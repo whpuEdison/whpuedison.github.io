@@ -152,6 +152,207 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/18/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E9%87%8D%E6%8E%92%E5%92%8C%E9%87%8D%E7%BB%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="马帅傅">
+      <meta itemprop="description" content="道阻且长,行则将至">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上任鹅城">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/08/18/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E9%87%8D%E6%8E%92%E5%92%8C%E9%87%8D%E7%BB%98/" class="post-title-link" itemprop="url">浏览器的重排和重绘</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-08-18 18:03:43 / Modified: 18:08:15" itemprop="dateCreated datePublished" datetime="2021-08-18T18:03:43+08:00">2021-08-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">浏览器</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2021/08/18/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E9%87%8D%E6%8E%92%E5%92%8C%E9%87%8D%E7%BB%98/" class="post-meta-item leancloud_visitors" data-flag-title="浏览器的重排和重绘" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2021/08/18/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E9%87%8D%E6%8E%92%E5%92%8C%E9%87%8D%E7%BB%98/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/08/18/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E9%87%8D%E6%8E%92%E5%92%8C%E9%87%8D%E7%BB%98/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="网页的生成过程是怎样的？"><a href="#网页的生成过程是怎样的？" class="headerlink" title="网页的生成过程是怎样的？"></a>网页的生成过程是怎样的？</h3><p><img src="https://raw.githubusercontent.com/whpuEdison/blog/master/static/images/%E9%87%8D%E6%8E%92%E5%92%8C%E9%87%8D%E7%BB%98.png" alt="img"></p>
+<p>在这个过程中：</p>
+<ol>
+<li><p>HTML 被 HTML 解析器解析成 DOM 树</p>
+</li>
+<li><p>CSS 则被 CSS 解析器解析成 CSSOM 树</p>
+</li>
+<li><p>结合 DOM 树和 CSSOM 树，生成一棵渲染树（Render Tree）</p>
+</li>
+<li><p>生成布局（flow），即将所有渲染树的所有节点进行平面合成</p>
+</li>
+<li><p>将布局绘制（paint）在屏幕上</p>
+</li>
+</ol>
+<p>其中，第 4 步和第 5 步是最耗时的部分，这两步合起来就是我们通常所说的渲染。在网页生成的过程中，至少会渲染一次；并且，在用户操作界面的过程中，还会不断地重新渲染。也就是会不断地发生重排和重绘。</p>
+<h3 id="什么是重排"><a href="#什么是重排" class="headerlink" title="什么是重排?"></a>什么是重排?</h3><p>当渲染树 Render tree 中的一部分（或全部）因为 DOM 的变化<strong>影响了元素的几何信息</strong>（DOM 对象的位置和尺寸大小），浏览器需要重新计算元素的几何属性，并将其安放在界面中的正确位置，这个过程就称为重排（reflow），重排也叫作回流。</p>
+<h3 id="什么是重绘？"><a href="#什么是重绘？" class="headerlink" title="什么是重绘？"></a>什么是重绘？</h3><p>当渲染树 Render tree 中的一些元素需要更新属性，而这些属性<strong>只是影响元素的外观，而没有影响到布局，</strong>例如改变 visibility、outline、背景色等属性，浏览器会根据元素的新属性重新绘制，使元素呈现新的外观，这个过程就称为重绘（repaint）。</p>
+<h3 id="重排与重绘的关系是怎样的？"><a href="#重排与重绘的关系是怎样的？" class="headerlink" title="重排与重绘的关系是怎样的？"></a>重排与重绘的关系是怎样的？</h3><p><strong>重绘不会引起重排，但重排一定会引起重绘</strong>。一个元素的重排通常会带来一系列的反应，甚至触发整个文档的重排和重绘，性能代价是高昂的。</p>
+<h3 id="什么情况会触发重排和重绘？"><a href="#什么情况会触发重排和重绘？" class="headerlink" title="什么情况会触发重排和重绘？"></a>什么情况会触发重排和重绘？</h3><h4 id="1、触发重排的条件"><a href="#1、触发重排的条件" class="headerlink" title="1、触发重排的条件"></a>1、触发重排的条件</h4><ul>
+<li><p>页面渲染初始化时；（这个无法避免）</p>
+</li>
+<li><p>浏览器窗口改变尺寸；</p>
+</li>
+<li><p>元素尺寸改变时；</p>
+</li>
+<li><p>元素位置改变时；</p>
+</li>
+<li><p>元素内容改变时；</p>
+</li>
+<li><p>添加或删除可见的 DOM 元素时。</p>
+</li>
+</ul>
+<h4 id="2、触发重绘的条件"><a href="#2、触发重绘的条件" class="headerlink" title="2、触发重绘的条件"></a>2、触发重绘的条件</h4><p>常见的引起重绘的属性：</p>
+<ul>
+<li><p>color</p>
+</li>
+<li><p>border-style</p>
+</li>
+<li><p>visibility</p>
+</li>
+<li><p>background  </p>
+</li>
+<li><p>text-decoration</p>
+</li>
+<li><p>background-image</p>
+</li>
+<li><p>background-position</p>
+</li>
+<li><p>background-repeat  </p>
+</li>
+<li><p>outline-color</p>
+</li>
+<li><p>outline</p>
+</li>
+<li><p>outline-style</p>
+</li>
+<li><p>border-radius  </p>
+</li>
+<li><p>outline-width</p>
+</li>
+<li><p>box-shadow</p>
+</li>
+<li><p>background-size</p>
+</li>
+</ul>
+<h3 id="display-none-和-visibility-hidden-有什么区别？"><a href="#display-none-和-visibility-hidden-有什么区别？" class="headerlink" title="display: none 和 visibility: hidden 有什么区别？"></a>display: none 和 visibility: hidden 有什么区别？</h3><ul>
+<li>通过 display: none 隐藏一个 DOM 节点，会触发重排和重绘；</li>
+<li>通过 visibility: hidden 隐藏一个 DOM 节点，只触发重绘，因为没有几何变化。</li>
+</ul>
+<h3 id="浏览器的渲染队列是什么意思？"><a href="#浏览器的渲染队列是什么意思？" class="headerlink" title="浏览器的渲染队列是什么意思？"></a>浏览器的渲染队列是什么意思？</h3><p>当我们修改了元素的几何属性，导致浏览器触发重排或重绘时，它会把该操作放进渲染队列，等到队列中的操作到了一定的数量或者到了一定的时间间隔时，浏览器就会批量执行这些操作。</p>
+<p>以下代码将会触发几次渲染？</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">div.style.left = <span class="string">&#x27;10px&#x27;</span>;</span><br><span class="line">div.style.top = <span class="string">&#x27;10px&#x27;</span>;</span><br><span class="line">div.style.width = <span class="string">&#x27;20px&#x27;</span>;</span><br><span class="line">div.style.height = <span class="string">&#x27;20px&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>根据前面的描述，这段代码理论上会触发4次重排+重绘，因为每一次都改变了元素的几何属性。但实际上最后只触发了一次重排，这都得益于浏览器的渲染队列机制。</p>
+<p>但是如果我们像下面这样：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">div.style.left = <span class="string">&#x27;10px&#x27;</span>;</span><br><span class="line"><span class="built_in">console</span>.log(div.offsetLeft);</span><br><span class="line">div.style.top = <span class="string">&#x27;10px&#x27;</span>;</span><br><span class="line"><span class="built_in">console</span>.log(div.offsetTop);</span><br><span class="line">div.style.width = <span class="string">&#x27;20px&#x27;</span>;</span><br><span class="line"><span class="built_in">console</span>.log(div.offsetWidth);</span><br><span class="line">div.style.height = <span class="string">&#x27;20px&#x27;</span>;</span><br><span class="line"><span class="built_in">console</span>.log(div.offsetHeight);</span><br></pre></td></tr></table></figure>
+
+<p>这段代码就会触发4次重排+重绘，因为在 console 中请求了这几个样式信息，无论何时浏览器都会立即执行渲染队列的任务（强制刷新队列），即使该值与操作中修改的值没关联。</p>
+<p>强制刷新队列的 style 样式请求：</p>
+<ul>
+<li><p>offsetTop、offsetLeft、offsetWidth、offsetHeight</p>
+</li>
+<li><p>scrollTop、scrollLeft、scrollWidth、scrollHeight</p>
+</li>
+<li><p>clientTop、clientLeft、clientWidth、clientHeight</p>
+</li>
+<li><p>getComputedStyle()、 或者 IE 的 currentStyle</p>
+</li>
+</ul>
+<p>我们在开发中应当避免这些能够强制刷新队列的操作。</p>
+<h3 id="如何优化重排？"><a href="#如何优化重排？" class="headerlink" title="如何优化重排？"></a>如何优化重排？</h3><h4 id="1、读写分离"><a href="#1、读写分离" class="headerlink" title="1、读写分离"></a>1、读写分离</h4><p>还是拿上面的强制刷新队列的例子，如果我们改成这样：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">div.style.left = <span class="string">&#x27;10px&#x27;</span>;</span><br><span class="line">div.style.top = <span class="string">&#x27;10px&#x27;</span>;</span><br><span class="line">div.style.width = <span class="string">&#x27;20px&#x27;</span>;</span><br><span class="line">div.style.height = <span class="string">&#x27;20px&#x27;</span>;</span><br><span class="line"><span class="built_in">console</span>.log(div.offsetLeft);</span><br><span class="line"><span class="built_in">console</span>.log(div.offsetTop);</span><br><span class="line"><span class="built_in">console</span>.log(div.offsetWidth);</span><br><span class="line"><span class="built_in">console</span>.log(div.offsetHeight);</span><br></pre></td></tr></table></figure>
+
+<p>这次只触发了一次重排，因为：在第一个 console 的时候，浏览器把之前上面四个写操作的渲染队列都给清空了；剩下的 console，因为渲染队列本来就是空的，所以并没有触发重排，仅仅拿值而已。</p>
+<h4 id="2、样式集中改变"><a href="#2、样式集中改变" class="headerlink" title="2、样式集中改变"></a>2、样式集中改变</h4><p>将多次改变样式属性的操作合并成一次操作，减少 DOM 访问</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">div.style.left = <span class="string">&#x27;10px&#x27;</span>;</span><br><span class="line">div.style.top = <span class="string">&#x27;10px&#x27;</span>;</span><br><span class="line">div.style.width = <span class="string">&#x27;20px&#x27;</span>;</span><br><span class="line">div.style.height = <span class="string">&#x27;20px&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>优化：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">el.className += <span class="string">&quot; className&quot;</span>; <span class="comment">// 直接改变 class</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="3、离线操作"><a href="#3、离线操作" class="headerlink" title="3、离线操作"></a>3、离线操作</h4><p>如果要批量添加 DOM，可以让要操作的元素进行「离线处理」，处理完后一起更新。离线处理的意思是：</p>
+<ul>
+<li><p>隐藏要操作的 DOM</p>
+</li>
+<li><p>在要操作 DOM 之前，通过 display 属性隐藏 DOM，当操作完成之后，再将元素的 display 属性为可见，因为不可见的元素不会触发重排和重绘。</p>
+</li>
+<li><p>通过使用 DocumentFragment 创建一个DOM 碎片，在它上面批量操作 DOM，操作完成之后，再添加到文档中，这样只会触发一次重排。</p>
+</li>
+</ul>
+<h4 id="4、position-属性的应用"><a href="#4、position-属性的应用" class="headerlink" title="4、position 属性的应用"></a>4、position 属性的应用</h4><p>将需要多次重排的元素，position 属性设为 absolute 或 fixed，这样此元素就脱离了文档流，它的变化不会影响到其他元素。例如有动画效果的元素就最好设置为绝对定位。</p>
+<h4 id="5、在内存中构建"><a href="#5、在内存中构建" class="headerlink" title="5、在内存中构建"></a>5、在内存中构建</h4><p>在内存中多次操作节点，完成后再添加到文档中去。例如要异步获取表格数据，渲染到页面。可以先取得数据后在内存中构建整个表格的 html 片段，再一次性添加到文档中去，而不是直接操作 DOM，循环添加每一行。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/18/%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E8%AF%AD%E4%B9%89%E5%8C%96/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -277,7 +478,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-08-18 17:49:26 / Modified: 17:53:50" itemprop="dateCreated datePublished" datetime="2021-08-18T17:49:26+08:00">2021-08-18</time>
+              <time title="Created: 2021-08-18 17:49:26 / Modified: 18:03:52" itemprop="dateCreated datePublished" datetime="2021-08-18T17:49:26+08:00">2021-08-18</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1057,112 +1258,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/18/JS%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="马帅傅">
-      <meta itemprop="description" content="道阻且长,行则将至">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上任鹅城">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/08/18/JS%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/" class="post-title-link" itemprop="url">JS中的原型和原型链</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-08-18 13:09:09 / Modified: 17:37:56" itemprop="dateCreated datePublished" datetime="2021-08-18T13:09:09+08:00">2021-08-18</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javascript/" itemprop="url" rel="index"><span itemprop="name">javascript</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2021/08/18/JS%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/" class="post-meta-item leancloud_visitors" data-flag-title="JS中的原型和原型链" title="Views">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">Views: </span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine: </span>
-    
-    <a title="valine" href="/2021/08/18/JS%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/08/18/JS%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h3><p>每一个javascript对象（null除外）在创建的时候，都会与另外一个对象所关联。而这个与创建对象所关联的对象，就是所创建对象的原型，每一个对象都会从原型中继承属性。</p>
-<h4 id="构造函数、原型、实例的关系图"><a href="#构造函数、原型、实例的关系图" class="headerlink" title="构造函数、原型、实例的关系图"></a>构造函数、原型、实例的关系图</h4><p><img src="https://raw.githubusercontent.com/whpuEdison/blog/master/static/images/%E5%8E%9F%E5%9E%8B%E5%9B%BE.png"></p>
-<h4 id="为什么原型没有属性指向实例？"><a href="#为什么原型没有属性指向实例？" class="headerlink" title="为什么原型没有属性指向实例？"></a>为什么原型没有属性指向实例？</h4><p>因为一个构造函数可以创建多个实例对象，原型与实例对象是一对多的关系，所以就没法用一个属性指向实例。</p>
-<h3 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h3><p>当读取实例的属性时，如果找不到就会去查找与对象关联的原型中的属性，如果还找不到，就去找原型的原型，一直找到最顶层为止，这样由原型组成的链状结构就是原型链。</p>
-<h4 id="原型链的尽头"><a href="#原型链的尽头" class="headerlink" title="原型链的尽头"></a>原型链的尽头</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.prototype.__proto__ === <span class="literal">null</span>) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-
-<p> Object.prototype.<strong>proto</strong> 的值为 null 跟 Object.prototype 没有原型，其实表达了一个意思，所以查找属性到了 Object.prototype就可以停止查找了。</p>
-<h4 id="原型链关系图"><a href="#原型链关系图" class="headerlink" title="原型链关系图"></a>原型链关系图</h4><p><img src="https://raw.githubusercontent.com/whpuEdison/blog/master/static/images/%E5%8E%9F%E5%9E%8B%E9%93%BE.png"></p>
-<p>图中由相互关联的原型组成的链状结构就是原型链，也就是蓝色的这条线。</p>
-<h3 id="几个常见小问题"><a href="#几个常见小问题" class="headerlink" title="几个常见小问题"></a>几个常见小问题</h3><h4 id="实例的constructor属性指向构造函数吗？"><a href="#实例的constructor属性指向构造函数吗？" class="headerlink" title="实例的constructor属性指向构造函数吗？"></a>实例的constructor属性指向构造函数吗？</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"><span class="keyword">var</span> person = <span class="keyword">new</span> Person();</span><br><span class="line"><span class="built_in">console</span>.log(person.constructor === Person); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-
-<p>当获取person的constructor属性时，其实 person 中并没有 constructor 属性，当不能读取到constructor 属性时，会从 person 的原型也就是 Person.prototype 中读取，正好原型中有该属性。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">person.constructor === Person.prototype.constructor</span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="怎么理解-proto-属性？"><a href="#怎么理解-proto-属性？" class="headerlink" title="怎么理解__proto__属性？"></a>怎么理解__proto__属性？</h4><p>绝大多数浏览器都支持这个非标准的方法访问原型，然而它并不存在于Person.prototype中，实际上它是来自于 Object.prototype。与其说是一个属性，不如说是一个getter/setter，当使用 obj.<strong>proto</strong> 时，可以理解成返回了 Object.getPrototypeOf(obj)。</p>
-<h4 id="真的是从原型上“继承”属性吗？"><a href="#真的是从原型上“继承”属性吗？" class="headerlink" title="真的是从原型上“继承”属性吗？"></a>真的是从原型上“继承”属性吗？</h4><p>继承意味着复制操作，然而 JavaScript 默认并不会复制对象的属性。相反，JavaScript 只是在两个对象之间创建一个关联，这样，一个对象就可以通过委托访问另一个对象的属性和函数，所以与其叫继承，委托的说法反而更准确些。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1233,20 +1328,20 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">22</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
