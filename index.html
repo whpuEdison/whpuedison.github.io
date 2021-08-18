@@ -152,6 +152,112 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/18/JS%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="马帅傅">
+      <meta itemprop="description" content="道阻且长,行则将至">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上任鹅城">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/08/18/JS%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/" class="post-title-link" itemprop="url">JS中的原型和原型链</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-08-18 12:55:24 / Modified: 12:57:30" itemprop="dateCreated datePublished" datetime="2021-08-18T12:55:24+08:00">2021-08-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index"><span itemprop="name">javascript</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2021/08/18/JS%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/" class="post-meta-item leancloud_visitors" data-flag-title="JS中的原型和原型链" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2021/08/18/JS%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/08/18/JS%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h3><p>每一个javascript对象（null除外）在创建的时候，都会与另外一个对象所关联。而这个与创建对象所关联的对象，就是所创建对象的原型，每一个对象都会从原型中继承属性。</p>
+<h4 id="构造函数、原型、实例的关系图"><a href="#构造函数、原型、实例的关系图" class="headerlink" title="构造函数、原型、实例的关系图"></a>构造函数、原型、实例的关系图</h4><p><img src="https://cdn.nlark.com/yuque/0/2020/png/1550775/1596705309124-8f37df9e-fa7e-48b1-bcb4-987d9b66a073.png" alt="img"></p>
+<h4 id="为什么原型没有属性指向实例？"><a href="#为什么原型没有属性指向实例？" class="headerlink" title="为什么原型没有属性指向实例？"></a>为什么原型没有属性指向实例？</h4><p>因为一个构造函数可以创建多个实例对象，原型与实例对象是一对多的关系，所以就没法用一个属性指向实例。</p>
+<h3 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h3><p>当读取实例的属性时，如果找不到就会去查找与对象关联的原型中的属性，如果还找不到，就去找原型的原型，一直找到最顶层为止，这样由原型组成的链状结构就是原型链。</p>
+<h4 id="原型链的尽头"><a href="#原型链的尽头" class="headerlink" title="原型链的尽头"></a>原型链的尽头</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(Object.prototype.__proto__ === null) // true</span><br></pre></td></tr></table></figure>
+
+<p> Object.prototype.<strong>proto</strong> 的值为 null 跟 Object.prototype 没有原型，其实表达了一个意思，所以查找属性到了 Object.prototype就可以停止查找了。</p>
+<h4 id="原型链关系图"><a href="#原型链关系图" class="headerlink" title="原型链关系图"></a>原型链关系图</h4><p><img src="https://cdn.nlark.com/yuque/0/2020/png/1550775/1596706173659-9dbd1d44-6c10-4872-a36d-4518546d2513.png" alt="img"></p>
+<p>图中由相互关联的原型组成的链状结构就是原型链，也就是蓝色的这条线。</p>
+<h3 id="几个常见小问题"><a href="#几个常见小问题" class="headerlink" title="几个常见小问题"></a>几个常见小问题</h3><h4 id="实例的constructor属性指向构造函数吗？"><a href="#实例的constructor属性指向构造函数吗？" class="headerlink" title="实例的constructor属性指向构造函数吗？"></a>实例的constructor属性指向构造函数吗？</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function Person() &#123;&#125;</span><br><span class="line">var person = new Person();</span><br><span class="line">console.log(person.constructor === Person); // true</span><br></pre></td></tr></table></figure>
+
+<p>当获取person的constructor属性时，其实 person 中并没有 constructor 属性，当不能读取到constructor 属性时，会从 person 的原型也就是 Person.prototype 中读取，正好原型中有该属性。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">person.constructor === Person.prototype.constructor</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="怎么理解-proto-属性？"><a href="#怎么理解-proto-属性？" class="headerlink" title="怎么理解__proto__属性？"></a>怎么理解__proto__属性？</h4><p>绝大多数浏览器都支持这个非标准的方法访问原型，然而它并不存在于Person.prototype中，实际上它是来自于 Object.prototype。与其说是一个属性，不如说是一个getter/setter，当使用 obj.<strong>proto</strong> 时，可以理解成返回了 Object.getPrototypeOf(obj)。</p>
+<h4 id="真的是从原型上“继承”属性吗？"><a href="#真的是从原型上“继承”属性吗？" class="headerlink" title="真的是从原型上“继承”属性吗？"></a>真的是从原型上“继承”属性吗？</h4><p>继承意味着复制操作，然而 JavaScript 默认并不会复制对象的属性。相反，JavaScript 只是在两个对象之间创建一个关联，这样，一个对象就可以通过委托访问另一个对象的属性和函数，所以与其叫继承，委托的说法反而更准确些。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/18/%E6%89%8B%E5%86%99%E9%98%B2%E6%8A%96%E4%B8%8E%E8%8A%82%E6%B5%81%E5%87%BD%E6%95%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -705,7 +811,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -718,7 +824,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
