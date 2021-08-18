@@ -152,6 +152,108 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/18/JS%E4%B8%AD%E7%9A%84%E9%97%AD%E5%8C%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="马帅傅">
+      <meta itemprop="description" content="道阻且长,行则将至">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上任鹅城">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/08/18/JS%E4%B8%AD%E7%9A%84%E9%97%AD%E5%8C%85/" class="post-title-link" itemprop="url">JS中的闭包</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-08-18 17:28:38 / Modified: 17:38:02" itemprop="dateCreated datePublished" datetime="2021-08-18T17:28:38+08:00">2021-08-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index"><span itemprop="name">javascript</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2021/08/18/JS%E4%B8%AD%E7%9A%84%E9%97%AD%E5%8C%85/" class="post-meta-item leancloud_visitors" data-flag-title="JS中的闭包" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2021/08/18/JS%E4%B8%AD%E7%9A%84%E9%97%AD%E5%8C%85/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/08/18/JS%E4%B8%AD%E7%9A%84%E9%97%AD%E5%8C%85/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>MDN对闭包的定义：</p>
+<p>函数和对其周围状态（lexical environment，词法环境）的引用捆绑在一起构成闭包（closure）。闭包可以让你从内部函数访问外部函数作用域。在 JavaScript 中，每当函数被创建，就会在函数生成时生成闭包。</p>
+<p>换种好理解的说法：</p>
+<p>闭包是指那些能够访问自由变量的函数。自由变量是指在函数中使用的，但既不是函数参数也不是函数的局部变量的变量。</p>
+<p>具体可以从两个角度来看什么函数是闭包：</p>
+<ol>
+<li>从理论角度：所有的函数。因为它们都在创建的时候就将上层上下文的数据保存起来了。哪怕是简单的全局变量也是如此，因为函数中访问全局变量就相当于是在访问自由变量，这个时候使用最外层的作用域。</li>
+<li>从实践角度：闭包就是能够读取其他函数内部变量的函数。在本质上，闭包是将函数内部和函数外部连接起来的桥梁。</li>
+</ol>
+<h3 id="闭包的用途"><a href="#闭包的用途" class="headerlink" title="闭包的用途"></a>闭包的用途</h3><ol>
+<li>可以读取函数内部的变量；</li>
+<li>让变量的值始终保持在内存中；</li>
+</ol>
+<h3 id="为什么闭包会造成内存泄漏？"><a href="#为什么闭包会造成内存泄漏？" class="headerlink" title="为什么闭包会造成内存泄漏？"></a>为什么闭包会造成内存泄漏？</h3><p>早期的IE，无法自动回收闭包引用的变量，变量用不上又回收不掉自然就造成了内存泄漏。其实这个问题本身就是有问题的，闭包不会造成内存泄漏，程序写错了才会造成内存泄漏。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/18/JS%E7%9A%84%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1041,106 +1143,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/20/%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AAPromise/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="马帅傅">
-      <meta itemprop="description" content="道阻且长,行则将至">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上任鹅城">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/07/20/%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AAPromise/" class="post-title-link" itemprop="url">手写一个Promise</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-07-20 16:22:17" itemprop="dateCreated datePublished" datetime="2021-07-20T16:22:17+08:00">2021-07-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-08-18 17:31:51" itemprop="dateModified" datetime="2021-08-18T17:31:51+08:00">2021-08-18</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javascript/" itemprop="url" rel="index"><span itemprop="name">javascript</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2021/07/20/%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AAPromise/" class="post-meta-item leancloud_visitors" data-flag-title="手写一个Promise" title="Views">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">Views: </span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine: </span>
-    
-    <a title="valine" href="/2021/07/20/%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AAPromise/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/07/20/%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AAPromise/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Promise</span> </span>&#123;</span><br><span class="line">    <span class="title">constructor</span> (<span class="params">execute</span>) &#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         *  Promise实例状态值（3种）: 1.pending; 2.fulfilled; 3.rejected。</span></span><br><span class="line"><span class="comment">         *  状态改变方式（2种）：1.pending -&gt; fulfilled; 2.pending -&gt; fulfilled。</span></span><br><span class="line"><span class="comment">         *  注意：一旦状态改变，不可逆。</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="built_in">this</span>.PromiseState = <span class="string">&#x27;pending&#x27;</span></span><br><span class="line">        <span class="comment">// Promise实例结果: 存储成功时返回的终值（eventual value）和失败时返回的拒因（reason）。</span></span><br><span class="line">        <span class="built_in">this</span>.PromiseResult = <span class="literal">null</span></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 应用场景：当Promise执行函数为异步时，存储then方法的回调函数，</span></span><br><span class="line"><span class="comment">         * 等异步执行完后，根据状态在resolve或reject函数中在去执行。</span></span><br><span class="line"><span class="comment">         * 因为每一个Promise实例可以有多个then方法，所以存储回调的对象属性值是一个数组。</span></span><br><span class="line"><span class="comment">         * 因为异步执行的结果未知，所以成功回调和失败回调都要存储起来，</span></span><br><span class="line"><span class="comment">         * 数组的每一项都是一个对象：&#123; onResolve: 成功回调, onReject: 失败回调 &#125;。</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="built_in">this</span>.callBacks = []</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 使用方式：在Promise执行函数中，将成功的值作为参数调用resolve函数</span></span><br><span class="line"><span class="comment">         * 执行函数里的内置方法，主要作用有三个：</span></span><br><span class="line"><span class="comment">         * 1.改变Promise实例状态： pending -&gt; fulfilled；</span></span><br><span class="line"><span class="comment">         * 2.改变Promise实例结果： this.PromiseState = data；</span></span><br><span class="line"><span class="comment">         * 3.实现Promise的状态不可逆，具体做法是只当状态为pending时才改变状态和结果。</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">const</span> resolve = <span class="function">(<span class="params">data</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">this</span>.PromiseState !== <span class="string">&#x27;pending&#x27;</span>) <span class="keyword">return</span></span><br><span class="line">            <span class="built_in">this</span>.PromiseState = <span class="string">&#x27;fulfilled&#x27;</span></span><br><span class="line">            <span class="built_in">this</span>.PromiseResult = data</span><br><span class="line">            <span class="comment">// Promise的then方法是异步执行的，回调函数执行放在定时器里面来实现。</span></span><br><span class="line">            <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123; <span class="built_in">this</span>.callBacks.forEach(<span class="function"><span class="params">item</span> =&gt;</span> item.onResolve())&#125;, <span class="number">0</span>)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 使用方式：在Promise执行函数中，将失败的原因作为参数调用reject函数</span></span><br><span class="line"><span class="comment">         * 执行函数里的内置方法，主要作用有三个：</span></span><br><span class="line"><span class="comment">         * 1.改变Promise实例状态： pending -&gt; rejected；</span></span><br><span class="line"><span class="comment">         * 2.改变Promise实例结果： this.PromiseState = data；</span></span><br><span class="line"><span class="comment">         * 3.实现Promise的状态不可逆，具体做法是只当状态为pending时才改变状态和结果。</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">const</span> reject = <span class="function">(<span class="params">data</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">this</span>.PromiseState !== <span class="string">&#x27;pending&#x27;</span>) <span class="keyword">return</span></span><br><span class="line">            <span class="built_in">this</span>.PromiseState = <span class="string">&#x27;rejected&#x27;</span></span><br><span class="line">            <span class="built_in">this</span>.PromiseResult = data</span><br><span class="line">            <span class="comment">// Promise的then方法是异步执行的，回调函数执行放在定时器里面来实现。</span></span><br><span class="line">            <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123; <span class="built_in">this</span>.callBacks.forEach(<span class="function"><span class="params">item</span> =&gt;</span> item.onReject())&#125;, <span class="number">0</span>)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 用try...catch...来处理执行函数运行抛出错误</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            execute(resolve, reject)</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">            reject(e)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    then (onResolve, onReject) &#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * then方法主要做的事情有四个：</span></span><br><span class="line"><span class="comment">         * 1.接收两个函数作为参数，分别是成功回调和失败回调；</span></span><br><span class="line"><span class="comment">         * 2.返回一个新的Promise实例，可以链式调用；</span></span><br><span class="line"><span class="comment">         * 3.当前面的Promise状态改变时，then方法根据其最终状态，选择特定的回调函数执行；</span></span><br><span class="line"><span class="comment">         * 4.回调函数返回值不同，分三种情况：</span></span><br><span class="line"><span class="comment">         *   *抛出异常，状态为失败，结果为失败返回的拒因；</span></span><br><span class="line"><span class="comment">         *   *返回结果不是Promise实例，状态为成功，结果为成功返回的终值；</span></span><br><span class="line"><span class="comment">         *   *返回结果是Promise实例，返回为这个Promise的结果。</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * then方法支持参数可以不传，当成功回调不传的时候，默认赋值为一个函数，</span></span><br><span class="line"><span class="comment">         * 这个函数做的事情就是把上一个Promise的返回结果，传递给下一个then方法。</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        onResolve = <span class="keyword">typeof</span> onResolve === <span class="string">&#x27;function&#x27;</span> ? onResolve : <span class="function"><span class="params">res</span> =&gt;</span> res</span><br><span class="line"></span><br><span class="line">         <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * then方法支持参数可以不传，当失败回调不传的时候，默认赋值为一个函数，</span></span><br><span class="line"><span class="comment">         * 这个函数做的事情就是抛出错误原因，实现异常穿透。</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        onReject = <span class="keyword">typeof</span> onReject === <span class="string">&#x27;function&#x27;</span> ? onReject : <span class="function"><span class="params">err</span> =&gt;</span> &#123; <span class="keyword">throw</span> err &#125; </span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">/**</span></span><br><span class="line"><span class="comment">             * 根据回调函数返回的结果，执行相应内置函数来改变then函数返回的Promise实例状态和结果值</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            <span class="keyword">const</span> handle = <span class="function">(<span class="params">cbType</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="comment">// 使用try...catch...来捕获成功回调函数执行中的异常</span></span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="comment">// 执行成功回调，获取then方法成功回调的返回结果。</span></span><br><span class="line">                    <span class="keyword">const</span> res = cbType(<span class="built_in">this</span>.PromiseResult)</span><br><span class="line">                    <span class="keyword">if</span> (res <span class="keyword">instanceof</span> <span class="built_in">Promise</span>) &#123;</span><br><span class="line">                        res.then(resolve, reject)</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        resolve(res)</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">                    reject(e)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">switch</span> (<span class="built_in">this</span>.PromiseState) &#123;</span><br><span class="line">                <span class="comment">// Promise实例的执行函数是同步的，状态为fulfilled。</span></span><br><span class="line">                <span class="keyword">case</span> <span class="string">&#x27;fulfilled&#x27;</span>:</span><br><span class="line">                    <span class="comment">// Promise的then方法是异步执行的，回调函数执行放在定时器里面来实现。</span></span><br><span class="line">                    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123; handle(onResolve) &#125;)</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="comment">// Promise实例的执行函数是同步的，状态为rejected。</span></span><br><span class="line">                <span class="keyword">case</span> <span class="string">&#x27;rejected&#x27;</span>:</span><br><span class="line">                    <span class="comment">// Promise的then方法是异步执行的，回调函数执行放在定时器里面来实现。</span></span><br><span class="line">                    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123; handle(onReject) &#125;)</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="comment">// Promise实例的执行函数是异步的，状态为pending。</span></span><br><span class="line">                <span class="keyword">default</span>:</span><br><span class="line">                    <span class="comment">// 往回调里面添加成功回调和失败回调</span></span><br><span class="line">                    <span class="built_in">this</span>.callBacks.push(&#123;</span><br><span class="line">                        <span class="comment">/**</span></span><br><span class="line"><span class="comment">                         * 等上一个Promise状态改变时，来根据key执行相对应的value函数</span></span><br><span class="line"><span class="comment">                         */</span></span><br><span class="line">                        <span class="attr">onResolve</span>: <span class="function">() =&gt;</span> handle(onResolve),</span><br><span class="line">                        <span class="attr">onReject</span>: <span class="function">() =&gt;</span> handle(onReject)</span><br><span class="line">                    &#125;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">catch</span> (onReject) &#123;</span><br><span class="line">        <span class="comment">// 只需要调用then方法，成功回调传空即可</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.then(<span class="literal">null</span>, onReject)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> resolve (value) &#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 返回结果为Promise实例，有两种情况：</span></span><br><span class="line"><span class="comment">         * 1.参数是Promise实例，返回为这个Promise的结果；</span></span><br><span class="line"><span class="comment">         * 2.参数不是Promise实例，状态为成功，结果为参数。</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (value <span class="keyword">instanceof</span> <span class="built_in">Promise</span>) &#123;</span><br><span class="line">                value.then(resolve, reject)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                resolve(value)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> reject (value) &#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 返回结果为Promise实例，状态为失败，结果为参数</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">            reject(value)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> all (promises) &#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 接收的参数为一个由Promise实例组成的数组</span></span><br><span class="line"><span class="comment">         * 返回结果有两种情况：</span></span><br><span class="line"><span class="comment">         * 1.参数中的Promise实例结果都为成功，状态为成功，并将实例终值按原顺序拼凑成一个数组，作为all返回的Promise实例终值；</span></span><br><span class="line"><span class="comment">         * 2.参数中的Promise实例结果有一个失败，状态为失败，并将第一个失败的拒因，作为all返回的Promise实例据因。</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">         <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">let</span> count = <span class="number">0</span></span><br><span class="line">            <span class="keyword">const</span> values = <span class="keyword">new</span> <span class="built_in">Array</span>(promises.length)</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; promises.length; i++) &#123;</span><br><span class="line">                <span class="built_in">Promise</span>.resolve(promises[i]).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">                    count++</span><br><span class="line">                    values[i] = res</span><br><span class="line">                    <span class="built_in">console</span>.log(<span class="string">&#x27;count&#x27;</span>, count)</span><br><span class="line">                    <span class="keyword">if</span> (count === promises.length) &#123;</span><br><span class="line">                        resolve(values)</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;, <span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">                    reject(err)</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;) </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> race (promises) &#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 接收的参数为一个由Promise实例组成的数组</span></span><br><span class="line"><span class="comment">         * 返回一个Promise实例，结果由第一个完成的Promise实例决定</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">         <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; promises.length; i++) &#123;</span><br><span class="line">                <span class="built_in">Promise</span>.resolve(promises[i]).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">                    resolve(res)</span><br><span class="line">                &#125;, <span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">                    reject(err)</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="built_in">Promise</span></span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1207,7 +1213,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1220,7 +1226,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-count">29</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
