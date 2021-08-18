@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/whpuEdison/blog/master/static/images/%E5%8E%9F%E5%9E%8B%E5%9B%BE.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/whpuEdison/blog/master/static/images/%E5%8E%9F%E5%9E%8B%E9%93%BE.png">
 <meta property="article:published_time" content="2021-08-18T05:09:09.312Z">
-<meta property="article:modified_time" content="2021-08-18T05:32:56.291Z">
+<meta property="article:modified_time" content="2021-08-18T09:37:56.607Z">
 <meta property="article:author" content="马帅傅">
 <meta property="article:tag" content="原型">
 <meta property="article:tag" content="原型链">
@@ -184,7 +184,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-08-18 13:09:09 / Modified: 13:32:56" itemprop="dateCreated datePublished" datetime="2021-08-18T13:09:09+08:00">2021-08-18</time>
+              <time title="Created: 2021-08-18 13:09:09 / Modified: 17:37:56" itemprop="dateCreated datePublished" datetime="2021-08-18T13:09:09+08:00">2021-08-18</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -232,15 +232,15 @@
 <h4 id="构造函数、原型、实例的关系图"><a href="#构造函数、原型、实例的关系图" class="headerlink" title="构造函数、原型、实例的关系图"></a>构造函数、原型、实例的关系图</h4><p><img src="https://raw.githubusercontent.com/whpuEdison/blog/master/static/images/%E5%8E%9F%E5%9E%8B%E5%9B%BE.png"></p>
 <h4 id="为什么原型没有属性指向实例？"><a href="#为什么原型没有属性指向实例？" class="headerlink" title="为什么原型没有属性指向实例？"></a>为什么原型没有属性指向实例？</h4><p>因为一个构造函数可以创建多个实例对象，原型与实例对象是一对多的关系，所以就没法用一个属性指向实例。</p>
 <h3 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h3><p>当读取实例的属性时，如果找不到就会去查找与对象关联的原型中的属性，如果还找不到，就去找原型的原型，一直找到最顶层为止，这样由原型组成的链状结构就是原型链。</p>
-<h4 id="原型链的尽头"><a href="#原型链的尽头" class="headerlink" title="原型链的尽头"></a>原型链的尽头</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(Object.prototype.__proto__ === null) // true</span><br></pre></td></tr></table></figure>
+<h4 id="原型链的尽头"><a href="#原型链的尽头" class="headerlink" title="原型链的尽头"></a>原型链的尽头</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.prototype.__proto__ === <span class="literal">null</span>) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
 
 <p> Object.prototype.<strong>proto</strong> 的值为 null 跟 Object.prototype 没有原型，其实表达了一个意思，所以查找属性到了 Object.prototype就可以停止查找了。</p>
 <h4 id="原型链关系图"><a href="#原型链关系图" class="headerlink" title="原型链关系图"></a>原型链关系图</h4><p><img src="https://raw.githubusercontent.com/whpuEdison/blog/master/static/images/%E5%8E%9F%E5%9E%8B%E9%93%BE.png"></p>
 <p>图中由相互关联的原型组成的链状结构就是原型链，也就是蓝色的这条线。</p>
-<h3 id="几个常见小问题"><a href="#几个常见小问题" class="headerlink" title="几个常见小问题"></a>几个常见小问题</h3><h4 id="实例的constructor属性指向构造函数吗？"><a href="#实例的constructor属性指向构造函数吗？" class="headerlink" title="实例的constructor属性指向构造函数吗？"></a>实例的constructor属性指向构造函数吗？</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function Person() &#123;&#125;</span><br><span class="line">var person = new Person();</span><br><span class="line">console.log(person.constructor === Person); // true</span><br></pre></td></tr></table></figure>
+<h3 id="几个常见小问题"><a href="#几个常见小问题" class="headerlink" title="几个常见小问题"></a>几个常见小问题</h3><h4 id="实例的constructor属性指向构造函数吗？"><a href="#实例的constructor属性指向构造函数吗？" class="headerlink" title="实例的constructor属性指向构造函数吗？"></a>实例的constructor属性指向构造函数吗？</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"><span class="keyword">var</span> person = <span class="keyword">new</span> Person();</span><br><span class="line"><span class="built_in">console</span>.log(person.constructor === Person); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
 
 <p>当获取person的constructor属性时，其实 person 中并没有 constructor 属性，当不能读取到constructor 属性时，会从 person 的原型也就是 Person.prototype 中读取，正好原型中有该属性。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">person.constructor === Person.prototype.constructor</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">person.constructor === Person.prototype.constructor</span><br></pre></td></tr></table></figure>
 
 
 
@@ -346,7 +346,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

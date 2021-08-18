@@ -152,6 +152,110 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/18/%E8%AF%8D%E6%B3%95%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E5%8A%A8%E6%80%81%E4%BD%9C%E7%94%A8%E5%9F%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="马帅傅">
+      <meta itemprop="description" content="道阻且长,行则将至">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上任鹅城">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/08/18/%E8%AF%8D%E6%B3%95%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E5%8A%A8%E6%80%81%E4%BD%9C%E7%94%A8%E5%9F%9F/" class="post-title-link" itemprop="url">词法作用域和动态作用域</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-08-18 17:34:18 / Modified: 17:36:09" itemprop="dateCreated datePublished" datetime="2021-08-18T17:34:18+08:00">2021-08-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index"><span itemprop="name">javascript</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2021/08/18/%E8%AF%8D%E6%B3%95%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E5%8A%A8%E6%80%81%E4%BD%9C%E7%94%A8%E5%9F%9F/" class="post-meta-item leancloud_visitors" data-flag-title="词法作用域和动态作用域" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2021/08/18/%E8%AF%8D%E6%B3%95%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E5%8A%A8%E6%80%81%E4%BD%9C%E7%94%A8%E5%9F%9F/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/08/18/%E8%AF%8D%E6%B3%95%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E5%8A%A8%E6%80%81%E4%BD%9C%E7%94%A8%E5%9F%9F/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h3><p>作用域就是一个独立的地盘，让变量不会外泄、暴露出去。也就是说作用域最大的用处就是隔离变量，不同作用域下同名变量不会有冲突。</p>
+<p>ES6 之前 JavaScript 没有块级作用域,只有全局作用域和函数作用域。ES6 的到来，为我们提供了‘块级作用域’,可通过新增命令 let 和 const 来体现。</p>
+<p>作用域是分层的，内层作用域可以访问外层作用域的变量，反之则不行。作用域规定了如何查找变量，也就是确定当前执行代码对变量的访问权限。</p>
+<h3 id="作用域链"><a href="#作用域链" class="headerlink" title="作用域链"></a>作用域链</h3><p>一般情况下，变量取值到创建这个变量的函数的作用域中取值。但是如果在当前作用域中没有查到值，就会向上级作用域去查，直到查到全局作用域，这么一个查找过程形成的链条就叫做作用域链。</p>
+<h3 id="静态作用域与动态作用域"><a href="#静态作用域与动态作用域" class="headerlink" title="静态作用域与动态作用域"></a>静态作用域与动态作用域</h3><p>JavaScript 采用的是词法作用域，函数的作用域在函数定义的时候就决定了。而与词法作用域相对的是动态作用域，函数的作用域是在函数调用的时候才决定的。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> value = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(value);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> value = <span class="number">2</span>;</span><br><span class="line">    foo();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bar(); <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+
+<p>假设JavaScript采用静态作用域，让我们分析下执行过程：</p>
+<p>执行 foo 函数，先从 foo 函数内部查找是否有局部变量 value，如果没有，就根据书写的位置，查找上面一层的代码，也就是 value 等于 1，所以结果会打印 1。</p>
+<p>假设JavaScript采用动态作用域，让我们分析下执行过程：</p>
+<p>执行 foo 函数，依然是从 foo 函数内部查找是否有局部变量 value。如果没有，就从调用函数的作用域，也就是 bar 函数内部查找 value 变量，所以结果会打印 2。</p>
+<p>前面我们已经说了，JavaScript采用的是静态作用域，所以这个例子的结果是 1。</p>
+<h3 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> scope = <span class="string">&quot;global scope&quot;</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkscope</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> scope = <span class="string">&quot;local scope&quot;</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> scope;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> f();</span><br><span class="line">&#125;</span><br><span class="line">checkscope(); <span class="comment">// local scope</span></span><br><span class="line"><span class="keyword">var</span> scope = <span class="string">&quot;global scope&quot;</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkscope</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> scope = <span class="string">&quot;local scope&quot;</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> scope;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> f;</span><br><span class="line">&#125;</span><br><span class="line">checkscope()(); <span class="comment">// local scope</span></span><br></pre></td></tr></table></figure>
+
+<p>原因也很简单，因为JavaScript采用的是词法作用域，函数的作用域基于函数创建的位置。</p>
+<p>JavaScript 函数的执行用到了作用域链，这个作用域链是在函数定义的时候创建的。嵌套的函数 f() 定义在这个作用域链里，其中的变量 scope 一定是局部变量，不管何时何地执行函数 f()，这种绑定在执行 f() 时依然有效。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/18/JS%E4%B8%AD%E7%9A%84%E9%97%AD%E5%8C%85/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -177,7 +281,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-08-18 17:28:38 / Modified: 17:30:05" itemprop="dateCreated datePublished" datetime="2021-08-18T17:28:38+08:00">2021-08-18</time>
+              <time title="Created: 2021-08-18 17:28:38 / Modified: 17:38:02" itemprop="dateCreated datePublished" datetime="2021-08-18T17:28:38+08:00">2021-08-18</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -372,7 +476,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-08-18 17:08:11 / Modified: 17:10:24" itemprop="dateCreated datePublished" datetime="2021-08-18T17:08:11+08:00">2021-08-18</time>
+              <time title="Created: 2021-08-18 17:08:11 / Modified: 17:37:15" itemprop="dateCreated datePublished" datetime="2021-08-18T17:08:11+08:00">2021-08-18</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -423,7 +527,7 @@
 <p>我们通过这个网站，他是一个esprima引擎的网站，十分好用.画成流程图如下：</p>
 <p><img src="https://raw.githubusercontent.com/whpuEdison/blog/master/static/images/ast.png" alt="img"></p>
 <p>而他的json对象格式是这样的：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;type&quot;: &quot;Program&quot;,</span><br><span class="line">    &quot;body&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;type&quot;: &quot;VariableDeclaration&quot;,</span><br><span class="line">            &quot;declarations&quot;: [</span><br><span class="line">                &#123;</span><br><span class="line">                    &quot;type&quot;: &quot;VariableDeclarator&quot;,</span><br><span class="line">                    &quot;id&quot;: &#123;</span><br><span class="line">                        &quot;type&quot;: &quot;Identifier&quot;,</span><br><span class="line">                        &quot;name&quot;: &quot;a&quot;</span><br><span class="line">                    &#125;,</span><br><span class="line">                    &quot;init&quot;: &#123;</span><br><span class="line">                        &quot;type&quot;: &quot;Literal&quot;,</span><br><span class="line">                        &quot;value&quot;: 1,</span><br><span class="line">                        &quot;raw&quot;: &quot;1&quot;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            ],</span><br><span class="line">            &quot;kind&quot;: &quot;var&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;type&quot;: &quot;VariableDeclaration&quot;,</span><br><span class="line">            &quot;declarations&quot;: [</span><br><span class="line">                &#123;</span><br><span class="line">                    &quot;type&quot;: &quot;VariableDeclarator&quot;,</span><br><span class="line">                    &quot;id&quot;: &#123;</span><br><span class="line">                        &quot;type&quot;: &quot;Identifier&quot;,</span><br><span class="line">                        &quot;name&quot;: &quot;b&quot;</span><br><span class="line">                    &#125;,</span><br><span class="line">                    &quot;init&quot;: &#123;</span><br><span class="line">                        &quot;type&quot;: &quot;BinaryExpression&quot;,</span><br><span class="line">                        &quot;operator&quot;: &quot;+&quot;,</span><br><span class="line">                        &quot;left&quot;: &#123;</span><br><span class="line">                            &quot;type&quot;: &quot;Identifier&quot;,</span><br><span class="line">                            &quot;name&quot;: &quot;a&quot;</span><br><span class="line">                        &#125;,</span><br><span class="line">                        &quot;right&quot;: &#123;</span><br><span class="line">                            &quot;type&quot;: &quot;Literal&quot;,</span><br><span class="line">                            &quot;value&quot;: 1,</span><br><span class="line">                            &quot;raw&quot;: &quot;1&quot;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            ],</span><br><span class="line">            &quot;kind&quot;: &quot;var&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    &quot;sourceType&quot;: &quot;script&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;type&quot;</span>: <span class="string">&quot;Program&quot;</span>,</span><br><span class="line">    <span class="string">&quot;body&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">&quot;type&quot;</span>: <span class="string">&quot;VariableDeclaration&quot;</span>,</span><br><span class="line">            <span class="string">&quot;declarations&quot;</span>: [</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="string">&quot;type&quot;</span>: <span class="string">&quot;VariableDeclarator&quot;</span>,</span><br><span class="line">                    <span class="string">&quot;id&quot;</span>: &#123;</span><br><span class="line">                        <span class="string">&quot;type&quot;</span>: <span class="string">&quot;Identifier&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;name&quot;</span>: <span class="string">&quot;a&quot;</span></span><br><span class="line">                    &#125;,</span><br><span class="line">                    <span class="string">&quot;init&quot;</span>: &#123;</span><br><span class="line">                        <span class="string">&quot;type&quot;</span>: <span class="string">&quot;Literal&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;value&quot;</span>: <span class="number">1</span>,</span><br><span class="line">                        <span class="string">&quot;raw&quot;</span>: <span class="string">&quot;1&quot;</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            ],</span><br><span class="line">            <span class="string">&quot;kind&quot;</span>: <span class="string">&quot;var&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">&quot;type&quot;</span>: <span class="string">&quot;VariableDeclaration&quot;</span>,</span><br><span class="line">            <span class="string">&quot;declarations&quot;</span>: [</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="string">&quot;type&quot;</span>: <span class="string">&quot;VariableDeclarator&quot;</span>,</span><br><span class="line">                    <span class="string">&quot;id&quot;</span>: &#123;</span><br><span class="line">                        <span class="string">&quot;type&quot;</span>: <span class="string">&quot;Identifier&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;name&quot;</span>: <span class="string">&quot;b&quot;</span></span><br><span class="line">                    &#125;,</span><br><span class="line">                    <span class="string">&quot;init&quot;</span>: &#123;</span><br><span class="line">                        <span class="string">&quot;type&quot;</span>: <span class="string">&quot;BinaryExpression&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;operator&quot;</span>: <span class="string">&quot;+&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;left&quot;</span>: &#123;</span><br><span class="line">                            <span class="string">&quot;type&quot;</span>: <span class="string">&quot;Identifier&quot;</span>,</span><br><span class="line">                            <span class="string">&quot;name&quot;</span>: <span class="string">&quot;a&quot;</span></span><br><span class="line">                        &#125;,</span><br><span class="line">                        <span class="string">&quot;right&quot;</span>: &#123;</span><br><span class="line">                            <span class="string">&quot;type&quot;</span>: <span class="string">&quot;Literal&quot;</span>,</span><br><span class="line">                            <span class="string">&quot;value&quot;</span>: <span class="number">1</span>,</span><br><span class="line">                            <span class="string">&quot;raw&quot;</span>: <span class="string">&quot;1&quot;</span></span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            ],</span><br><span class="line">            <span class="string">&quot;kind&quot;</span>: <span class="string">&quot;var&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="string">&quot;sourceType&quot;</span>: <span class="string">&quot;script&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="AST的三板斧"><a href="#AST的三板斧" class="headerlink" title="AST的三板斧"></a>AST的三板斧</h3><ul>
 <li><p>通过esprima生成AST</p>
@@ -672,7 +776,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-08-18 13:09:09 / Modified: 13:32:56" itemprop="dateCreated datePublished" datetime="2021-08-18T13:09:09+08:00">2021-08-18</time>
+              <time title="Created: 2021-08-18 13:09:09 / Modified: 17:37:56" itemprop="dateCreated datePublished" datetime="2021-08-18T13:09:09+08:00">2021-08-18</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -720,15 +824,15 @@
 <h4 id="构造函数、原型、实例的关系图"><a href="#构造函数、原型、实例的关系图" class="headerlink" title="构造函数、原型、实例的关系图"></a>构造函数、原型、实例的关系图</h4><p><img src="https://raw.githubusercontent.com/whpuEdison/blog/master/static/images/%E5%8E%9F%E5%9E%8B%E5%9B%BE.png"></p>
 <h4 id="为什么原型没有属性指向实例？"><a href="#为什么原型没有属性指向实例？" class="headerlink" title="为什么原型没有属性指向实例？"></a>为什么原型没有属性指向实例？</h4><p>因为一个构造函数可以创建多个实例对象，原型与实例对象是一对多的关系，所以就没法用一个属性指向实例。</p>
 <h3 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h3><p>当读取实例的属性时，如果找不到就会去查找与对象关联的原型中的属性，如果还找不到，就去找原型的原型，一直找到最顶层为止，这样由原型组成的链状结构就是原型链。</p>
-<h4 id="原型链的尽头"><a href="#原型链的尽头" class="headerlink" title="原型链的尽头"></a>原型链的尽头</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(Object.prototype.__proto__ === null) // true</span><br></pre></td></tr></table></figure>
+<h4 id="原型链的尽头"><a href="#原型链的尽头" class="headerlink" title="原型链的尽头"></a>原型链的尽头</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.prototype.__proto__ === <span class="literal">null</span>) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
 
 <p> Object.prototype.<strong>proto</strong> 的值为 null 跟 Object.prototype 没有原型，其实表达了一个意思，所以查找属性到了 Object.prototype就可以停止查找了。</p>
 <h4 id="原型链关系图"><a href="#原型链关系图" class="headerlink" title="原型链关系图"></a>原型链关系图</h4><p><img src="https://raw.githubusercontent.com/whpuEdison/blog/master/static/images/%E5%8E%9F%E5%9E%8B%E9%93%BE.png"></p>
 <p>图中由相互关联的原型组成的链状结构就是原型链，也就是蓝色的这条线。</p>
-<h3 id="几个常见小问题"><a href="#几个常见小问题" class="headerlink" title="几个常见小问题"></a>几个常见小问题</h3><h4 id="实例的constructor属性指向构造函数吗？"><a href="#实例的constructor属性指向构造函数吗？" class="headerlink" title="实例的constructor属性指向构造函数吗？"></a>实例的constructor属性指向构造函数吗？</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function Person() &#123;&#125;</span><br><span class="line">var person = new Person();</span><br><span class="line">console.log(person.constructor === Person); // true</span><br></pre></td></tr></table></figure>
+<h3 id="几个常见小问题"><a href="#几个常见小问题" class="headerlink" title="几个常见小问题"></a>几个常见小问题</h3><h4 id="实例的constructor属性指向构造函数吗？"><a href="#实例的constructor属性指向构造函数吗？" class="headerlink" title="实例的constructor属性指向构造函数吗？"></a>实例的constructor属性指向构造函数吗？</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"><span class="keyword">var</span> person = <span class="keyword">new</span> Person();</span><br><span class="line"><span class="built_in">console</span>.log(person.constructor === Person); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
 
 <p>当获取person的constructor属性时，其实 person 中并没有 constructor 属性，当不能读取到constructor 属性时，会从 person 的原型也就是 Person.prototype 中读取，正好原型中有该属性。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">person.constructor === Person.prototype.constructor</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">person.constructor === Person.prototype.constructor</span><br></pre></td></tr></table></figure>
 
 
 
@@ -778,7 +882,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-08-18 08:11:36 / Modified: 13:08:44" itemprop="dateCreated datePublished" datetime="2021-08-18T08:11:36+08:00">2021-08-18</time>
+              <time title="Created: 2021-08-18 08:11:36 / Modified: 17:31:40" itemprop="dateCreated datePublished" datetime="2021-08-18T08:11:36+08:00">2021-08-18</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -885,7 +989,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-08-18 08:03:24 / Modified: 12:45:35" itemprop="dateCreated datePublished" datetime="2021-08-18T08:03:24+08:00">2021-08-18</time>
+              <time title="Created: 2021-08-18 08:03:24 / Modified: 17:31:36" itemprop="dateCreated datePublished" datetime="2021-08-18T08:03:24+08:00">2021-08-18</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -981,7 +1085,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-08-18 12:45:53" itemprop="dateModified" datetime="2021-08-18T12:45:53+08:00">2021-08-18</time>
+                <time title="Modified: 2021-08-18 17:31:54" itemprop="dateModified" datetime="2021-08-18T17:31:54+08:00">2021-08-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1026,109 +1130,6 @@
 
       
           <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> proxy = <span class="built_in">require</span>(<span class="string">&#x27;http-proxy-middleware&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = express()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 解决跨域：开发环境前端服务通过proxy代理转发请求。</span></span><br><span class="line"><span class="comment">// 跨域问题是由于浏览器的同源策略，在node环境没有跨域问题。</span></span><br><span class="line">app.use(<span class="string">&#x27;*&#x27;</span>, proxy(&#123; <span class="attr">target</span>: <span class="string">&#x27;http://xx.xx.xx.xx:xxxx&#x27;</span>, <span class="attr">changeOrigin</span>: <span class="literal">true</span> &#125;));</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">onError</span>(<span class="params">error</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (error.syscall !== <span class="string">&#x27;listen&#x27;</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> error;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">var</span> bind = <span class="keyword">typeof</span> port === <span class="string">&#x27;string&#x27;</span></span><br><span class="line">      ? <span class="string">&#x27;Pipe &#x27;</span> + port</span><br><span class="line">      : <span class="string">&#x27;Port &#x27;</span> + port;</span><br><span class="line">  </span><br><span class="line">    <span class="comment">// handle specific listen errors with friendly messages</span></span><br><span class="line">    <span class="keyword">switch</span> (error.code) &#123;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">&#x27;EACCES&#x27;</span>:</span><br><span class="line">        <span class="built_in">console</span>.error(bind + <span class="string">&#x27; requires elevated privileges&#x27;</span>);</span><br><span class="line">        process.exit(<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">&#x27;EADDRINUSE&#x27;</span>:</span><br><span class="line">        <span class="built_in">console</span>.error(bind + <span class="string">&#x27; is already in use&#x27;</span>);</span><br><span class="line">        process.exit(<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">default</span>:</span><br><span class="line">        <span class="keyword">throw</span> error;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">onListening</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> addr = app.address();</span><br><span class="line">    <span class="keyword">var</span> bind = <span class="keyword">typeof</span> addr === <span class="string">&#x27;string&#x27;</span></span><br><span class="line">      ? <span class="string">&#x27;pipe &#x27;</span> + addr</span><br><span class="line">      : <span class="string">&#x27;port &#x27;</span> + addr.port;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;Listening on &#x27;</span> + bind);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">app.on(<span class="string">&#x27;error&#x27;</span>, onError);</span><br><span class="line">app.on(<span class="string">&#x27;listening&#x27;</span>, onListening);</span><br><span class="line"><span class="comment">// 开发环境前端请求自己启动的服务端口，在本地express服务中做代理转发</span></span><br><span class="line">app.listen(<span class="number">8080</span>)</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/17/%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AALoader/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="马帅傅">
-      <meta itemprop="description" content="道阻且长,行则将至">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上任鹅城">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/08/17/%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AALoader/" class="post-title-link" itemprop="url">手写一个Loader</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-08-17 15:59:17" itemprop="dateCreated datePublished" datetime="2021-08-17T15:59:17+08:00">2021-08-17</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-08-18 12:45:41" itemprop="dateModified" datetime="2021-08-18T12:45:41+08:00">2021-08-18</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/webpack/" itemprop="url" rel="index"><span itemprop="name">webpack</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2021/08/17/%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AALoader/" class="post-meta-item leancloud_visitors" data-flag-title="手写一个Loader" title="Views">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">Views: </span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine: </span>
-    
-    <a title="valine" href="/2021/08/17/%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AALoader/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/08/17/%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AALoader/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>1.主文件 babelParse.js</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; getOptions &#125; = <span class="built_in">require</span>(<span class="string">&#x27;loader-utils&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> &#123; validate &#125; = <span class="built_in">require</span>(<span class="string">&#x27;schema-utils&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> &#123; transform&#125; = <span class="built_in">require</span>(<span class="string">&#x27;@babel/core&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> &#123; promisify &#125; = <span class="built_in">require</span>(<span class="string">&#x27;util&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将回调函数转换为基于promise的函数</span></span><br><span class="line"><span class="keyword">const</span> transformAsync = promisify(transform)</span><br><span class="line"><span class="comment">// 校验配置</span></span><br><span class="line"><span class="keyword">const</span> babelSchema = <span class="built_in">require</span>(<span class="string">&#x27;./schemas/babelSchema.js&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// loader本质上是一个函数</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params">source</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 获取loader的配置</span></span><br><span class="line">    <span class="keyword">const</span> options = getOptions(<span class="built_in">this</span>)</span><br><span class="line">    <span class="comment">// 校验配置：成功时往下运行，失败时停止运行报出错误</span></span><br><span class="line">    validate(babelSchema, options, &#123;</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&#x27;babelLoader&#x27;</span></span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="comment">// 异步返回结果</span></span><br><span class="line">    <span class="keyword">const</span> callBack = <span class="built_in">this</span>.async()</span><br><span class="line">    <span class="comment">// 调用transform方法进行转码并返回</span></span><br><span class="line">    transformAsync(source, options)</span><br><span class="line">        .then(<span class="function">(<span class="params">&#123; code &#125;</span>) =&gt;</span> callBack(<span class="literal">null</span>, code))</span><br><span class="line">        .catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;callBack(err)&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>2.校验文件 babelSchema.js</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="attr">type</span>: <span class="string">&#x27;object&#x27;</span>,</span><br><span class="line">    <span class="attr">properties</span>: &#123;</span><br><span class="line">        <span class="attr">presets</span>: &#123;</span><br><span class="line">            <span class="attr">type</span>: <span class="string">&#x27;array&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 是否可以有未定义的附加属性</span></span><br><span class="line">    <span class="attr">addtionalProperty</span>: <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>3.webpack配置文件 webpack.config.js</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="attr">module</span>: &#123;</span><br><span class="line">   <span class="attr">rules</span>: [ </span><br><span class="line">     &#123; </span><br><span class="line">       <span class="attr">test</span>: <span class="regexp">/\.js$/</span>, </span><br><span class="line">       use: &#123; </span><br><span class="line">         <span class="attr">loader</span>: <span class="string">&#x27;babelParse.js&#x27;</span>, </span><br><span class="line">         <span class="comment">// 配置参数</span></span><br><span class="line">         <span class="attr">options</span>: &#123; </span><br><span class="line">           <span class="attr">presets</span>: [<span class="string">&#x27;@babel/preset-env&#x27;</span>] </span><br><span class="line">         &#125; </span><br><span class="line">       &#125;</span><br><span class="line">     &#125;</span><br><span class="line">   ]</span><br><span class="line"> &#125;,</span><br><span class="line"> <span class="attr">resolveLoader</span>: &#123;</span><br><span class="line">   <span class="comment">// 寻找loader所在位置</span></span><br><span class="line">   <span class="attr">modules</span>: [<span class="string">&#x27;node_modules&#x27;</span>, path.resolve(__dirname, <span class="string">&#x27;loaders/&#x27;</span>)]</span><br><span class="line"> &#125;,</span><br><span class="line"> ...</span><br></pre></td></tr></table></figure>
-
-
       
     </div>
 
@@ -1213,7 +1214,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
