@@ -23,21 +23,21 @@
   <meta name="description" content="原型每一个javascript对象（null除外）在创建的时候，都会与另外一个对象所关联。而这个与创建对象所关联的对象，就是所创建对象的原型，每一个对象都会从原型中继承属性。 构造函数、原型、实例的关系图  为什么原型没有属性指向实例？因为一个构造函数可以创建多个实例对象，原型与实例对象是一对多的关系，所以就没法用一个属性指向实例。 原型链当读取实例的属性时，如果找不到就会去查找与对象关联的原型中">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JS中的原型和原型链">
-<meta property="og:url" content="http://example.com/2021/08/18/JS%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/index.html">
+<meta property="og:url" content="http://example.com/2021/08/18/JS%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE1/index.html">
 <meta property="og:site_name" content="上任鹅城">
 <meta property="og:description" content="原型每一个javascript对象（null除外）在创建的时候，都会与另外一个对象所关联。而这个与创建对象所关联的对象，就是所创建对象的原型，每一个对象都会从原型中继承属性。 构造函数、原型、实例的关系图  为什么原型没有属性指向实例？因为一个构造函数可以创建多个实例对象，原型与实例对象是一对多的关系，所以就没法用一个属性指向实例。 原型链当读取实例的属性时，如果找不到就会去查找与对象关联的原型中">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/.com//%E5%8E%9F%E5%9E%8B%E5%9B%BE.png">
 <meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/png/1550775/1596706173659-9dbd1d44-6c10-4872-a36d-4518546d2513.png">
-<meta property="article:published_time" content="2021-08-18T05:09:09.312Z">
-<meta property="article:modified_time" content="2021-08-18T05:16:10.578Z">
+<meta property="article:published_time" content="2021-08-18T05:15:20.534Z">
+<meta property="article:modified_time" content="2021-08-18T05:15:20.535Z">
 <meta property="article:author" content="马帅傅">
 <meta property="article:tag" content="原型">
 <meta property="article:tag" content="原型链">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/.com//%E5%8E%9F%E5%9E%8B%E5%9B%BE.png">
 
-<link rel="canonical" href="http://example.com/2021/08/18/JS%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/">
+<link rel="canonical" href="http://example.com/2021/08/18/JS%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE1/">
 
 
 <script id="page-configurations">
@@ -160,7 +160,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/18/JS%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/18/JS%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -182,9 +182,8 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-08-18 13:09:09 / Modified: 13:16:10" itemprop="dateCreated datePublished" datetime="2021-08-18T13:09:09+08:00">2021-08-18</time>
+              <time title="Created: 2021-08-18 13:15:20" itemprop="dateCreated datePublished" datetime="2021-08-18T13:15:20+08:00">2021-08-18</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -197,7 +196,7 @@
             </span>
 
           
-            <span id="/2021/08/18/JS%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/" class="post-meta-item leancloud_visitors" data-flag-title="JS中的原型和原型链" title="Views">
+            <span id="/2021/08/18/JS%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE1/" class="post-meta-item leancloud_visitors" data-flag-title="JS中的原型和原型链" title="Views">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -212,8 +211,8 @@
       </span>
       <span class="post-meta-item-text">Valine: </span>
     
-    <a title="valine" href="/2021/08/18/JS%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/08/18/JS%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/" itemprop="commentCount"></span>
+    <a title="valine" href="/2021/08/18/JS%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE1/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/08/18/JS%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE1/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -229,7 +228,7 @@
 
       
         <h3 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h3><p>每一个javascript对象（null除外）在创建的时候，都会与另外一个对象所关联。而这个与创建对象所关联的对象，就是所创建对象的原型，每一个对象都会从原型中继承属性。</p>
-<h4 id="构造函数、原型、实例的关系图"><a href="#构造函数、原型、实例的关系图" class="headerlink" title="构造函数、原型、实例的关系图"></a>构造函数、原型、实例的关系图</h4><p><img src="/.com//%E5%8E%9F%E5%9E%8B%E5%9B%BE.png" alt="img"> </p>
+<h4 id="构造函数、原型、实例的关系图"><a href="#构造函数、原型、实例的关系图" class="headerlink" title="构造函数、原型、实例的关系图"></a>构造函数、原型、实例的关系图</h4><p><img src="/.com//%E5%8E%9F%E5%9E%8B%E5%9B%BE.png"> </p>
 <h4 id="为什么原型没有属性指向实例？"><a href="#为什么原型没有属性指向实例？" class="headerlink" title="为什么原型没有属性指向实例？"></a>为什么原型没有属性指向实例？</h4><p>因为一个构造函数可以创建多个实例对象，原型与实例对象是一对多的关系，所以就没法用一个属性指向实例。</p>
 <h3 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h3><p>当读取实例的属性时，如果找不到就会去查找与对象关联的原型中的属性，如果还找不到，就去找原型的原型，一直找到最顶层为止，这样由原型组成的链状结构就是原型链。</p>
 <h4 id="原型链的尽头"><a href="#原型链的尽头" class="headerlink" title="原型链的尽头"></a>原型链的尽头</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(Object.prototype.__proto__ === null) // true</span><br></pre></td></tr></table></figure>
@@ -265,13 +264,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/08/18/%E6%89%8B%E5%86%99%E9%98%B2%E6%8A%96%E4%B8%8E%E8%8A%82%E6%B5%81%E5%87%BD%E6%95%B0/" rel="prev" title="手写防抖与节流函数">
-      <i class="fa fa-chevron-left"></i> 手写防抖与节流函数
+    <a href="/2021/08/18/JS%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/" rel="prev" title="JS中的原型和原型链">
+      <i class="fa fa-chevron-left"></i> JS中的原型和原型链
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/08/18/JS%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE1/" rel="next" title="JS中的原型和原型链">
-      JS中的原型和原型链 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
