@@ -166,7 +166,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/08/18/%E5%87%BD%E6%95%B0%E7%9A%84%E9%98%B2%E6%8A%96%E4%B8%8E%E8%8A%82%E6%B5%81/" class="post-title-link" itemprop="url">手写一个爬虫</a>
+            <a href="/2021/08/18/%E5%87%BD%E6%95%B0%E7%9A%84%E9%98%B2%E6%8A%96%E4%B8%8E%E8%8A%82%E6%B5%81/" class="post-title-link" itemprop="url">函数的防抖与节流</a>
         </h2>
 
         <div class="post-meta">
@@ -177,7 +177,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-08-18 08:11:36 / Modified: 12:37:33" itemprop="dateCreated datePublished" datetime="2021-08-18T08:11:36+08:00">2021-08-18</time>
+              <time title="Created: 2021-08-18 08:11:36 / Modified: 12:40:09" itemprop="dateCreated datePublished" datetime="2021-08-18T08:11:36+08:00">2021-08-18</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -190,7 +190,7 @@
             </span>
 
           
-            <span id="/2021/08/18/%E5%87%BD%E6%95%B0%E7%9A%84%E9%98%B2%E6%8A%96%E4%B8%8E%E8%8A%82%E6%B5%81/" class="post-meta-item leancloud_visitors" data-flag-title="手写一个爬虫" title="Views">
+            <span id="/2021/08/18/%E5%87%BD%E6%95%B0%E7%9A%84%E9%98%B2%E6%8A%96%E4%B8%8E%E8%8A%82%E6%B5%81/" class="post-meta-item leancloud_visitors" data-flag-title="函数的防抖与节流" title="Views">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -228,8 +228,7 @@
 <ol>
 <li>监听浏览器resize事件；</li>
 <li>文本编辑器实时保存；</li>
-<li>输入框的模糊查询功能；</li>
-<li>…</li>
+<li>输入框的模糊查询功能；<br>…</li>
 </ol>
 <h2 id="防抖函数"><a href="#防抖函数" class="headerlink" title="防抖函数"></a>防抖函数</h2><h3 id="防抖的原理是什么？"><a href="#防抖的原理是什么？" class="headerlink" title="防抖的原理是什么？"></a>防抖的原理是什么？</h3><p>防抖的原理就是：不管怎么触发事件，但是一定在事件触发 n 秒后才执行，如果一个事件触发的 n 秒内又触发了这个事件，那就以新事件的时间为准，n 秒后才执行，总之就是要等触发完事件 n 秒内不再触发事件才执行。</p>
 <h3 id="实现一个防抖函数？"><a href="#实现一个防抖函数？" class="headerlink" title="实现一个防抖函数？"></a>实现一个防抖函数？</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> debounce = <span class="function">(<span class="params">fn, delay</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> timer = <span class="literal">null</span></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 返回值也是一个函数，函数内部的变量就是局部变量，可以避免造成全局污染；</span></span><br><span class="line"><span class="comment">     * 注意：这里不能使用箭头函数，因为后面会用到this。</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 存储参数</span></span><br><span class="line">        <span class="keyword">let</span> args = <span class="built_in">arguments</span></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 除了第一次timers为null,后续函数的调用timer都有值；</span></span><br><span class="line"><span class="comment">         * 这一步要做的是清除目前正在进行的定时器，即使时间到了也不能执行回调函数；</span></span><br><span class="line"><span class="comment">         * 注意：clearTimeout(timer)执行之后，timer的值没变。</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">if</span> (timer) <span class="built_in">clearTimeout</span>(timer)</span><br><span class="line">        <span class="comment">// 将新的定时器赋值给timer</span></span><br><span class="line">        timer = <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">            fn.apply(<span class="built_in">this</span>, args)</span><br><span class="line">        &#125;, delay)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
