@@ -152,6 +152,96 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/18/%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AA%E7%88%AC%E8%99%AB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="马帅傅">
+      <meta itemprop="description" content="道阻且长,行则将至">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上任鹅城">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/08/18/%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AA%E7%88%AC%E8%99%AB/" class="post-title-link" itemprop="url">手写一个爬虫</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-08-18 08:03:24 / Modified: 08:06:24" itemprop="dateCreated datePublished" datetime="2021-08-18T08:03:24+08:00">2021-08-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/express/" itemprop="url" rel="index"><span itemprop="name">express</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2021/08/18/%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AA%E7%88%AC%E8%99%AB/" class="post-meta-item leancloud_visitors" data-flag-title="手写一个爬虫" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2021/08/18/%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AA%E7%88%AC%E8%99%AB/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/08/18/%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AA%E7%88%AC%E8%99%AB/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"><span class="comment">// superagent是一个轻量的Ajax API，服务器端（Node.js）客户端（浏览器端）均可使用</span></span><br><span class="line"><span class="keyword">const</span> superagent = <span class="built_in">require</span>(<span class="string">&#x27;superagent&#x27;</span>)</span><br><span class="line"><span class="comment">// nodejs的抓取页面模块，实现了核心jQuery的子集</span></span><br><span class="line"><span class="keyword">const</span> cheerio = <span class="built_in">require</span>(<span class="string">&#x27;cheerio&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> app = express()</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">&#x27;/&#x27;</span>, <span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">    superagent.get(<span class="string">&#x27;https://www.zhipin.com/wuhan/&#x27;</span>)</span><br><span class="line">        .end(<span class="function">(<span class="params">err, data</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// 错误优先处理</span></span><br><span class="line">            <span class="keyword">if</span> (err) <span class="keyword">return</span> next(err)</span><br><span class="line">            <span class="comment">// 将获取到dom绑定到$上，后面可以直接用$以jQuery的方式操作dom</span></span><br><span class="line">            <span class="keyword">const</span> $ = cheerio.load(data.text);</span><br><span class="line">            <span class="keyword">const</span> conpanys = []</span><br><span class="line">            $(<span class="string">&#x27;.conpany-text&#x27;</span>).each(<span class="function">(<span class="params">index, element</span>) =&gt;</span> &#123;</span><br><span class="line">                conpanys.push($(element).find(<span class="string">&#x27;h4&#x27;</span>).text())</span><br><span class="line">            &#125;);</span><br><span class="line">            res.send(conpanys)</span><br><span class="line">        &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.listen(<span class="string">&#x27;9999&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;http://localhost:9999&#x27;</span>);</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/17/%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AAProxy%E4%BB%A3%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -177,7 +267,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-08-17 16:48:18 / Modified: 16:55:37" itemprop="dateCreated datePublished" datetime="2021-08-17T16:48:18+08:00">2021-08-17</time>
+              <time title="Created: 2021-08-17 16:48:18 / Modified: 16:58:14" itemprop="dateCreated datePublished" datetime="2021-08-17T16:48:18+08:00">2021-08-17</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -496,7 +586,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -509,7 +599,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
