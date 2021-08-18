@@ -476,7 +476,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-08-18 17:08:11 / Modified: 17:37:15" itemprop="dateCreated datePublished" datetime="2021-08-18T17:08:11+08:00">2021-08-18</time>
+              <time title="Created: 2021-08-18 17:08:11 / Modified: 17:40:04" itemprop="dateCreated datePublished" datetime="2021-08-18T17:08:11+08:00">2021-08-18</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -522,7 +522,7 @@
       
           <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>babel是现在几乎每个项目中必备的一个东西，但是其工作原理避不开对js的解析在生成的过程，babel有引擎babylon，早期fork了项目acron，了解这个之前我们先来看看这种引擎解析出来是什么东西。不光是babel还有webpack等都是通过javascript parser将代码转化成抽象语法树，这棵树定义了代码本身，通过操作这颗树，可以精准的定位到赋值语句、声明语句和运算语句。</p>
 <h3 id="什么是抽象语法树"><a href="#什么是抽象语法树" class="headerlink" title="什么是抽象语法树"></a>什么是抽象语法树</h3><p>我们可以来看一个简单的例子：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var a = 1;</span><br><span class="line">var b = a + 1;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">var</span> b = a + <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
 
 <p>我们通过这个网站，他是一个esprima引擎的网站，十分好用.画成流程图如下：</p>
 <p><img src="https://raw.githubusercontent.com/whpuEdison/blog/master/static/images/ast.png" alt="img"></p>
