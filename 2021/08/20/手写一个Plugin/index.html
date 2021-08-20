@@ -23,17 +23,20 @@
   <meta name="description" content="1.配置文件中使用插件webpack.config.js 1234567891011121314151617const CopyWebpackPlugin &#x3D; require(&amp;#x27;.&#x2F;plugins&#x2F;CopyWebpackPlugin.js&amp;#x27;)module.exports &#x3D; &amp;#123;  ...  plugins: [    new CopyWebpackPlugin(&amp;#1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="手写一个Plugin">
-<meta property="og:url" content="http://example.com/2021/08/19/%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AAPlugin/index.html">
+<meta property="og:url" content="http://example.com/2021/08/20/%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AAPlugin/index.html">
 <meta property="og:site_name" content="上任鹅城">
 <meta property="og:description" content="1.配置文件中使用插件webpack.config.js 1234567891011121314151617const CopyWebpackPlugin &#x3D; require(&amp;#x27;.&#x2F;plugins&#x2F;CopyWebpackPlugin.js&amp;#x27;)module.exports &#x3D; &amp;#123;  ...  plugins: [    new CopyWebpackPlugin(&amp;#1">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-08-19T15:56:54.569Z">
-<meta property="article:modified_time" content="2021-08-20T07:11:03.259Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/whpuEdison/blog/master/static/images/node_debug.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/whpuEdison/blog/master/static/images/debugger.png">
+<meta property="article:published_time" content="2021-08-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-08-20T07:38:00.873Z">
 <meta property="article:author" content="马帅傅">
 <meta property="article:tag" content="plugin">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/whpuEdison/blog/master/static/images/node_debug.png">
 
-<link rel="canonical" href="http://example.com/2021/08/19/%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AAPlugin/">
+<link rel="canonical" href="http://example.com/2021/08/20/%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AAPlugin/">
 
 
 <script id="page-configurations">
@@ -156,7 +159,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/19/%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AAPlugin/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/20/%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AAPlugin/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -178,16 +181,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2021-08-19 23:56:54" itemprop="dateCreated datePublished" datetime="2021-08-19T23:56:54+08:00">2021-08-19</time>
+              <time title="Created: 2021-08-20 00:00:00 / Modified: 15:38:00" itemprop="dateCreated datePublished" datetime="2021-08-20T00:00:00+08:00">2021-08-20</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-08-20 15:11:03" itemprop="dateModified" datetime="2021-08-20T15:11:03+08:00">2021-08-20</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -199,7 +196,7 @@
             </span>
 
           
-            <span id="/2021/08/19/%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AAPlugin/" class="post-meta-item leancloud_visitors" data-flag-title="手写一个Plugin" title="Views">
+            <span id="/2021/08/20/%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AAPlugin/" class="post-meta-item leancloud_visitors" data-flag-title="手写一个Plugin" title="Views">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -214,8 +211,8 @@
       </span>
       <span class="post-meta-item-text">Valine: </span>
     
-    <a title="valine" href="/2021/08/19/%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AAPlugin/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/08/19/%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AAPlugin/" itemprop="commentCount"></span>
+    <a title="valine" href="/2021/08/20/%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AAPlugin/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/08/20/%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AAPlugin/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -238,6 +235,37 @@
 <h3 id="2-plugin文件"><a href="#2-plugin文件" class="headerlink" title="2.plugin文件"></a>2.plugin文件</h3><p>CopyWebpackPlugin.js：将静态文件打包到dist目录</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> globby = <span class="built_in">require</span>(<span class="string">&#x27;globby&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> util = <span class="built_in">require</span>(<span class="string">&#x27;util&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">&#x27;webpack&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将文件资源转化成webpack compilation可以识别的格式</span></span><br><span class="line"><span class="keyword">const</span> &#123; RawSource &#125; = webpack.sources</span><br><span class="line"><span class="comment">// 将读取文件函数基于Promise再次封装</span></span><br><span class="line"><span class="keyword">const</span> readFilePromise = util.promisify(fs.readFile)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 插件都是一个类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CopyWebpackPlugin</span> </span>&#123;</span><br><span class="line">    <span class="title">constructor</span> (<span class="params">options</span>) &#123;</span><br><span class="line">        <span class="comment">// 从构造函数参数中获取webpack.config.js中的配置</span></span><br><span class="line">        <span class="comment">// options: &#x27;&#123; from: &#x27;public&#x27;, to: &#x27;&#x27;, ignore: &#x27;**/index.html&#x27; &#125;&#x27;</span></span><br><span class="line">        <span class="built_in">this</span>.options = options</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * apply函数中根据需求在合适的生命周期注册回调函数</span></span><br><span class="line"><span class="comment">     * 函数接收的参数是一个Compiler实例，Compiler扩展自Tapable。</span></span><br><span class="line"><span class="comment">     * </span></span><br><span class="line"><span class="comment">     * Tapable实现了发布订阅模式:</span></span><br><span class="line"><span class="comment">     * 1.实例属性hooks是一个对象，key为事件名称， value可以指定该事件数组的执行方式（同步并行/异步并行/...）；</span></span><br><span class="line"><span class="comment">     * 2.使用tap/tapAsync/tapPromise往hooks里的事件注册回调；</span></span><br><span class="line"><span class="comment">     * 3.使用call/callAsync/promise触发hooks里的事件。</span></span><br><span class="line"><span class="comment">     * </span></span><br><span class="line"><span class="comment">     * 在webpack中Tapable创建了各种钩子，插件将自己的方法注册到对应的钩子上，</span></span><br><span class="line"><span class="comment">     * 相当于往实例的hooks里的事件注册回调，交给webpcak，</span></span><br><span class="line"><span class="comment">     * webpack编译时，不同的生命周期触发不同的事件。</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    apply (compiler) &#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * thisCompilation钩子：</span></span><br><span class="line"><span class="comment">         * 生命周期：初始化compilation时调用，在触发compilation事件之前调用</span></span><br><span class="line"><span class="comment">         * 事件数组执行方式：SyncHook 串行同步，出没出错都往下执行</span></span><br><span class="line"><span class="comment">         * 回调参数：compilation，compilationParams</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        compiler.hooks.thisCompilation.tap(<span class="string">&#x27;CopyWebpackPlugin&#x27;</span>, <span class="function">(<span class="params">compilation</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">/**</span></span><br><span class="line"><span class="comment">             * Compilation模块会被Compiler用来创建新的编译（或新的构建）</span></span><br><span class="line"><span class="comment">             * compilation实例的additionalAssets钩子：</span></span><br><span class="line"><span class="comment">             * 生命周期：可以为compilation创建额外asset</span></span><br><span class="line"><span class="comment">             * 事件数组执行方式：AsyncSeriesHook 串行异步</span></span><br><span class="line"><span class="comment">             * cb: 调用表示任务完成</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            compilation.hooks.additionalAssets.tapAsync(<span class="string">&#x27;CopyWebpackPlugin&#x27;</span>, <span class="keyword">async</span> callback =&gt; &#123;</span><br><span class="line">                <span class="keyword">const</span> &#123; <span class="keyword">from</span>, to = <span class="string">&#x27;&#x27;</span>, ignore &#125; = <span class="built_in">this</span>.options || &#123;&#125;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 筛选需要拷贝的所有文件的绝对路径</span></span><br><span class="line">                <span class="keyword">const</span> absoluteFromPath = path.resolve(compiler.options.context, <span class="keyword">from</span>)</span><br><span class="line">                <span class="comment">/**</span></span><br><span class="line"><span class="comment">                 * globby函数第一个参数是匹配的绝对路径，第二个参数是配置对象。</span></span><br><span class="line"><span class="comment">                 * 下面配置了ignore属性，设置可以忽略的文件</span></span><br><span class="line"><span class="comment">                 */</span></span><br><span class="line">                <span class="keyword">const</span> paths = <span class="keyword">await</span> globby(absoluteFromPath, &#123; ignore &#125;)</span><br><span class="line">                <span class="built_in">console</span>.log(absoluteFromPath)</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 判断文件分类，先简单分为三类：js、css、images </span></span><br><span class="line">                <span class="keyword">const</span> judgeType = <span class="function">(<span class="params">path</span>) =&gt;</span> &#123;</span><br><span class="line">                    <span class="keyword">let</span> middle = <span class="string">&#x27;&#x27;</span></span><br><span class="line">                    <span class="keyword">if</span> (<span class="regexp">/\.js$/</span>.test(path)) &#123;</span><br><span class="line">                        middle = <span class="string">&#x27;js&#x27;</span></span><br><span class="line">                    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="regexp">/\.css$/</span>.test(path)) &#123;</span><br><span class="line">                        middle = <span class="string">&#x27;css&#x27;</span></span><br><span class="line">                    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="regexp">/\w(\.gif|\.jpeg|\.png|\.jpg|\.bmp)/i</span>.test(path)) &#123;</span><br><span class="line">                        middle = <span class="string">&#x27;image&#x27;</span></span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">return</span> middle</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="keyword">const</span> files = <span class="keyword">await</span> <span class="built_in">Promise</span>.all(</span><br><span class="line">                        <span class="comment">// 遍历文件内容</span></span><br><span class="line">                        paths.map(<span class="keyword">async</span> absolutePath =&gt; &#123;</span><br><span class="line">                            <span class="comment">// 获取文件内容</span></span><br><span class="line">                            <span class="keyword">const</span> source = <span class="keyword">await</span> readFilePromise(absolutePath)</span><br><span class="line">                            <span class="comment">// 文件名称：webpack.config.js中配置的to + 文件分类 + 获取path的最后一部分</span></span><br><span class="line">                            <span class="keyword">const</span> baseName = path.basename(absolutePath)</span><br><span class="line">                            <span class="keyword">const</span> fileName = path.join(to, judgeType(absolutePath), baseName )</span><br><span class="line">                            <span class="comment">// 将资源转成compilation可识别的格式</span></span><br><span class="line">                            <span class="keyword">const</span> rawSource = <span class="keyword">new</span> RawSource(source)</span><br><span class="line">                            <span class="comment">// 输出文件</span></span><br><span class="line">                            compilation.emitAsset(fileName, rawSource)</span><br><span class="line">                        &#125;)</span><br><span class="line">                    )</span><br><span class="line">                    <span class="comment">// 成功回调</span></span><br><span class="line">                    callback()</span><br><span class="line">                &#125; <span class="keyword">catch</span> &#123;</span><br><span class="line">                    <span class="comment">// 抛出异常</span></span><br><span class="line">                    callback(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;[CopyWebpackPlugin] loading error&#x27;</span>))</span><br><span class="line">                &#125; </span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = CopyWebpackPlugin</span><br></pre></td></tr></table></figure>
 
+
+
+<h3 id="3-调试技巧"><a href="#3-调试技巧" class="headerlink" title="3.调试技巧"></a>3.调试技巧</h3><ol>
+<li>Package.json: 配置执行脚本</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">   ...</span><br><span class="line">   <span class="string">&quot;debug&quot;</span>: <span class="string">&quot;node --inspect-brk ./node_modules/webpack/bin/webpack.js --mode development&quot;</span></span><br><span class="line">   ...</span><br><span class="line"> &#125;,</span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="2">
+<li>CopyWebpackPlugin.js: 在需要断点的地方添加debugger</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">compiler.hooks.thisCompilation.tap(<span class="string">&#x27;CopyWebpackPlugin&#x27;</span>, <span class="function">(<span class="params">compilation</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">debugger</span></span><br><span class="line">    <span class="built_in">console</span>.log(compilation)</span><br><span class="line">    ...</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="3">
+<li>控制台执行</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run debug</span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="4">
+<li>打开网页:  <a target="_blank" rel="noopener" href="https://nodejs.org/en/docs/inspector">https://nodejs.org/en/docs/inspector</a></li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/whpuEdison/blog/master/static/images/node_debug.png" alt="img"></p>
+<ol start="5">
+<li>开始调试</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/whpuEdison/blog/master/static/images/debugger.png" alt="img"></p>
 
     </div>
 
@@ -319,7 +347,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%B8%AD%E4%BD%BF%E7%94%A8%E6%8F%92%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">1.配置文件中使用插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-plugin%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">2.plugin文件</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%B8%AD%E4%BD%BF%E7%94%A8%E6%8F%92%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">1.配置文件中使用插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-plugin%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">2.plugin文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7"><span class="nav-number">3.</span> <span class="nav-text">3.调试技巧</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
