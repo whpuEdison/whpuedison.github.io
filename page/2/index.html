@@ -152,6 +152,112 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/05/typeof%E5%92%8Cinstanceof%E5%8C%BA%E5%88%AB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="马帅傅">
+      <meta itemprop="description" content="道阻且长,行则将至">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上任鹅城">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/08/05/typeof%E5%92%8Cinstanceof%E5%8C%BA%E5%88%AB/" class="post-title-link" itemprop="url">typeof和instanceof区别</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-08-05 00:00:00" itemprop="dateCreated datePublished" datetime="2021-08-05T00:00:00+08:00">2021-08-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-08-18 19:06:17" itemprop="dateModified" datetime="2021-08-18T19:06:17+08:00">2021-08-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index"><span itemprop="name">javascript</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2021/08/05/typeof%E5%92%8Cinstanceof%E5%8C%BA%E5%88%AB/" class="post-meta-item leancloud_visitors" data-flag-title="typeof和instanceof区别" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2021/08/05/typeof%E5%92%8Cinstanceof%E5%8C%BA%E5%88%AB/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/08/05/typeof%E5%92%8Cinstanceof%E5%8C%BA%E5%88%AB/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>typeof和instanceof都是用来判断变量类型的，两者的区别在于：</p>
+<ul>
+<li><p>typeof判断所有变量的类型，返回值有number，boolean，string，function，object，undefined。（这里需要注意一下，js中基本数据类型常用的有六种，其中简单一点的有五个：String、Number、Boolean、Undefined、Null，一个复杂的数据类型：Object。ES6中新增了一个Symbol用于生成唯一标识符，ES10中新增了BigInt可以表示任意大的整数）。</p>
+</li>
+<li><p>typeof对于丰富的对象实例，只能返回”object”字符串。</p>
+</li>
+<li><p>instanceof用来判断对象，代码形式为obj1 instanceof obj2（obj1是否是obj2的实例），obj2必须为对象，否则会报错！其返回值为布尔值。</p>
+</li>
+</ul>
+<p>语法： object instanceof constructor</p>
+<p>object（要检测的对象），constructor（某个构造函数），instanceof 运算符用来检测 constructor.prototype 是否存在于参数 object 的原型链上。</p>
+<p>简而言之，A instanceof B ， 是判断对象实例A是否是构造函数B的实例。更准确一点的说法是，构造函数B的原型，是否存在与对象实例A的原型链上。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/04/%E6%89%8B%E5%86%99%E9%98%B2%E6%8A%96%E4%B8%8E%E8%8A%82%E6%B5%81%E5%87%BD%E6%95%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1244,112 +1350,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/21/%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E8%AF%AD%E4%B9%89%E5%8C%96/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="马帅傅">
-      <meta itemprop="description" content="道阻且长,行则将至">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上任鹅城">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/07/21/%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E8%AF%AD%E4%B9%89%E5%8C%96/" class="post-title-link" itemprop="url">如何理解语义化</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-07-21 00:00:00" itemprop="dateCreated datePublished" datetime="2021-07-21T00:00:00+08:00">2021-07-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-08-18 19:03:12" itemprop="dateModified" datetime="2021-08-18T19:03:12+08:00">2021-08-18</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/html/" itemprop="url" rel="index"><span itemprop="name">html</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2021/07/21/%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E8%AF%AD%E4%B9%89%E5%8C%96/" class="post-meta-item leancloud_visitors" data-flag-title="如何理解语义化" title="Views">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">Views: </span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine: </span>
-    
-    <a title="valine" href="/2021/07/21/%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E8%AF%AD%E4%B9%89%E5%8C%96/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/07/21/%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E8%AF%AD%E4%B9%89%E5%8C%96/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <ol>
-<li><p>用正确的标签做正确的事情；</p>
-</li>
-<li><p>HTML 语义化让页面的内容结构化，结构更清晰，便于对浏览器，搜索引擎解析；</p>
-</li>
-<li><p>即使在没有样式 CSS 情况下也以一种文档格式显示，并且是容易阅读的；</p>
-</li>
-<li><p>搜索引擎的爬虫也依赖于 HTML 标记确定上下文和各个关键字的权重，利于 SEO;</p>
-</li>
-<li><p>使阅读源代码的人更容易将网站分块，便于阅读维护理解。</p>
-</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1420,7 +1420,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">24</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1433,7 +1433,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-count">31</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
