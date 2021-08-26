@@ -28,7 +28,7 @@
 <meta property="og:description" content="开发环境优化优化打包速度HMR模块热替换，一个模块发生变化，只会重新打包这一个文件，而不是打包所有文件，提升构建速度。  HTML文件：默认不能使用HMR功能，开启HMR功能之后会导致HTML文件不能热更新了。解决方法是修改entry入口，将HTML文件引入。  CSS文件：可以使用HMR功能，因为style-loader内部实现了。  JS文件：默认不能使用，得手动处理热替换。 1234567i">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-08-25T23:48:32.757Z">
-<meta property="article:modified_time" content="2021-08-26T03:25:04.556Z">
+<meta property="article:modified_time" content="2021-08-26T03:26:48.127Z">
 <meta property="article:author" content="马帅傅">
 <meta property="article:tag" content="webpack">
 <meta name="twitter:card" content="summary">
@@ -180,7 +180,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-08-26 07:48:32 / Modified: 11:25:04" itemprop="dateCreated datePublished" datetime="2021-08-26T07:48:32+08:00">2021-08-26</time>
+              <time title="Created: 2021-08-26 07:48:32 / Modified: 11:26:48" itemprop="dateCreated datePublished" datetime="2021-08-26T07:48:32+08:00">2021-08-26</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -238,7 +238,7 @@
 
 <p>开发环境推荐使用：eval-source-map / eval-cheap-module-source-map</p>
 <h3 id="生产环境优化"><a href="#生产环境优化" class="headerlink" title="生产环境优化"></a>生产环境优化</h3><h4 id="优化打包速度-1"><a href="#优化打包速度-1" class="headerlink" title="优化打包速度"></a>优化打包速度</h4><h5 id="oneof"><a href="#oneof" class="headerlink" title="oneof"></a>oneof</h5><p>找到了匹配的loader之后，后面的loader就不去匹配了，一个文件在oneOf里只会匹配一个loader。</p>
-<h5 id="babel缓存"><a href="#babel缓存" class="headerlink" title="babel缓存"></a>babel缓存</h5><p>开启换成后，babel运行的结果会保存起来。如果js文件没有变化，就可以直接使用babel的缓存，不需要重新去编译。</p>
+<h5 id="babel缓存"><a href="#babel缓存" class="headerlink" title="babel缓存"></a>babel缓存</h5><p>开启缓存后，babel运行的结果会保存起来。如果js文件没有变化，就可以直接使用babel的缓存，不需要重新去编译。</p>
 <h5 id="多进程打包"><a href="#多进程打包" class="headerlink" title="多进程打包"></a>多进程打包</h5><p>可以使用thread-loader对后面的loader开启多进程打包。</p>
 <p>需要注意的是进程的启动大概600ms，通信也需要时间，只有消耗时间长的工作使用多进程打包才有优化效果，如babel-loader。</p>
 <h5 id="externals"><a href="#externals" class="headerlink" title="externals"></a>externals</h5><p>配置忽略打包的库，在入口文件中以CDN的方式引入，来优化打包速度。</p>
