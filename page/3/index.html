@@ -152,6 +152,122 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/22/%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="马帅傅">
+      <meta itemprop="description" content="道阻且长,行则将至">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上任鹅城">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/07/22/%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/" class="post-title-link" itemprop="url">清除浮动的几种方式</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-07-22 00:00:00" itemprop="dateCreated datePublished" datetime="2021-07-22T00:00:00+08:00">2021-07-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-08-18 19:03:21" itemprop="dateModified" datetime="2021-08-18T19:03:21+08:00">2021-08-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/css/" itemprop="url" rel="index"><span itemprop="name">css</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2021/07/22/%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/" class="post-meta-item leancloud_visitors" data-flag-title="清除浮动的几种方式" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2021/07/22/%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/07/22/%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ol>
+<li>额外标签法：在最后一个浮动标签后，新加一个标签，给其设置clear：both；</li>
+</ol>
+<ol start="2">
+<li><p>父级添加overflow属性：父元素添加overflow:hidden/auto;</p>
+</li>
+<li><p>使用after伪元素清除浮动：</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">优点：符合闭合浮动思想，结构语义化正确</span><br><span class="line"></span><br><span class="line">缺点：ie6-7不支持伪元素：after，使用zoom:1触发hasLayout.</span><br><span class="line">    .clearfix:after&#123;/*伪元素是行内元素 正常浏览器清除浮动方法*/</span><br><span class="line">        content: &quot;&quot;;</span><br><span class="line">        display: block;</span><br><span class="line">        clear:both;</span><br><span class="line">    &#125;</span><br><span class="line">    .clearfix&#123;</span><br><span class="line">        zoom: 1;/*ie6清除浮动的方式 *号只有IE6-IE7执行，其他浏览器不执行*/</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div class=&quot;father clearfix&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;big&quot;&gt;big&lt;/div&gt;</span><br><span class="line">        &lt;div class=&quot;small&quot;&gt;small&lt;/div&gt;</span><br><span class="line">        &lt;!--&lt;div class=&quot;clear&quot;&gt;额外标签法&lt;/div&gt;--&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;footer&quot;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>优点：符合闭合浮动思想，结构语义化正确。</p>
+<p>缺点：ie6-7不支持伪元素：after，使用zoom:1触发hasLayout。</p>
+<ol start="4">
+<li><p>父级div定义height；</p>
+</li>
+<li><p>父级div也一起浮动；</p>
+</li>
+</ol>
+<h3 id="追本溯源"><a href="#追本溯源" class="headerlink" title="追本溯源"></a>追本溯源</h3><h4 id="1-为什么要用浮动？"><a href="#1-为什么要用浮动？" class="headerlink" title="1.为什么要用浮动？"></a>1.为什么要用浮动？</h4><p>以前提出浮动的概念，主要是为了解决左边图片右边文字的需求，后来浮动在网页布局上应用比较广泛。</p>
+<h4 id="2-什么情况又要清除浮动？"><a href="#2-什么情况又要清除浮动？" class="headerlink" title="2.什么情况又要清除浮动？"></a>2.什么情况又要清除浮动？</h4><p>当子元素都设置浮动之后，而父元素本身又没有设置宽高（设置浮动前宽高是由子元素撑起来的），会导致父元素的高度塌陷，原来被撑起来的height被置为0，最终就会影响父元素的布局。</p>
+<p>说到底，就是因为所有的子元素都浮动，会导致父元素高度坍塌影响布局。在这种情况下，就要清除浮动。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/21/%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E8%AF%AD%E4%B9%89%E5%8C%96/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -713,7 +829,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-count">25</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
