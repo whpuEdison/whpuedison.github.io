@@ -152,6 +152,175 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/28/Vue2.x%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="马帅傅">
+      <meta itemprop="description" content="道阻且长,行则将至">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上任鹅城">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/08/28/Vue2.x%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">Vue2.x源码学习</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-08-28 09:09:14" itemprop="dateCreated datePublished" datetime="2021-08-28T09:09:14+08:00">2021-08-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-08-30 16:41:29" itemprop="dateModified" datetime="2021-08-30T16:41:29+08:00">2021-08-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/vue/" itemprop="url" rel="index"><span itemprop="name">vue</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2021/08/28/Vue2.x%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/" class="post-meta-item leancloud_visitors" data-flag-title="Vue2.x源码学习" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2021/08/28/Vue2.x%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/08/28/Vue2.x%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>tips：这篇文章会从源码的角度来分析一些常见的问题。</p>
+</blockquote>
+<h4 id="为什么创建Vue实例的时候需要使用new？"><a href="#为什么创建Vue实例的时候需要使用new？" class="headerlink" title="为什么创建Vue实例的时候需要使用new？"></a>为什么创建Vue实例的时候需要使用new？</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 代码来源：src/core/instance/index.js</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Vue</span> (<span class="params">options</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (process.env.NODE_ENV !== <span class="string">&#x27;production&#x27;</span> &amp;&amp;</span><br><span class="line">    !(<span class="built_in">this</span> <span class="keyword">instanceof</span> Vue)</span><br><span class="line">  ) &#123;</span><br><span class="line">    warn(<span class="string">&#x27;Vue is a constructor and should be called with the `new` keyword&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// _init函数，是在initMixin(Vue)中扩展到Vue原型上的</span></span><br><span class="line">  <span class="built_in">this</span>._init(options)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Vue实际上是一个用Function实现的类，只能使用new去实例化。</p>
+<h4 id="为什么Vue要用Function去实现，而不用ES6的Class？"><a href="#为什么Vue要用Function去实现，而不用ES6的Class？" class="headerlink" title="为什么Vue要用Function去实现，而不用ES6的Class？"></a>为什么Vue要用Function去实现，而不用ES6的Class？</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 代码来源：src/core/instance/index.js</span></span><br><span class="line">initMixin(Vue)</span><br><span class="line">stateMixin(Vue)</span><br><span class="line">eventsMixin(Vue)</span><br><span class="line">lifecycleMixin(Vue)</span><br><span class="line">renderMixin(Vue)</span><br></pre></td></tr></table></figure>
+
+<p>这些Mixin方法，都会给Vue的prototype上扩展一些方法，Vue按照功能把这些扩展放在了不同的模块。实现方式是在创建Vue实例的时候，调用这些Mixin方法，并将Vue作为参数传入。这种将原型方法放在不同的模块去扩展，用Class是难以实现的。</p>
+<h4 id="new-Vue发生了什么？"><a href="#new-Vue发生了什么？" class="headerlink" title="new Vue发生了什么？"></a>new Vue发生了什么？</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 代码来源：src/core/instance/init.js</span></span><br><span class="line"><span class="comment">// 合并配置</span></span><br><span class="line"><span class="keyword">if</span> (options &amp;&amp; options._isComponent) &#123;</span><br><span class="line">     initInternalComponent(vm, options)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">     vm.$options = mergeOptions(</span><br><span class="line">     resolveConstructorOptions(vm.constructor),</span><br><span class="line">     options || &#123;&#125;,</span><br><span class="line">     vm)</span><br><span class="line">&#125;</span><br><span class="line">...</span><br><span class="line">initLifecycle(vm) <span class="comment">// 初始化生命周期</span></span><br><span class="line">initEvents(vm) <span class="comment">// 初始化事件中心</span></span><br><span class="line">initRender(vm) <span class="comment">// 初始化渲染</span></span><br><span class="line">callHook(vm, <span class="string">&#x27;beforeCreate&#x27;</span>) <span class="comment">// 执行生命周期beforeCreate的回调函数</span></span><br><span class="line">initInjections(vm) <span class="comment">// 初始化inject</span></span><br><span class="line">initState(vm) <span class="comment">// 依次初始化props、method、data、computed、watch</span></span><br><span class="line">initProvide(vm) <span class="comment">// 初始化privide</span></span><br><span class="line">callHook(vm, <span class="string">&#x27;created&#x27;</span>) <span class="comment">// 执行生命周期created的回调函数</span></span><br></pre></td></tr></table></figure>
+
+<p>Vue初始化主要干了几件事情，合并配置，初始化生命周期，初始化事件中心，初始化渲染，初始化inject、props、method、data、computed、watch、privide等等。</p>
+<h4 id="生命周期对应的回调函数是怎么执行的？"><a href="#生命周期对应的回调函数是怎么执行的？" class="headerlink" title="生命周期对应的回调函数是怎么执行的？"></a>生命周期对应的回调函数是怎么执行的？</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 代码来源：src/core/instance/lifecycle.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">callHook</span> (<span class="params">vm: Component, hook: string</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// #7573 disable dep collection when invoking lifecycle hooks</span></span><br><span class="line">  pushTarget()</span><br><span class="line">  <span class="comment">// 找到该生命周期对应的回调函数</span></span><br><span class="line">  <span class="keyword">const</span> handlers = vm.$options[hook]</span><br><span class="line">  <span class="keyword">const</span> info = <span class="string">`<span class="subst">$&#123;hook&#125;</span> hook`</span></span><br><span class="line">  <span class="keyword">if</span> (handlers) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>, j = handlers.length; i &lt; j; i++) &#123;</span><br><span class="line">      <span class="comment">// 执行回调</span></span><br><span class="line">      invokeWithErrorHandling(handlers[i], vm, <span class="literal">null</span>, vm, info)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (vm._hasHookEvent) &#123;</span><br><span class="line">    <span class="comment">// ⚠️生命周期回调函数执行的时候会向父元素冒泡一个事件</span></span><br><span class="line">    vm.$emit(<span class="string">&#x27;hook:&#x27;</span> + hook)</span><br><span class="line">  &#125;</span><br><span class="line">  popTarget()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="Vue实例的挂载是怎么实现的？"><a href="#Vue实例的挂载是怎么实现的？" class="headerlink" title="Vue实例的挂载是怎么实现的？"></a>Vue实例的挂载是怎么实现的？</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 代码来源：src/platform/web/entry-runtime-with-compiler.js</span></span><br><span class="line"><span class="comment">// 代码比较多，可以先只关注⚠️相关模块，了解主要流程</span></span><br><span class="line"><span class="keyword">const</span> mount = Vue.prototype.$mount</span><br><span class="line">Vue.prototype.$mount = <span class="function"><span class="keyword">function</span> (<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="function">  el?: string | Element,</span></span></span><br><span class="line"><span class="params"><span class="function">  hydrating?: boolean</span></span></span><br><span class="line"><span class="params"><span class="function"></span>): <span class="title">Component</span> </span>&#123;</span><br><span class="line">  el = el &amp;&amp; query(el)</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* istanbul ignore if */</span></span><br><span class="line">  <span class="comment">// ⚠️ Vue不能挂在在body、html这样的根结点上</span></span><br><span class="line">  <span class="keyword">if</span> (el === <span class="built_in">document</span>.body || el === <span class="built_in">document</span>.documentElement) &#123;</span><br><span class="line">    process.env.NODE_ENV !== <span class="string">&#x27;production&#x27;</span> &amp;&amp; warn(</span><br><span class="line">      <span class="string">`Do not mount Vue to &lt;html&gt; or &lt;body&gt; - mount to normal elements instead.`</span></span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> options = <span class="built_in">this</span>.$options</span><br><span class="line">  <span class="comment">// resolve template/el and convert to render function</span></span><br><span class="line">  <span class="comment">// ⚠️如果没有定义render方法，则会把el和template转换成render方法</span></span><br><span class="line">  <span class="keyword">if</span> (!options.render) &#123;</span><br><span class="line">    <span class="keyword">let</span> template = options.template</span><br><span class="line">    <span class="keyword">if</span> (template) &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">typeof</span> template === <span class="string">&#x27;string&#x27;</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (template.charAt(<span class="number">0</span>) === <span class="string">&#x27;#&#x27;</span>) &#123;</span><br><span class="line">          template = idToTemplate(template)</span><br><span class="line">          <span class="comment">/* istanbul ignore if */</span></span><br><span class="line">          <span class="keyword">if</span> (process.env.NODE_ENV !== <span class="string">&#x27;production&#x27;</span> &amp;&amp; !template) &#123;</span><br><span class="line">            warn(</span><br><span class="line">              <span class="string">`Template element not found or is empty: <span class="subst">$&#123;options.template&#125;</span>`</span>,</span><br><span class="line">              <span class="built_in">this</span></span><br><span class="line">            )</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (template.nodeType) &#123;</span><br><span class="line">        template = template.innerHTML</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (process.env.NODE_ENV !== <span class="string">&#x27;production&#x27;</span>) &#123;</span><br><span class="line">          warn(<span class="string">&#x27;invalid template option:&#x27;</span> + template, <span class="built_in">this</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (el) &#123;</span><br><span class="line">      template = getOuterHTML(el)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (template) &#123;</span><br><span class="line">      <span class="comment">/* istanbul ignore if */</span></span><br><span class="line">      <span class="keyword">if</span> (process.env.NODE_ENV !== <span class="string">&#x27;production&#x27;</span> &amp;&amp; config.performance &amp;&amp; mark) &#123;</span><br><span class="line">        mark(<span class="string">&#x27;compile&#x27;</span>)</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// ⚠️调用compileToFunctions在线编译template为render方法</span></span><br><span class="line">      <span class="keyword">const</span> &#123; render, staticRenderFns &#125; = compileToFunctions(template, &#123;</span><br><span class="line">        <span class="attr">outputSourceRange</span>: process.env.NODE_ENV !== <span class="string">&#x27;production&#x27;</span>,</span><br><span class="line">        shouldDecodeNewlines,</span><br><span class="line">        shouldDecodeNewlinesForHref,</span><br><span class="line">        <span class="attr">delimiters</span>: options.delimiters,</span><br><span class="line">        <span class="attr">comments</span>: options.comments</span><br><span class="line">      &#125;, <span class="built_in">this</span>)</span><br><span class="line">      options.render = render</span><br><span class="line">      options.staticRenderFns = staticRenderFns</span><br><span class="line"></span><br><span class="line">      <span class="comment">/* istanbul ignore if */</span></span><br><span class="line">      <span class="keyword">if</span> (process.env.NODE_ENV !== <span class="string">&#x27;production&#x27;</span> &amp;&amp; config.performance &amp;&amp; mark) &#123;</span><br><span class="line">        mark(<span class="string">&#x27;compile end&#x27;</span>)</span><br><span class="line">        measure(<span class="string">`vue <span class="subst">$&#123;<span class="built_in">this</span>._name&#125;</span> compile`</span>, <span class="string">&#x27;compile&#x27;</span>, <span class="string">&#x27;compile end&#x27;</span>)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// ⚠️调用原先原型上的$mount方法挂载</span></span><br><span class="line">  <span class="keyword">return</span> mount.call(<span class="built_in">this</span>, el, hydrating)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p>首先对el做了限制，Vue不能挂在在body、html这样的根结点上；</p>
+</li>
+<li><p>然后判断是否有定义render方法，如果没有定义render方法，则会吧el和template转换成render方法；</p>
+</li>
+<li><p>最后调用原先原型上的$mount方法挂载。</p>
+</li>
+</ol>
+<p>原先原型上$mount方法挂载的主要流程：</p>
+<ol>
+<li><p>原先原型上的$mount方法是在 src/platform/web/runtime/index.js定义的；</p>
+</li>
+<li><p>这个mount方法真正去实现挂载调用的是src/core/instance/lifecycle.js 中的mountComponent方法；</p>
+</li>
+<li><p>mountComponent方法主要做的事情有3个：</p>
+<ul>
+<li>调用vm._render方法生成VNode;</li>
+<li>实例化一个渲染Watcher，会在回调函数中调用updateComponent；</li>
+<li>调用vm._update更新dom。</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>tips: 这里可以停顿下来思考一个细节，将原先原型上的$mount方法放在 src/platform/web/runtime/index.js定义，其实就是将挂载功能独立了出去，使Runtime-Only和Runtime+Compiler都可以复用。</p>
+</blockquote>
+<h4 id="为什么Vue2-x组件模板只能有一个根元素？"><a href="#为什么Vue2-x组件模板只能有一个根元素？" class="headerlink" title="为什么Vue2.x组件模板只能有一个根元素？"></a>为什么Vue2.x组件模板只能有一个根元素？</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 代码来源：src/core/instance/render.js</span></span><br><span class="line"><span class="comment">// if the returned array contains only a single node, allow it</span></span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">Array</span>.isArray(vnode) &amp;&amp; vnode.length === <span class="number">1</span>) &#123;</span><br><span class="line">    vnode = vnode[<span class="number">0</span>]</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// return empty vnode in case the render function errored out</span></span><br><span class="line"><span class="keyword">if</span> (!(vnode <span class="keyword">instanceof</span> VNode)) &#123;</span><br><span class="line">  <span class="keyword">if</span> (process.env.NODE_ENV !== <span class="string">&#x27;production&#x27;</span> &amp;&amp; <span class="built_in">Array</span>.isArray(vnode)) &#123;</span><br><span class="line">      warn(</span><br><span class="line">          <span class="string">&#x27;Multiple root nodes returned from render function. Render function &#x27;</span> +</span><br><span class="line">          <span class="string">&#x27;should return a single root node.&#x27;</span>,</span><br><span class="line">      vm)</span><br><span class="line">  &#125;</span><br><span class="line">  vnode = createEmptyVNode()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里只从Vue2.x的源码角度，来解释为什么Vue2.x组件模板只能有一个根元素。至于为什么这么设计就不去多分析了，因为Vue3是允许一个组件是有多个根元素的。对于开发者来讲，允许多个根元素是更友好的。</p>
+<h4 id="render方法做了什么事情？"><a href="#render方法做了什么事情？" class="headerlink" title="render方法做了什么事情？"></a>render方法做了什么事情？</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 代码来源：src/core/instance/render.js</span></span><br><span class="line"><span class="comment">// 内部调用了createElement方法</span></span><br><span class="line">vm.$createElement = <span class="function">(<span class="params">a, b, c, d</span>) =&gt;</span> createElement(vm, a, b, c, d, <span class="literal">true</span>)</span><br><span class="line">...</span><br><span class="line"><span class="comment">// render函数的第一个参数是vm.$createElement</span></span><br><span class="line">vnode = render.call(vm._renderProxy, vm.$createElement)</span><br></pre></td></tr></table></figure>
+
+<p>简而言之render方法主要做的事情就是将实例渲染成了一个VNode，创建VNode实际上调用的是createElement方法。而createElement方法也只是对真正创建VNode的_createElement函数的封装，允许传入的参数更灵活。</p>
+<h5 id="children的规范化"><a href="#children的规范化" class="headerlink" title="children的规范化"></a>children的规范化</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 代码来源：src/core/vdom/create-element.js</span></span><br><span class="line"><span class="comment">// normalizationType表示子节点规范的类型，类型不同规范的方法也不同</span></span><br><span class="line"><span class="comment">// 主要的参考是render函数是编译生成的还是开发者手写的</span></span><br><span class="line"><span class="keyword">if</span> (normalizationType === ALWAYS_NORMALIZE) &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 调用场景有两个：</span></span><br><span class="line"><span class="comment">     * 1.render函数是用户手写的，当children只有一个节点的时候，</span></span><br><span class="line"><span class="comment">     * Vue.js从接⼝层⾯允许⽤户把children写成基础类型⽤来创建单个简单的⽂本节点；</span></span><br><span class="line"><span class="comment">     * 2.编译slot、v-for的时候会产生嵌套数组的情况，会调⽤normalizeArrayChildren⽅法。</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    children = normalizeChildren(children)</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (normalizationType === SIMPLE_NORMALIZE) &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 调用场景是render函数是由编译生成的 。理论上编译生成的children都已经是VNode类型的，</span></span><br><span class="line"><span class="comment">     * 有一个例外，函数式组件返回的是一个深度只有一层的数组而不是一个根结点，</span></span><br><span class="line"><span class="comment">     * 所以会通过Array.prototype.concat⽅法将数组打平。</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    children = simpleNormalizeChildren(children)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>由于Virtual DOM实际上是一个树状结构，每一个VNode可能会有若干个子节点，这些子节点应该也是VNode类型。但是_createElement接收的第四个参数children是任意类型的，因此要将这个children规范成VNode类型的Array。</p>
+<h5 id="VNode的创建"><a href="#VNode的创建" class="headerlink" title="VNode的创建"></a>VNode的创建</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 代码来源：src/core/vdom/create-element.js</span></span><br><span class="line"><span class="comment">// 判断tag是否是String类型</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> tag === <span class="string">&#x27;string&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> Ctor</span><br><span class="line">    ns = (context.$vnode &amp;&amp; context.$vnode.ns) || config.getTagNamespace(tag)</span><br><span class="line">    <span class="keyword">if</span> (config.isReservedTag(tag)) &#123;</span><br><span class="line">        <span class="comment">// 判断如果是内置的⼀些节点，则直接创建⼀个普通VNode</span></span><br><span class="line">        <span class="comment">// platform built-in elements</span></span><br><span class="line">        <span class="keyword">if</span> (process.env.NODE_ENV !== <span class="string">&#x27;production&#x27;</span> &amp;&amp; isDef(data) &amp;&amp; isDef(data.nativeOn)) &#123;</span><br><span class="line">            warn(<span class="string">`The .native modifier for v-on is only valid on components but it was used on &lt;<span class="subst">$&#123;tag&#125;</span>&gt;.`</span>,</span><br><span class="line">            context)</span><br><span class="line">        &#125;</span><br><span class="line">        vnode = <span class="keyword">new</span> VNode(</span><br><span class="line">            config.parsePlatformTagName(tag), data, children,</span><br><span class="line">            <span class="literal">undefined</span>, <span class="literal">undefined</span>, context</span><br><span class="line">            )</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> ((!data || !data.pre) &amp;&amp; isDef(Ctor = resolveAsset(context.$options, <span class="string">&#x27;components&#x27;</span>, tag))) &#123;</span><br><span class="line">        <span class="comment">// 如果是一个已注册的组件名，则通过createComponent创建⼀个组件类型的VNode，本质上还是返回一个Vnode</span></span><br><span class="line">        vnode = createComponent(Ctor, data, context, children, tag)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// unknown or unlisted namespaced elements</span></span><br><span class="line">        <span class="comment">// check at runtime because it may get assigned a namespace when its</span></span><br><span class="line">        <span class="comment">// parent normalizes children</span></span><br><span class="line">        <span class="comment">// 创建一个未知的标签的VNode</span></span><br><span class="line">        vnode = <span class="keyword">new</span> VNode(</span><br><span class="line">            tag, data, children,</span><br><span class="line">            <span class="literal">undefined</span>, <span class="literal">undefined</span>, context</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 如果tag是Component类型，则直接调⽤createComponent创建⼀个组件类型的VNode节点</span></span><br><span class="line">    <span class="comment">// direct component options / constructor</span></span><br><span class="line">    vnode = createComponent(tag, data, context, children)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>无论是new VNode还是createComponent，最后返回的都是VNode类型的数据。每个VNode有children，children的每个元素又是VNode，这样就形成了一个VNode Tree，也就是传说中的Virtual DOM，用来映射构建DOM Tree。</p>
+<h4 id="Vue2-x为什么要用Virtual-DOM"><a href="#Vue2-x为什么要用Virtual-DOM" class="headerlink" title="Vue2.x为什么要用Virtual DOM?"></a>Vue2.x为什么要用Virtual DOM?</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 代码来源：src/core/vdom/vnode.js</span></span><br><span class="line"><span class="comment">// VNode只是用来映射到真实DOM的渲染，不需要包含操作DOM的方法</span></span><br><span class="line"><span class="comment">// 虽然看起来还是很复杂，但是跟浏览器的DOM比起来还是非常轻量的</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">VNode</span> </span>&#123;</span><br><span class="line">  <span class="attr">tag</span>: string | <span class="keyword">void</span>;</span><br><span class="line">  data: VNodeData | <span class="keyword">void</span>;</span><br><span class="line">  children: ?<span class="built_in">Array</span>&lt;VNode&gt;;</span><br><span class="line">  text: string | <span class="keyword">void</span>;</span><br><span class="line">  elm: Node | <span class="keyword">void</span>;</span><br><span class="line">  ns: string | <span class="keyword">void</span>;</span><br><span class="line">  context: Component | <span class="keyword">void</span>; <span class="comment">// rendered in this component&#x27;s scope</span></span><br><span class="line">  key: string | number | <span class="keyword">void</span>;</span><br><span class="line">  componentOptions: VNodeComponentOptions | <span class="keyword">void</span>;</span><br><span class="line">  componentInstance: Component | <span class="keyword">void</span>; <span class="comment">// component instance</span></span><br><span class="line">  parent: VNode | <span class="keyword">void</span>; <span class="comment">// component placeholder node</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// strictly internal</span></span><br><span class="line">  raw: boolean; <span class="comment">// contains raw HTML? (server only)</span></span><br><span class="line">  isStatic: boolean; <span class="comment">// hoisted static node</span></span><br><span class="line">  isRootInsert: boolean; <span class="comment">// necessary for enter transition check</span></span><br><span class="line">  isComment: boolean; <span class="comment">// empty comment placeholder?</span></span><br><span class="line">  isCloned: boolean; <span class="comment">// is a cloned node?</span></span><br><span class="line">  isOnce: boolean; <span class="comment">// is a v-once node?</span></span><br><span class="line">  asyncFactory: <span class="built_in">Function</span> | <span class="keyword">void</span>; <span class="comment">// async component factory function</span></span><br><span class="line">  asyncMeta: <span class="built_in">Object</span> | <span class="keyword">void</span>;</span><br><span class="line">  isAsyncPlaceholder: boolean;</span><br><span class="line">  ssrContext: <span class="built_in">Object</span> | <span class="keyword">void</span>;</span><br><span class="line">  fnContext: Component | <span class="keyword">void</span>; <span class="comment">// real context vm for functional nodes</span></span><br><span class="line">  fnOptions: ?ComponentOptions; <span class="comment">// for SSR caching</span></span><br><span class="line">  devtoolsMeta: ?<span class="built_in">Object</span>; <span class="comment">// used to store functional render context for devtools</span></span><br><span class="line">  fnScopeId: ?string; <span class="comment">// functional scope id support</span></span><br><span class="line"></span><br><span class="line">  <span class="title">constructor</span> (<span class="params"></span></span><br><span class="line"><span class="params">    tag?: string,</span></span><br><span class="line"><span class="params">    data?: VNodeData,</span></span><br><span class="line"><span class="params">    children?: ?<span class="built_in">Array</span>&lt;VNode&gt;,</span></span><br><span class="line"><span class="params">    text?: string,</span></span><br><span class="line"><span class="params">    elm?: Node,</span></span><br><span class="line"><span class="params">    context?: Component,</span></span><br><span class="line"><span class="params">    componentOptions?: VNodeComponentOptions,</span></span><br><span class="line"><span class="params">    asyncFactory?: <span class="built_in">Function</span></span></span><br><span class="line"><span class="params">  </span>) &#123;</span><br><span class="line">    <span class="built_in">this</span>.tag = tag</span><br><span class="line">    <span class="built_in">this</span>.data = data</span><br><span class="line">    <span class="built_in">this</span>.children = children</span><br><span class="line">    <span class="built_in">this</span>.text = text</span><br><span class="line">    <span class="built_in">this</span>.elm = elm</span><br><span class="line">    <span class="built_in">this</span>.ns = <span class="literal">undefined</span></span><br><span class="line">    <span class="built_in">this</span>.context = context</span><br><span class="line">    <span class="built_in">this</span>.fnContext = <span class="literal">undefined</span></span><br><span class="line">    <span class="built_in">this</span>.fnOptions = <span class="literal">undefined</span></span><br><span class="line">    <span class="built_in">this</span>.fnScopeId = <span class="literal">undefined</span></span><br><span class="line">    <span class="built_in">this</span>.key = data &amp;&amp; data.key</span><br><span class="line">    <span class="built_in">this</span>.componentOptions = componentOptions</span><br><span class="line">    <span class="built_in">this</span>.componentInstance = <span class="literal">undefined</span></span><br><span class="line">    <span class="built_in">this</span>.parent = <span class="literal">undefined</span></span><br><span class="line">    <span class="built_in">this</span>.raw = <span class="literal">false</span></span><br><span class="line">    <span class="built_in">this</span>.isStatic = <span class="literal">false</span></span><br><span class="line">    <span class="built_in">this</span>.isRootInsert = <span class="literal">true</span></span><br><span class="line">    <span class="built_in">this</span>.isComment = <span class="literal">false</span></span><br><span class="line">    <span class="built_in">this</span>.isCloned = <span class="literal">false</span></span><br><span class="line">    <span class="built_in">this</span>.isOnce = <span class="literal">false</span></span><br><span class="line">    <span class="built_in">this</span>.asyncFactory = asyncFactory</span><br><span class="line">    <span class="built_in">this</span>.asyncMeta = <span class="literal">undefined</span></span><br><span class="line">    <span class="built_in">this</span>.isAsyncPlaceholder = <span class="literal">false</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// DEPRECATED: alias for componentInstance for backwards compat.</span></span><br><span class="line">  <span class="comment">/* istanbul ignore next */</span></span><br><span class="line">  get child (): Component | <span class="keyword">void</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.componentInstance</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>浏览器中的DOM的设计是非常复杂的，当我们频繁的去做DOM更新的时候，会产生一定的性能问题。而Virtual DOM就是一个用js对象去描述一个DOM节点，对Virtual DOM的操作代价会少很多，这草设计在react中也有用到。在Vue中，Virtual DOM是用VNode这么一个Class去描述的，借鉴了⼀个开源库 snabbdom 的实现，然后加⼊了⼀些 Vue.js 特⾊的东⻄。</p>
+<h4 id="VDOM是怎么渲染成DOM的？"><a href="#VDOM是怎么渲染成DOM的？" class="headerlink" title="VDOM是怎么渲染成DOM的？"></a>VDOM是怎么渲染成DOM的？</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 代码来源：src/core/instance/lifecycle.js</span></span><br><span class="line"><span class="keyword">if</span> (!prevVnode) &#123;</span><br><span class="line">    <span class="comment">// initial render</span></span><br><span class="line">    <span class="comment">// 首次渲染</span></span><br><span class="line">    vm.$el = vm.__patch__(vm.$el, vnode, hydrating, <span class="literal">false</span> <span class="comment">/* removeOnly */</span>)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// updates</span></span><br><span class="line">    <span class="comment">// 数据更新</span></span><br><span class="line">    vm.$el = vm.__patch__(prevVnode, vnode)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>patch方法被调用的时机有两个：首次渲染和数据更新。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 代码来源：src/platforms/web/runtime/index.js</span></span><br><span class="line">Vue.prototype.__patch__ = inBrowser ? patch : noop</span><br></pre></td></tr></table></figure>
+
+<p>在源码中是使用vm._update完成的，而 _update的核心是vm.__patch__方法。patch放在在不同的平台上的定义是不一样的，在Web和Weex环境，它们把VDOM映射到平台DOM的方法是不同的，包括对属性模块的创建和更新都会有所不同。整个渲染过程，实际上就是调用原生的DOM的API来进行DOM操作。</p>
+<p>需要关注的两个函数：</p>
+<ol>
+<li>createElm的作⽤是通过虚拟节点创建真实的 DOM 并插⼊到它的⽗节点中；</li>
+<li>createChildren遍历子虚拟节点，以深度优先的算法递归调用createElm，最后再调用insert方法把dom插入到父节点中。子元素会优先调用insert方法，所以整个VNode树的插入顺序是先子后父。</li>
+</ol>
+<blockquote>
+<p>tips：首次渲染的整个过程实际上就是递归创建了一个完整的DOM树并插入到Body上。</p>
+</blockquote>
+<h4 id="初始化Vue到最终渲染的过程是怎么样的？"><a href="#初始化Vue到最终渲染的过程是怎么样的？" class="headerlink" title="初始化Vue到最终渲染的过程是怎么样的？"></a>初始化Vue到最终渲染的过程是怎么样的？</h4><p>new Vue 之后执行一系列的初始化操作，如合并配置，初始化生命周期，初始化事件中心，初始化渲染，初始化inject、props、method、data、computed、watch、privide等等。初始化完成之后，对Vue实例进行挂载。挂载时会判断是否有render函数，如果是el和template转换成render方法，执行render方法会生成VNode tree，也就是VDOM。最后再调用patch方法，将VNode渲染成DOM并完成挂载，实际上整个渲染过程调用的就是原生的DOM API。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/26/webpack%E4%B9%8B%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1206,116 +1375,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/08/%E8%AF%8D%E6%B3%95%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E5%8A%A8%E6%80%81%E4%BD%9C%E7%94%A8%E5%9F%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="马帅傅">
-      <meta itemprop="description" content="道阻且长,行则将至">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上任鹅城">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/08/08/%E8%AF%8D%E6%B3%95%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E5%8A%A8%E6%80%81%E4%BD%9C%E7%94%A8%E5%9F%9F/" class="post-title-link" itemprop="url">词法作用域和动态作用域</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-08-08 00:00:00" itemprop="dateCreated datePublished" datetime="2021-08-08T00:00:00+08:00">2021-08-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-08-18 19:07:15" itemprop="dateModified" datetime="2021-08-18T19:07:15+08:00">2021-08-18</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javascript/" itemprop="url" rel="index"><span itemprop="name">javascript</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2021/08/08/%E8%AF%8D%E6%B3%95%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E5%8A%A8%E6%80%81%E4%BD%9C%E7%94%A8%E5%9F%9F/" class="post-meta-item leancloud_visitors" data-flag-title="词法作用域和动态作用域" title="Views">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">Views: </span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine: </span>
-    
-    <a title="valine" href="/2021/08/08/%E8%AF%8D%E6%B3%95%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E5%8A%A8%E6%80%81%E4%BD%9C%E7%94%A8%E5%9F%9F/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/08/08/%E8%AF%8D%E6%B3%95%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E5%8A%A8%E6%80%81%E4%BD%9C%E7%94%A8%E5%9F%9F/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h3><p>作用域就是一个独立的地盘，让变量不会外泄、暴露出去。也就是说作用域最大的用处就是隔离变量，不同作用域下同名变量不会有冲突。</p>
-<p>ES6 之前 JavaScript 没有块级作用域,只有全局作用域和函数作用域。ES6 的到来，为我们提供了‘块级作用域’,可通过新增命令 let 和 const 来体现。</p>
-<p>作用域是分层的，内层作用域可以访问外层作用域的变量，反之则不行。作用域规定了如何查找变量，也就是确定当前执行代码对变量的访问权限。</p>
-<h3 id="作用域链"><a href="#作用域链" class="headerlink" title="作用域链"></a>作用域链</h3><p>一般情况下，变量取值到创建这个变量的函数的作用域中取值。但是如果在当前作用域中没有查到值，就会向上级作用域去查，直到查到全局作用域，这么一个查找过程形成的链条就叫做作用域链。</p>
-<h3 id="静态作用域与动态作用域"><a href="#静态作用域与动态作用域" class="headerlink" title="静态作用域与动态作用域"></a>静态作用域与动态作用域</h3><p>JavaScript 采用的是词法作用域，函数的作用域在函数定义的时候就决定了。而与词法作用域相对的是动态作用域，函数的作用域是在函数调用的时候才决定的。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> value = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(value);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> value = <span class="number">2</span>;</span><br><span class="line">    foo();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bar(); <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
-
-<p>假设JavaScript采用静态作用域，让我们分析下执行过程：</p>
-<p>执行 foo 函数，先从 foo 函数内部查找是否有局部变量 value，如果没有，就根据书写的位置，查找上面一层的代码，也就是 value 等于 1，所以结果会打印 1。</p>
-<p>假设JavaScript采用动态作用域，让我们分析下执行过程：</p>
-<p>执行 foo 函数，依然是从 foo 函数内部查找是否有局部变量 value。如果没有，就从调用函数的作用域，也就是 bar 函数内部查找 value 变量，所以结果会打印 2。</p>
-<p>前面我们已经说了，JavaScript采用的是静态作用域，所以这个例子的结果是 1。</p>
-<h3 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> scope = <span class="string">&quot;global scope&quot;</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkscope</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> scope = <span class="string">&quot;local scope&quot;</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> scope;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> f();</span><br><span class="line">&#125;</span><br><span class="line">checkscope(); <span class="comment">// local scope</span></span><br><span class="line"><span class="keyword">var</span> scope = <span class="string">&quot;global scope&quot;</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkscope</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> scope = <span class="string">&quot;local scope&quot;</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> scope;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> f;</span><br><span class="line">&#125;</span><br><span class="line">checkscope()(); <span class="comment">// local scope</span></span><br></pre></td></tr></table></figure>
-
-<p>原因也很简单，因为JavaScript采用的是词法作用域，函数的作用域基于函数创建的位置。</p>
-<p>JavaScript 函数的执行用到了作用域链，这个作用域链是在函数定义的时候创建的。嵌套的函数 f() 定义在这个作用域链里，其中的变量 scope 一定是局部变量，不管何时何地执行函数 f()，这种绑定在执行 f() 时依然有效。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1386,20 +1445,20 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-count">26</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-count">34</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
