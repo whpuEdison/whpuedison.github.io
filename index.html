@@ -152,6 +152,144 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/02/Vue2.x%E7%9A%84%E4%BE%9D%E8%B5%96%E6%94%B6%E9%9B%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="马帅傅">
+      <meta itemprop="description" content="道阻且长,行则将至">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上任鹅城">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/02/Vue2.x%E7%9A%84%E4%BE%9D%E8%B5%96%E6%94%B6%E9%9B%86/" class="post-title-link" itemprop="url">Vue2.x的依赖收集</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-09-02 14:48:40 / Modified: 18:11:12" itemprop="dateCreated datePublished" datetime="2021-09-02T14:48:40+08:00">2021-09-02</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/vue/" itemprop="url" rel="index"><span itemprop="name">vue</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2021/09/02/Vue2.x%E7%9A%84%E4%BE%9D%E8%B5%96%E6%94%B6%E9%9B%86/" class="post-meta-item leancloud_visitors" data-flag-title="Vue2.x的依赖收集" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2021/09/02/Vue2.x%E7%9A%84%E4%BE%9D%E8%B5%96%E6%94%B6%E9%9B%86/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/09/02/Vue2.x%E7%9A%84%E4%BE%9D%E8%B5%96%E6%94%B6%E9%9B%86/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h4><p>Vue是一个实现了数据驱动的框架， 当数据改变的时候，需要通知到依赖这个数据的订阅者watcher。将数据和依赖数据的订阅者watcher联系起来的过程，称为依赖收集。</p>
+<h4 id="收集过程"><a href="#收集过程" class="headerlink" title="收集过程"></a>收集过程</h4><p>一般来讲，数据的订阅者watcher常见的类型有如下3种：</p>
+<ol>
+<li>computed watcher</li>
+<li>user watcher</li>
+<li>render watcher</li>
+</ol>
+<p>不同类型的watcher完成依赖收集是有顺序的，比如上面提到的3种类型watcher执行顺序就是：computed watcher -&gt; user watcher -&gt; render watcher。</p>
+<p>下面按顺序来分析3种watcher完成依赖收集的过程：</p>
+<h5 id="computed-watcher"><a href="#computed-watcher" class="headerlink" title="computed watcher"></a>computed watcher</h5><p>在初始化数据的时候，如果组件中有使用computed计算属性，会执行initComputed方法，一个computed属性对应生成一个computed watcher。computed watcher是惰性的，不会马上执行watcher实例的get方法，watcher实例的get方法是依赖收集的一个关键方法，也就是说初始化computed的时候是没有做依赖收集的。</p>
+<p>当后面使用到computed属性时，如template模版中第一次使用到计算属性，会执行computed对应watcher的get方法。</p>
+<p>在这里插入对依赖管理器的介绍，帮助理解后续的过程。对于每一个被用到的响应式数据，都需要有一个dep实例来管理依赖这个数据的watcher。构造函数Dep有一个静态属性target可以理解成一个全局变量，当开始当前watcher的依赖收集的时候，就将当前依赖收集的watcher赋值给target。当结束当前watcher的依赖收集的时候，将target赋值为watcher栈里的最上层的一个watcher。从上面的描述中可以看出，在做依赖收集的时候，是按watcher顺序执行来完成依赖收集的。</p>
+<p>在get方法中会将当前的watcher压入watcher栈中，并将依赖管理器Dep的静态属性target赋值为当前watcher。然后执行当前watcher实例的getter方法，也就是computed属性对应的计算方法，里面涉及到对响应式数据的取值操作，就会执行数据的getter方法（为了跟前面的get方法区别开，使用getter）。</p>
+<p>这里注意一下响应式数据，在执行initComputed之前，props和data都是已经被数据劫持过的，使用的是Object.defineProperty方法。所以在对响应式数据取值的时候，才会执行数据的getter方法。</p>
+<p>在getter方法中，除了取值还做了依赖收集的工作。判断Dep.target是否存在，如果存在就执行dep实例的depend方法，而dep.depend方法中调用的是当前watcher的addDep方法。</p>
+<p>因为在前面的get方法中完成了computed watcher的压栈，所以这个时候的Dep.target是存在的，且值为computed watcher，会顺利执行到当前watcher的addDep方法。</p>
+<p>在watcher.addDep方法中做了两件事，通过id来避免了重复收集：</p>
+<ol>
+<li>判断当前的watcher是否有收集关于当前dep实例的信息，如果没有则收集到自己的属性中；</li>
+<li>判断当前的dep实例是否有收集当前watcher的信息，如果没有则收集到自己的属性中。</li>
+</ol>
+<p>watcher.addDep执行完成后，接着执行computed属性对应的计算方法，对使用到的响应式数据都完成依赖收集。完成依赖收集之后，将当前的watcher出栈。最后完成一个细节，遍历deps属性移除旧的订阅，更新为新的订阅。一些列操作完成之后，开始下一个watcher的依赖收集。</p>
+<p>#####user watcher</p>
+<p>在初始化数据的时候， 如果组件中有使用watch监听属性，会执行initWatch方法，一个computed属性对应生成一个user watcher。创建user watcher实例之后，会马上执行实例的get方法。</p>
+<p>在get方法中也会将当前的watcher压入watcher栈中，并将依赖管理器Dep的静态属性target赋值为当前watcher。</p>
+<p>执行当前watcher实例的getter方法，这个getter方法是在创建实例的时候执行parsePath方法返回的一个方法，会从Vue实例中获取到当前watch属性的值。因为watch的属性都是响应式数据，所以取值的时候会执行数据的getter方法。</p>
+<p>在getter方法中，除了取值还做了依赖收集的工作。判断Dep.target是否存在，如果存在就执行dep实例的depend方法，而dep.depend方法中调用的是当前watcher的addDep方法。</p>
+<p>因为在前面的get方法中完成了computed watcher的压栈，所以这个时候的Dep.target是存在的，且值为user watcher，会顺利执行到当前watcher的addDep方法。</p>
+<p>在watcher.addDep方法中做了两件事，通过id来避免了重复收集：</p>
+<ol>
+<li>判断当前的watcher是否有收集关于当前dep实例的信息，如果没有则收集到自己的属性中；</li>
+<li>判断当前的dep实例是否有收集当前watcher的信息，如果没有则收集到自己的属性中。</li>
+</ol>
+<p>watcher.addDep执行完成后，将当前的watcher出栈。最后也是完成一个细节，遍历deps属性移除旧的订阅，更新为新的订阅。一些列操作完成之后，开始下一个watcher的依赖收集。</p>
+<h5 id="render-watcher"><a href="#render-watcher" class="headerlink" title="render watcher"></a>render watcher</h5><p>初始化数据完成之后，对Vue实例进行挂载。将VNode渲染成DOM的方法作为创建watcher的第二个参数，创建了一个render watcher，一个组件对应一个render watcher。创建render watcher实例之后，会马上执行实例的get方法。</p>
+<p>在get方法中也会将当前的watcher压入watcher栈中，并将依赖管理器Dep的静态属性target赋值为当前watcher。</p>
+<p>执行当前watcher实例的getter方法，也就是将VNode渲染成DOM的方法（创建watcher实例时传入的第二个参数），在创建DOM的时候，需要对响应式数据进行取值，这就会执行数据的getter方法。</p>
+<p>在getter方法中，除了取值还做了依赖收集的工作。判断Dep.target是否存在，如果存在就执行dep实例的depend方法，而dep.depend方法中调用的是当前watcher的addDep方法。</p>
+<p>因为在前面的get方法中完成了computed watcher的压栈，所以这个时候的Dep.target是存在的，且值为user watcher，会顺利执行到当前watcher的addDep方法。</p>
+<p>在watcher.addDep方法中做了两件事，通过id来避免了重复收集：</p>
+<ol>
+<li>判断当前的watcher是否有收集关于当前dep实例的信息，如果没有则收集到自己的属性中；</li>
+<li>判断当前的dep实例是否有收集当前watcher的信息，如果没有则收集到自己的属性中。</li>
+</ol>
+<p>watcher.addDep执行完成后，将当前的watcher出栈。最后也是完成一个细节，遍历deps属性移除旧的订阅，更新为新的订阅。一些列操作完成之后，开始下一个watcher的依赖收集。</p>
+<h4 id="差异"><a href="#差异" class="headerlink" title="差异"></a>差异</h4><p>这三种watcher的其实大同小异，主要差别在于两点：</p>
+<ol>
+<li>实例的get方法执行时机不一样；</li>
+<li>实例的getter方法不一样，可以根据需求自定义。</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/26/webpack%E4%B9%8B%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1206,116 +1344,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/08/%E8%AF%8D%E6%B3%95%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E5%8A%A8%E6%80%81%E4%BD%9C%E7%94%A8%E5%9F%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="马帅傅">
-      <meta itemprop="description" content="道阻且长,行则将至">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上任鹅城">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/08/08/%E8%AF%8D%E6%B3%95%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E5%8A%A8%E6%80%81%E4%BD%9C%E7%94%A8%E5%9F%9F/" class="post-title-link" itemprop="url">词法作用域和动态作用域</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-08-08 00:00:00" itemprop="dateCreated datePublished" datetime="2021-08-08T00:00:00+08:00">2021-08-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-08-18 19:07:15" itemprop="dateModified" datetime="2021-08-18T19:07:15+08:00">2021-08-18</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javascript/" itemprop="url" rel="index"><span itemprop="name">javascript</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2021/08/08/%E8%AF%8D%E6%B3%95%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E5%8A%A8%E6%80%81%E4%BD%9C%E7%94%A8%E5%9F%9F/" class="post-meta-item leancloud_visitors" data-flag-title="词法作用域和动态作用域" title="Views">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">Views: </span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine: </span>
-    
-    <a title="valine" href="/2021/08/08/%E8%AF%8D%E6%B3%95%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E5%8A%A8%E6%80%81%E4%BD%9C%E7%94%A8%E5%9F%9F/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/08/08/%E8%AF%8D%E6%B3%95%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E5%8A%A8%E6%80%81%E4%BD%9C%E7%94%A8%E5%9F%9F/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h3><p>作用域就是一个独立的地盘，让变量不会外泄、暴露出去。也就是说作用域最大的用处就是隔离变量，不同作用域下同名变量不会有冲突。</p>
-<p>ES6 之前 JavaScript 没有块级作用域,只有全局作用域和函数作用域。ES6 的到来，为我们提供了‘块级作用域’,可通过新增命令 let 和 const 来体现。</p>
-<p>作用域是分层的，内层作用域可以访问外层作用域的变量，反之则不行。作用域规定了如何查找变量，也就是确定当前执行代码对变量的访问权限。</p>
-<h3 id="作用域链"><a href="#作用域链" class="headerlink" title="作用域链"></a>作用域链</h3><p>一般情况下，变量取值到创建这个变量的函数的作用域中取值。但是如果在当前作用域中没有查到值，就会向上级作用域去查，直到查到全局作用域，这么一个查找过程形成的链条就叫做作用域链。</p>
-<h3 id="静态作用域与动态作用域"><a href="#静态作用域与动态作用域" class="headerlink" title="静态作用域与动态作用域"></a>静态作用域与动态作用域</h3><p>JavaScript 采用的是词法作用域，函数的作用域在函数定义的时候就决定了。而与词法作用域相对的是动态作用域，函数的作用域是在函数调用的时候才决定的。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> value = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(value);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> value = <span class="number">2</span>;</span><br><span class="line">    foo();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bar(); <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
-
-<p>假设JavaScript采用静态作用域，让我们分析下执行过程：</p>
-<p>执行 foo 函数，先从 foo 函数内部查找是否有局部变量 value，如果没有，就根据书写的位置，查找上面一层的代码，也就是 value 等于 1，所以结果会打印 1。</p>
-<p>假设JavaScript采用动态作用域，让我们分析下执行过程：</p>
-<p>执行 foo 函数，依然是从 foo 函数内部查找是否有局部变量 value。如果没有，就从调用函数的作用域，也就是 bar 函数内部查找 value 变量，所以结果会打印 2。</p>
-<p>前面我们已经说了，JavaScript采用的是静态作用域，所以这个例子的结果是 1。</p>
-<h3 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> scope = <span class="string">&quot;global scope&quot;</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkscope</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> scope = <span class="string">&quot;local scope&quot;</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> scope;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> f();</span><br><span class="line">&#125;</span><br><span class="line">checkscope(); <span class="comment">// local scope</span></span><br><span class="line"><span class="keyword">var</span> scope = <span class="string">&quot;global scope&quot;</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkscope</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> scope = <span class="string">&quot;local scope&quot;</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> scope;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> f;</span><br><span class="line">&#125;</span><br><span class="line">checkscope()(); <span class="comment">// local scope</span></span><br></pre></td></tr></table></figure>
-
-<p>原因也很简单，因为JavaScript采用的是词法作用域，函数的作用域基于函数创建的位置。</p>
-<p>JavaScript 函数的执行用到了作用域链，这个作用域链是在函数定义的时候创建的。嵌套的函数 f() 定义在这个作用域链里，其中的变量 scope 一定是局部变量，不管何时何地执行函数 f()，这种绑定在执行 f() 时依然有效。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1386,20 +1414,20 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-count">26</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-count">33</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

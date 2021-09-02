@@ -152,6 +152,113 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/24/%E4%BA%8B%E4%BB%B6%E5%A7%94%E6%89%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="马帅傅">
+      <meta itemprop="description" content="道阻且长,行则将至">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上任鹅城">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/07/24/%E4%BA%8B%E4%BB%B6%E5%A7%94%E6%89%98/" class="post-title-link" itemprop="url">事件委托</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-07-24 00:00:00" itemprop="dateCreated datePublished" datetime="2021-07-24T00:00:00+08:00">2021-07-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-08-18 19:03:30" itemprop="dateModified" datetime="2021-08-18T19:03:30+08:00">2021-08-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index"><span itemprop="name">javascript</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2021/07/24/%E4%BA%8B%E4%BB%B6%E5%A7%94%E6%89%98/" class="post-meta-item leancloud_visitors" data-flag-title="事件委托" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2021/07/24/%E4%BA%8B%E4%BB%B6%E5%A7%94%E6%89%98/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/07/24/%E4%BA%8B%E4%BB%B6%E5%A7%94%E6%89%98/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>关键词：事件冒泡和目标元素。</strong></p>
+<p><strong>科普：</strong></p>
+<p>一个事件触发后，会在子元素和父元素之间传播（propagation）。这种传播分成三个阶段：事件捕获阶段、处于目标阶段和事件冒泡阶段。</p>
+<p>事件冒泡： 当一个元素上的事件被触发的时候，比如说鼠标点击了一个按钮，同样的事件将会在那个元素的所有的祖先元素中被触发。这个事件从事件的原始元素开始一直冒泡到DOM树最上层。</p>
+<p>目标元素：任何事件的目标元素都是最开始的那个元素，在老IE下，目标元素是window.event.srcElement，其他浏览器event.target。</p>
+<p><strong>使用</strong>：</p>
+<p>把事件处理器添加到一个父级元素上，等待一个事件从它的子级里冒泡上来，并且可以得知这个事件是从哪个元素开始的。</p>
+<p><strong>优点：</strong></p>
+<p>1.可以大量节省内存占用，减少事件注册；</p>
+<p>2.在DOM更新后无需重新绑定事件处理器。</p>
+<p><strong>缺点：</strong></p>
+<p>1.事件冒泡的过程也需要耗时，越靠近顶层，事件的”事件传播链”越长，也就越耗时；</p>
+<p>2.不是所有的事件都是能冒泡的，如blur、focus、load和unload。也不是所有事件都适合用事件代理的，如mousemove事件触发非常频繁会导致性能瓶颈，mouseout怪异的表现很难用事件代理来管理。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/22/%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -829,20 +936,20 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-count">26</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-count">33</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
