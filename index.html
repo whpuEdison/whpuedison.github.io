@@ -177,7 +177,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-09-02 14:48:40 / Modified: 18:20:14" itemprop="dateCreated datePublished" datetime="2021-09-02T14:48:40+08:00">2021-09-02</time>
+              <time title="Created: 2021-09-02 14:48:40 / Modified: 18:26:12" itemprop="dateCreated datePublished" datetime="2021-09-02T14:48:40+08:00">2021-09-02</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -243,8 +243,7 @@
 <li>判断当前的dep实例是否有收集当前watcher的信息，如果没有则收集到自己的属性中。</li>
 </ol>
 <p>watcher.addDep执行完成后，接着执行computed属性对应的计算方法，对使用到的响应式数据都完成依赖收集。完成依赖收集之后，将当前的watcher出栈。最后完成一个细节，遍历deps属性移除旧的订阅，更新为新的订阅。一些列操作完成之后，开始下一个watcher的依赖收集。</p>
-<p>#####user watcher</p>
-<p>在初始化数据的时候， 如果组件中有使用watch监听属性，会执行initWatch方法，一个watch属性对应生成一个user watcher。创建user watcher实例之后，会马上执行实例的get方法。</p>
+<h5 id="user-watcher"><a href="#user-watcher" class="headerlink" title="user watcher"></a>user watcher</h5><p>在初始化数据的时候， 如果组件中有使用watch监听属性，会执行initWatch方法，一个watch属性对应生成一个user watcher。创建user watcher实例之后，会马上执行实例的get方法。</p>
 <p>在get方法中也会将当前的watcher压入watcher栈中，并将依赖管理器Dep的静态属性target赋值为当前watcher。</p>
 <p>执行当前watcher实例的getter方法，这个getter方法是在创建实例的时候执行parsePath方法返回的一个方法，会从Vue实例中获取到当前watch属性的值。因为watch的属性都是响应式数据，所以取值的时候会执行数据的getter方法。</p>
 <p>在getter方法中，除了取值还做了依赖收集的工作。判断Dep.target是否存在，如果存在就执行dep实例的depend方法，而dep.depend方法中调用的是当前watcher的addDep方法。</p>
