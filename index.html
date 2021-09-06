@@ -183,7 +183,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-09-06 09:04:50" itemprop="dateModified" datetime="2021-09-06T09:04:50+08:00">2021-09-06</time>
+                <time title="Modified: 2021-09-06 09:06:58" itemprop="dateModified" datetime="2021-09-06T09:06:58+08:00">2021-09-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -242,11 +242,7 @@
 <h4 id="三大阶段详述"><a href="#三大阶段详述" class="headerlink" title="三大阶段详述"></a>三大阶段详述</h4><p>日常开发中绝大部分的异步任务都是在poll、check、timer这三个阶段，重点分析一下。</p>
 <h5 id="timer"><a href="#timer" class="headerlink" title="timer"></a>timer</h5><p>timer阶段会执行setTimeout、setInterval里面的回调函数，并且是由poll阶段控制的。在Node中定时器指定的时间也不是准确时间，只能是尽快执行。</p>
 <h5 id="check"><a href="#check" class="headerlink" title="check"></a>check</h5><p>setImmediate()回调函数在这里执行。</p>
-<h5 id="poll"><a href="#poll" class="headerlink" title="poll"></a>poll</h5><p>poll阶段是一个至关重要的阶段，执行逻辑相对复杂，具体流程如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">graph LR </span><br><span class="line"> A[poll] --&gt; B&#123;是否存在定时器且时间到了&#125;</span><br><span class="line"> B --&gt;|是| C[timers]</span><br><span class="line"> B --&gt;|否| D&#123;poll队列是否有回调函数&#125;</span><br><span class="line"> D --&gt;|是| E[拿出队列中的方法依次执行]</span><br><span class="line"> D --&gt;|否| F&#123;setImmediate回调是否需要执行&#125;</span><br><span class="line"> F --&gt;|是| G[进入check阶段执行回调]</span><br><span class="line"> F --&gt;|否| H&#123;等待回调被加入到队列中并立即执行回调&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
+<h5 id="poll"><a href="#poll" class="headerlink" title="poll"></a>poll</h5><p>poll阶段是一个至关重要的阶段，执行逻辑相对复杂，具体流程如下。</p>
 <p>在这一阶段中，系统会做两件事情：</p>
 <ol>
 <li>回到timer阶段执行回调：设定了timer且poll队列为空，如果有timer超时，则会回到timer阶段；</li>
