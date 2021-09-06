@@ -177,7 +177,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-09-06 11:37:22 / Modified: 20:43:00" itemprop="dateCreated datePublished" datetime="2021-09-06T11:37:22+08:00">2021-09-06</time>
+              <time title="Created: 2021-09-06 11:37:22 / Modified: 20:47:29" itemprop="dateCreated datePublished" datetime="2021-09-06T11:37:22+08:00">2021-09-06</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -259,7 +259,7 @@
 <li>异步http请求线程（多个）</li>
 </ul>
 <h5 id="GUI渲染线程"><a href="#GUI渲染线程" class="headerlink" title="GUI渲染线程"></a>GUI渲染线程</h5><p>主要负责页面的渲染，解析HTML、CSS，构建DOM树，布局和绘制等。当界面需要重绘或重排时，会执行该线程。</p>
-<p>⚠️渲染线程跟JS引擎线程互斥，当执行JS引擎线程时，GUI渲染会被挂起。当任务队列空闲时，才会执行GUI渲染。互斥的原因是因为，JS是可以操作DOM的，边操作边渲染会出现问题。</p>
+<p>⚠️渲染线程跟JS引擎线程互斥，当执行JS引擎线程时，GUI渲染会被挂起。当任务队列空闲时，才会执行GUI渲染。互斥的原因是因为，JS是可以操作DOM的，边操作边渲染会出现问题，js被设计成单线程也是这个原因。</p>
 <h5 id="JS引擎线程"><a href="#JS引擎线程" class="headerlink" title="JS引擎线程"></a>JS引擎线程</h5><p>同步任务和异步任务都由该线程执行。如果JS引擎执行脚本的时间过长，将导致页面渲染阻塞。</p>
 <h5 id="定时器触发线程"><a href="#定时器触发线程" class="headerlink" title="定时器触发线程"></a>定时器触发线程</h5><p>主要负责执行异步定时器一类的函数，如setTimeOut、setInterval。主线程按顺序执行代码时，遇见定时器，会将定时器交给该线程处理。当计时完毕后，通过事件触发线程将技术完毕后的事件加入到任务队列的尾部，等待JS引擎线程执行。</p>
 <h5 id="事件触发线程"><a href="#事件触发线程" class="headerlink" title="事件触发线程"></a>事件触发线程</h5><p>主要负责将准备好的事件交给JS引擎线程执行。也就是将已经准备好的异步回调函数添加到任务队列的队尾。</p>
