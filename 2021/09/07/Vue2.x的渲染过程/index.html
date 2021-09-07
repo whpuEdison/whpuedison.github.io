@@ -20,20 +20,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="1.主文件 babelParse.js 12345678910111213141516171819202122232425262728const &amp;#123; getOptions &amp;#125; &#x3D; require(&amp;#x27;loader-utils&amp;#x27;)const &amp;#123; validate &amp;#125; &#x3D; require(&amp;#x27;schema-utils&amp;#x27;)con">
+  <meta name="description" content="new Vue 之后执行一系列的初始化操作，如合并配置，初始化生命周期，初始化事件中心，初始化渲染，初始化inject、props、method、data、computed、watch、privide等等。 初始化完成之后，对Vue实例进行挂载。挂载时会判断是否有render函数，如果是el和template转换成render方法，执行render方法会生成VNode tree，也就是VDOM。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="手写一个Loader">
-<meta property="og:url" content="http://example.com/2021/08/16/%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AALoader/index.html">
+<meta property="og:title" content="Vue2.x的渲染过程">
+<meta property="og:url" content="http://example.com/2021/09/07/Vue2.x%E7%9A%84%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B/index.html">
 <meta property="og:site_name" content="上任鹅城">
-<meta property="og:description" content="1.主文件 babelParse.js 12345678910111213141516171819202122232425262728const &amp;#123; getOptions &amp;#125; &#x3D; require(&amp;#x27;loader-utils&amp;#x27;)const &amp;#123; validate &amp;#125; &#x3D; require(&amp;#x27;schema-utils&amp;#x27;)con">
+<meta property="og:description" content="new Vue 之后执行一系列的初始化操作，如合并配置，初始化生命周期，初始化事件中心，初始化渲染，初始化inject、props、method、data、computed、watch、privide等等。 初始化完成之后，对Vue实例进行挂载。挂载时会判断是否有render函数，如果是el和template转换成render方法，执行render方法会生成VNode tree，也就是VDOM。">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-08-15T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-08-20T07:11:30.219Z">
+<meta property="article:published_time" content="2021-09-07T00:47:39.686Z">
+<meta property="article:modified_time" content="2021-09-07T00:48:47.845Z">
 <meta property="article:author" content="马帅傅">
-<meta property="article:tag" content="loader">
+<meta property="article:tag" content="渲染">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2021/08/16/%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AALoader/">
+<link rel="canonical" href="http://example.com/2021/09/07/Vue2.x%E7%9A%84%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B/">
 
 
 <script id="page-configurations">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>手写一个Loader | 上任鹅城</title>
+  <title>Vue2.x的渲染过程 | 上任鹅城</title>
   
 
 
@@ -156,7 +156,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/16/%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AALoader/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/07/Vue2.x%E7%9A%84%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -169,7 +169,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          手写一个Loader
+          Vue2.x的渲染过程
         </h1>
 
         <div class="post-meta">
@@ -178,28 +178,22 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2021-08-16 00:00:00" itemprop="dateCreated datePublished" datetime="2021-08-16T00:00:00+08:00">2021-08-16</time>
+              <time title="Created: 2021-09-07 08:47:39 / Modified: 08:48:47" itemprop="dateCreated datePublished" datetime="2021-09-07T08:47:39+08:00">2021-09-07</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-08-20 15:11:30" itemprop="dateModified" datetime="2021-08-20T15:11:30+08:00">2021-08-20</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/webpack/" itemprop="url" rel="index"><span itemprop="name">webpack</span></a>
+                  <a href="/categories/vue/" itemprop="url" rel="index"><span itemprop="name">vue</span></a>
                 </span>
             </span>
 
           
-            <span id="/2021/08/16/%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AALoader/" class="post-meta-item leancloud_visitors" data-flag-title="手写一个Loader" title="Views">
+            <span id="/2021/09/07/Vue2.x%E7%9A%84%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B/" class="post-meta-item leancloud_visitors" data-flag-title="Vue2.x的渲染过程" title="Views">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -214,8 +208,8 @@
       </span>
       <span class="post-meta-item-text">Valine: </span>
     
-    <a title="valine" href="/2021/08/16/%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AALoader/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/08/16/%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AALoader/" itemprop="commentCount"></span>
+    <a title="valine" href="/2021/09/07/Vue2.x%E7%9A%84%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/09/07/Vue2.x%E7%9A%84%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -230,15 +224,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>1.主文件 babelParse.js</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; getOptions &#125; = <span class="built_in">require</span>(<span class="string">&#x27;loader-utils&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> &#123; validate &#125; = <span class="built_in">require</span>(<span class="string">&#x27;schema-utils&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> &#123; transform&#125; = <span class="built_in">require</span>(<span class="string">&#x27;@babel/core&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> &#123; promisify &#125; = <span class="built_in">require</span>(<span class="string">&#x27;util&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将回调函数转换为基于promise的函数</span></span><br><span class="line"><span class="keyword">const</span> transformAsync = promisify(transform)</span><br><span class="line"><span class="comment">// 校验配置</span></span><br><span class="line"><span class="keyword">const</span> babelSchema = <span class="built_in">require</span>(<span class="string">&#x27;./schemas/babelSchema.js&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Loader通常是一个函数</span></span><br><span class="line"><span class="comment"> * source: 对于第一个执行的loader为资源的内容，非第一个执行的loader为上一个loader的执行结果</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment">module.exports = function (source) &#123;</span></span><br><span class="line"><span class="comment">    // 获取loader的配置</span></span><br><span class="line"><span class="comment">    const options = getOptions(this)</span></span><br><span class="line"><span class="comment">    // 校验配置：成功时往下运行，失败时停止运行报出错误</span></span><br><span class="line"><span class="comment">    validate(babelSchema, options, &#123;</span></span><br><span class="line"><span class="comment">        name: &#x27;babelLoader&#x27;</span></span><br><span class="line"><span class="comment">    &#125;)</span></span><br><span class="line"><span class="comment">    // 异步返回结果</span></span><br><span class="line"><span class="comment">    const callBack = this.async()</span></span><br><span class="line"><span class="comment">    // 调用transform方法进行转码并返回</span></span><br><span class="line"><span class="comment">    transformAsync(source, options)</span></span><br><span class="line"><span class="comment">        .then((&#123; code &#125;) =&gt; callBack(null, code))</span></span><br><span class="line"><span class="comment">        .catch(err =&gt; &#123;callBack(err)&#125;)</span></span><br><span class="line"><span class="comment">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<p>2.校验文件 babelSchema.js</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="attr">type</span>: <span class="string">&#x27;object&#x27;</span>,</span><br><span class="line">    <span class="attr">properties</span>: &#123;</span><br><span class="line">        <span class="attr">presets</span>: &#123;</span><br><span class="line">            <span class="attr">type</span>: <span class="string">&#x27;array&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 是否可以有未定义的附加属性</span></span><br><span class="line">    <span class="attr">addtionalProperty</span>: <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>3.webpack配置文件 webpack.config.js</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="attr">module</span>: &#123;</span><br><span class="line">   <span class="attr">rules</span>: [ </span><br><span class="line">     &#123; </span><br><span class="line">       <span class="attr">test</span>: <span class="regexp">/\.js$/</span>, </span><br><span class="line">       use: &#123; </span><br><span class="line">         <span class="attr">loader</span>: <span class="string">&#x27;babelParse.js&#x27;</span>, </span><br><span class="line">         <span class="comment">// 配置参数</span></span><br><span class="line">         <span class="attr">options</span>: &#123; </span><br><span class="line">           <span class="attr">presets</span>: [<span class="string">&#x27;@babel/preset-env&#x27;</span>] </span><br><span class="line">         &#125; </span><br><span class="line">       &#125;</span><br><span class="line">     &#125;</span><br><span class="line">   ]</span><br><span class="line"> &#125;,</span><br><span class="line"> <span class="attr">resolveLoader</span>: &#123;</span><br><span class="line">   <span class="comment">// 寻找loader所在位置</span></span><br><span class="line">   <span class="attr">modules</span>: [<span class="string">&#x27;node_modules&#x27;</span>, path.resolve(__dirname, <span class="string">&#x27;loaders/&#x27;</span>)]</span><br><span class="line"> &#125;,</span><br><span class="line"> ...</span><br></pre></td></tr></table></figure>
-
+        <p>new Vue 之后执行一系列的初始化操作，如合并配置，初始化生命周期，初始化事件中心，初始化渲染，初始化inject、props、method、data、computed、watch、privide等等。</p>
+<p>初始化完成之后，对Vue实例进行挂载。挂载时会判断是否有render函数，如果是el和template转换成render方法，执行render方法会生成VNode tree，也就是VDOM。</p>
+<p>最后再调用patch方法，将VNode渲染成DOM并完成挂载，实际上整个渲染过程调用的就是原生的DOM API。</p>
 
     </div>
 
@@ -248,7 +236,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/loader/" rel="tag"># loader</a>
+              <a href="/tags/%E6%B8%B2%E6%9F%93/" rel="tag"># 渲染</a>
           </div>
 
         
@@ -257,13 +245,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/08/14/%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AAProxy%E4%BB%A3%E7%90%86/" rel="prev" title="手写一个Proxy代理">
-      <i class="fa fa-chevron-left"></i> 手写一个Proxy代理
+    <a href="/2021/09/06/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/" rel="prev" title="浏览器的进程和线程">
+      <i class="fa fa-chevron-left"></i> 浏览器的进程和线程
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/08/19/Loader%E7%9A%84%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F/" rel="next" title="Loader的执行顺序">
-      Loader的执行顺序 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
