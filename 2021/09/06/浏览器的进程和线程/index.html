@@ -29,7 +29,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://raw.githubusercontent.com/whpuEdison/blog/master/static/images/%E6%B5%8F%E8%A7%88%E5%99%A8%E8%BF%9B%E7%A8%8B.png">
 <meta property="article:published_time" content="2021-09-06T03:37:22.566Z">
-<meta property="article:modified_time" content="2021-09-06T12:47:29.205Z">
+<meta property="article:modified_time" content="2021-09-07T00:17:35.025Z">
 <meta property="article:author" content="马帅傅">
 <meta property="article:tag" content="进程">
 <meta property="article:tag" content="线程">
@@ -181,10 +181,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-09-06 11:37:22 / Modified: 20:47:29" itemprop="dateCreated datePublished" datetime="2021-09-06T11:37:22+08:00">2021-09-06</time>
+              <time title="Created: 2021-09-06 11:37:22" itemprop="dateCreated datePublished" datetime="2021-09-06T11:37:22+08:00">2021-09-06</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-09-07 08:17:35" itemprop="dateModified" datetime="2021-09-07T08:17:35+08:00">2021-09-07</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -244,17 +250,19 @@
 </li>
 <li>GPU进程：使用初衷是为了实现3D CSS的效果，后面随着网页、Chrome的UI界面都选择用GPU来绘制，使得GPU成为了浏览器普遍的需求。</li>
 <li>Network Service：网络进程，主要负责页面的网络资源加载，之前是作为一个模块运行在浏览器进程里面。</li>
-<li>Storage Service：缓存进程；</li>
+<li>Storage Service：控制文件读写的存储线程；</li>
 <li>Audio Service：音频进程；</li>
-<li>渲染进程：核心任务是将HTML、CSS和javascript转换为用户可以与之交互的网页，排版引擎Blink和javascript引擎V8都是运行在该进程中。默认情况下，Chrome会为每个Tab标签创建一个渲染进程。处于安全考虑，渲染进程都是运行在沙箱模式下。渲染进程中主要包含以下线程：<ul>
-<li>主线程 Main thread</li>
-<li>工作线程 Worker thread</li>
-<li>排版线程 Compositor thread</li>
-<li>光栅线程 Raster thread</li>
+<li>渲染进程：核心任务是将HTML、CSS和javascript转换为用户可以与之交互的网页，排版引擎Blink和javascript引擎V8都是运行在该进程中。默认情况下，Chrome会为每个Tab标签创建一个渲染进程，当进程数达到一定的界限后，Chrome会将访问同一个网站的tab都放在一个进程里面跑。处于安全考虑，渲染进程都是运行在沙箱模式下。渲染进程中主要包含以下线程：<ul>
+<li>主线程 Main thread：对几个常驻线程的调用，执行大多数的代码。</li>
+<li>工作线程 Worker thread：web worker和service worker相关的代码由该进程处理。</li>
+<li>光栅线程 Raster thread：将文档结构、元素的样式、元素的几何位置以及绘画顺序这些信息转化为显示器的像素的过程叫做光栅化。</li>
+<li>合成线程 Compositor thread：将页面分成若干层，分别进行光栅化，光栅化之前合成线程需要将页面的一层切分成一块又一块小图块，光栅线程会栅格化每个图块并将它们储存在GPU的内存中。最后在合成线程中合并成一个页面。当页面的层超过一定的数量后，层的合成操作要比每个帧中光栅化页面的一小部分还要慢。</li>
 </ul>
 </li>
 <li>插件进程：虽然图上没有，也可以了解一下。主要负责插件的运行，用来保证插件进程崩溃不会对浏览器和页面造成影响。</li>
 </ol>
+<p>⚠️Network Service、Storage Service和Audio Service这些服务本来是在浏览器进程里面的，后来将这些模块拆分为了一个个不同的服务，这个过程也叫做Chrome服务化。服务化之后，这些功能既可以放在不同的进程里运行，也可以合并为一个单独的进程运行。</p>
+<p>这样做主要是为了让Chrome在不同性能的硬件上有不同的表现。当Chrome运行在一些性能比较好的硬件时，浏览器进程香港的服务会放在不同的进程中运行来提高系统的稳定性。如果硬件性能不好，这些服务就被放在同一个进程里面执行来减少内存的占用。</p>
 <h4 id="渲染进程中的线程"><a href="#渲染进程中的线程" class="headerlink" title="渲染进程中的线程"></a>渲染进程中的线程</h4><p>渲染进程也称为浏览器内核，浏览器内核通过取得页面内容，整理信息、计算组合最终输出可视化的图像结果，通常也被称为渲染引擎。</p>
 <p>浏览器内核是多线程，在内核控制下各个线程相互配合，一个浏览器通常由以下常驻线程组成：</p>
 <ul>
