@@ -28,7 +28,7 @@
 <meta property="og:description" content="数组响应式的限制Vue对数组响应式的处理可以分为两个方面来理解：  对数组项的以下7个操作方法做了重写，当数组使用下面方法改变了数组的值，Vue会派发更新通知依赖数组的watcher。 push  pop  shift  unshift  splice  sort  reverse   数组项的值如果是对象，会对对象属性进行数据劫持实现响应式，完全走的就是对普通对象属性进行依赖收集，派发更新那一套">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-09-07T02:25:01.042Z">
-<meta property="article:modified_time" content="2021-09-08T07:27:10.022Z">
+<meta property="article:modified_time" content="2021-09-08T07:35:37.505Z">
 <meta property="article:author" content="马帅傅">
 <meta property="article:tag" content="数组">
 <meta property="article:tag" content="响应式">
@@ -187,7 +187,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-09-08 15:27:10" itemprop="dateModified" datetime="2021-09-08T15:27:10+08:00">2021-09-08</time>
+                <time title="Modified: 2021-09-08 15:35:37" itemprop="dateModified" datetime="2021-09-08T15:35:37+08:00">2021-09-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -260,7 +260,7 @@
 </ol>
 <p>与其说Vue不能检测上面两种方式的变化，不如说Vue不想检测，尤大给的原因是性能代价和获得的用户体验收益不成正比。其实也好理解，对数据项直接赋值和修改数组的长度这两种方式都太不可控了。</p>
 <h4 id="数组响应式的实现"><a href="#数组响应式的实现" class="headerlink" title="数组响应式的实现"></a>数组响应式的实现</h4><p>在对数组类型的数据进行响应式处理之前，先往数组上绑定了数原型上有的一些方法和属性。这些方法和属性中有7个方法是被Vue做了重写的。因为这7个方法会改变数组本身的值，而Vue根本就没有对数组项这个维度进行响应式处理，所以不会触发数组的setter方法。</p>
-<p>为了处理这种情况，使数组在用的这7种方法改变值的时候会触发依赖更新，Vue讲这几个方法做了一个重写。</p>
+<p>为了处理这种情况，使数组在用的这7种方法改变值的时候会触发依赖更新，Vue将这几个方法做了一个重写。</p>
 <p>其中pop、shift、sort、reverse四个方法，因为没有添加数组项，所以重写的步骤很简单，就是执行方法、手动派发更新和返回方法的结果值。</p>
 <p>而push、unshift和splice方法因为添加了数据项，所以重写的步骤多了一项，简单来讲就是执行方法、将新增的数据项进行响应式处理、手动派发更新和返回方法的结果值。</p>
 <p>往目标数组中绑定这些方法和属性时，根据浏览器是否支持__proto__，分为了两种处理方法。</p>
