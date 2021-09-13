@@ -152,6 +152,118 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/10/JS%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="马帅傅">
+      <meta itemprop="description" content="道阻且长,行则将至">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上任鹅城">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/08/10/JS%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/" class="post-title-link" itemprop="url">JS抽象语法树</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-08-10 00:00:00" itemprop="dateCreated datePublished" datetime="2021-08-10T00:00:00+08:00">2021-08-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-08-18 19:06:34" itemprop="dateModified" datetime="2021-08-18T19:06:34+08:00">2021-08-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index"><span itemprop="name">javascript</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2021/08/10/JS%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/" class="post-meta-item leancloud_visitors" data-flag-title="JS抽象语法树" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2021/08/10/JS%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/08/10/JS%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>babel是现在几乎每个项目中必备的一个东西，但是其工作原理避不开对js的解析在生成的过程，babel有引擎babylon，早期fork了项目acron，了解这个之前我们先来看看这种引擎解析出来是什么东西。不光是babel还有webpack等都是通过javascript parser将代码转化成抽象语法树，这棵树定义了代码本身，通过操作这颗树，可以精准的定位到赋值语句、声明语句和运算语句。</p>
+<h3 id="什么是抽象语法树"><a href="#什么是抽象语法树" class="headerlink" title="什么是抽象语法树"></a>什么是抽象语法树</h3><p>我们可以来看一个简单的例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">var</span> b = a + <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<p>我们通过这个网站，他是一个esprima引擎的网站，十分好用.画成流程图如下：</p>
+<p><img src="https://raw.githubusercontent.com/whpuEdison/blog/master/static/images/ast.png" alt="img"></p>
+<p>而他的json对象格式是这样的：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;type&quot;</span>: <span class="string">&quot;Program&quot;</span>,</span><br><span class="line">    <span class="string">&quot;body&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">&quot;type&quot;</span>: <span class="string">&quot;VariableDeclaration&quot;</span>,</span><br><span class="line">            <span class="string">&quot;declarations&quot;</span>: [</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="string">&quot;type&quot;</span>: <span class="string">&quot;VariableDeclarator&quot;</span>,</span><br><span class="line">                    <span class="string">&quot;id&quot;</span>: &#123;</span><br><span class="line">                        <span class="string">&quot;type&quot;</span>: <span class="string">&quot;Identifier&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;name&quot;</span>: <span class="string">&quot;a&quot;</span></span><br><span class="line">                    &#125;,</span><br><span class="line">                    <span class="string">&quot;init&quot;</span>: &#123;</span><br><span class="line">                        <span class="string">&quot;type&quot;</span>: <span class="string">&quot;Literal&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;value&quot;</span>: <span class="number">1</span>,</span><br><span class="line">                        <span class="string">&quot;raw&quot;</span>: <span class="string">&quot;1&quot;</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            ],</span><br><span class="line">            <span class="string">&quot;kind&quot;</span>: <span class="string">&quot;var&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">&quot;type&quot;</span>: <span class="string">&quot;VariableDeclaration&quot;</span>,</span><br><span class="line">            <span class="string">&quot;declarations&quot;</span>: [</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="string">&quot;type&quot;</span>: <span class="string">&quot;VariableDeclarator&quot;</span>,</span><br><span class="line">                    <span class="string">&quot;id&quot;</span>: &#123;</span><br><span class="line">                        <span class="string">&quot;type&quot;</span>: <span class="string">&quot;Identifier&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;name&quot;</span>: <span class="string">&quot;b&quot;</span></span><br><span class="line">                    &#125;,</span><br><span class="line">                    <span class="string">&quot;init&quot;</span>: &#123;</span><br><span class="line">                        <span class="string">&quot;type&quot;</span>: <span class="string">&quot;BinaryExpression&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;operator&quot;</span>: <span class="string">&quot;+&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;left&quot;</span>: &#123;</span><br><span class="line">                            <span class="string">&quot;type&quot;</span>: <span class="string">&quot;Identifier&quot;</span>,</span><br><span class="line">                            <span class="string">&quot;name&quot;</span>: <span class="string">&quot;a&quot;</span></span><br><span class="line">                        &#125;,</span><br><span class="line">                        <span class="string">&quot;right&quot;</span>: &#123;</span><br><span class="line">                            <span class="string">&quot;type&quot;</span>: <span class="string">&quot;Literal&quot;</span>,</span><br><span class="line">                            <span class="string">&quot;value&quot;</span>: <span class="number">1</span>,</span><br><span class="line">                            <span class="string">&quot;raw&quot;</span>: <span class="string">&quot;1&quot;</span></span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            ],</span><br><span class="line">            <span class="string">&quot;kind&quot;</span>: <span class="string">&quot;var&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="string">&quot;sourceType&quot;</span>: <span class="string">&quot;script&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="AST的三板斧"><a href="#AST的三板斧" class="headerlink" title="AST的三板斧"></a>AST的三板斧</h3><ul>
+<li><p>通过esprima生成AST</p>
+</li>
+<li><p>通过estraverse遍历和更新AST</p>
+</li>
+<li><p>通过escodegen将AST重新生成源码</p>
+</li>
+</ul>
+<h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><p>抽象语法树的作用非常的多，比如编译器、IDE、压缩优化代码等。在JavaScript中，虽然我们并不会常常与AST直接打交道，但却也会经常的涉及到它。例如使用UglifyJS来压缩代码，实际这背后就是在对JavaScript的抽象语法树进行操作。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/08/%E8%AF%8D%E6%B3%95%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E5%8A%A8%E6%80%81%E4%BD%9C%E7%94%A8%E5%9F%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1142,213 +1254,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/26/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E9%87%8D%E6%8E%92%E5%92%8C%E9%87%8D%E7%BB%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="马帅傅">
-      <meta itemprop="description" content="道阻且长,行则将至">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上任鹅城">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/07/26/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E9%87%8D%E6%8E%92%E5%92%8C%E9%87%8D%E7%BB%98/" class="post-title-link" itemprop="url">浏览器的重排和重绘</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-07-26 00:00:00" itemprop="dateCreated datePublished" datetime="2021-07-26T00:00:00+08:00">2021-07-26</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-08-18 19:03:48" itemprop="dateModified" datetime="2021-08-18T19:03:48+08:00">2021-08-18</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">浏览器</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2021/07/26/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E9%87%8D%E6%8E%92%E5%92%8C%E9%87%8D%E7%BB%98/" class="post-meta-item leancloud_visitors" data-flag-title="浏览器的重排和重绘" title="Views">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">Views: </span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine: </span>
-    
-    <a title="valine" href="/2021/07/26/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E9%87%8D%E6%8E%92%E5%92%8C%E9%87%8D%E7%BB%98/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/07/26/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E9%87%8D%E6%8E%92%E5%92%8C%E9%87%8D%E7%BB%98/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="网页的生成过程是怎样的？"><a href="#网页的生成过程是怎样的？" class="headerlink" title="网页的生成过程是怎样的？"></a>网页的生成过程是怎样的？</h3><p><img src="https://raw.githubusercontent.com/whpuEdison/blog/master/static/images/%E9%87%8D%E6%8E%92%E5%92%8C%E9%87%8D%E7%BB%98.png" alt="img"></p>
-<p>在这个过程中：</p>
-<ol>
-<li><p>HTML 被 HTML 解析器解析成 DOM 树</p>
-</li>
-<li><p>CSS 则被 CSS 解析器解析成 CSSOM 树</p>
-</li>
-<li><p>结合 DOM 树和 CSSOM 树，生成一棵渲染树（Render Tree）</p>
-</li>
-<li><p>生成布局（flow），即将所有渲染树的所有节点进行平面合成</p>
-</li>
-<li><p>将布局绘制（paint）在屏幕上</p>
-</li>
-</ol>
-<p>其中，第 4 步和第 5 步是最耗时的部分，这两步合起来就是我们通常所说的渲染。在网页生成的过程中，至少会渲染一次；并且，在用户操作界面的过程中，还会不断地重新渲染。也就是会不断地发生重排和重绘。</p>
-<h3 id="什么是重排"><a href="#什么是重排" class="headerlink" title="什么是重排?"></a>什么是重排?</h3><p>当渲染树 Render tree 中的一部分（或全部）因为 DOM 的变化<strong>影响了元素的几何信息</strong>（DOM 对象的位置和尺寸大小），浏览器需要重新计算元素的几何属性，并将其安放在界面中的正确位置，这个过程就称为重排（reflow），重排也叫作回流。</p>
-<h3 id="什么是重绘？"><a href="#什么是重绘？" class="headerlink" title="什么是重绘？"></a>什么是重绘？</h3><p>当渲染树 Render tree 中的一些元素需要更新属性，而这些属性<strong>只是影响元素的外观，而没有影响到布局，</strong>例如改变 visibility、outline、背景色等属性，浏览器会根据元素的新属性重新绘制，使元素呈现新的外观，这个过程就称为重绘（repaint）。</p>
-<h3 id="重排与重绘的关系是怎样的？"><a href="#重排与重绘的关系是怎样的？" class="headerlink" title="重排与重绘的关系是怎样的？"></a>重排与重绘的关系是怎样的？</h3><p><strong>重绘不会引起重排，但重排一定会引起重绘</strong>。一个元素的重排通常会带来一系列的反应，甚至触发整个文档的重排和重绘，性能代价是高昂的。</p>
-<h3 id="什么情况会触发重排和重绘？"><a href="#什么情况会触发重排和重绘？" class="headerlink" title="什么情况会触发重排和重绘？"></a>什么情况会触发重排和重绘？</h3><h4 id="1、触发重排的条件"><a href="#1、触发重排的条件" class="headerlink" title="1、触发重排的条件"></a>1、触发重排的条件</h4><ul>
-<li><p>页面渲染初始化时；（这个无法避免）</p>
-</li>
-<li><p>浏览器窗口改变尺寸；</p>
-</li>
-<li><p>元素尺寸改变时；</p>
-</li>
-<li><p>元素位置改变时；</p>
-</li>
-<li><p>元素内容改变时；</p>
-</li>
-<li><p>添加或删除可见的 DOM 元素时。</p>
-</li>
-</ul>
-<h4 id="2、触发重绘的条件"><a href="#2、触发重绘的条件" class="headerlink" title="2、触发重绘的条件"></a>2、触发重绘的条件</h4><p>常见的引起重绘的属性：</p>
-<ul>
-<li><p>color</p>
-</li>
-<li><p>border-style</p>
-</li>
-<li><p>visibility</p>
-</li>
-<li><p>background  </p>
-</li>
-<li><p>text-decoration</p>
-</li>
-<li><p>background-image</p>
-</li>
-<li><p>background-position</p>
-</li>
-<li><p>background-repeat  </p>
-</li>
-<li><p>outline-color</p>
-</li>
-<li><p>outline</p>
-</li>
-<li><p>outline-style</p>
-</li>
-<li><p>border-radius  </p>
-</li>
-<li><p>outline-width</p>
-</li>
-<li><p>box-shadow</p>
-</li>
-<li><p>background-size</p>
-</li>
-</ul>
-<h3 id="display-none-和-visibility-hidden-有什么区别？"><a href="#display-none-和-visibility-hidden-有什么区别？" class="headerlink" title="display: none 和 visibility: hidden 有什么区别？"></a>display: none 和 visibility: hidden 有什么区别？</h3><ul>
-<li>通过 display: none 隐藏一个 DOM 节点，会触发重排和重绘；</li>
-<li>通过 visibility: hidden 隐藏一个 DOM 节点，只触发重绘，因为没有几何变化。</li>
-</ul>
-<h3 id="浏览器的渲染队列是什么意思？"><a href="#浏览器的渲染队列是什么意思？" class="headerlink" title="浏览器的渲染队列是什么意思？"></a>浏览器的渲染队列是什么意思？</h3><p>当我们修改了元素的几何属性，导致浏览器触发重排或重绘时，它会把该操作放进渲染队列，等到队列中的操作到了一定的数量或者到了一定的时间间隔时，浏览器就会批量执行这些操作。</p>
-<p>以下代码将会触发几次渲染？</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">div.style.left = <span class="string">&#x27;10px&#x27;</span>;</span><br><span class="line">div.style.top = <span class="string">&#x27;10px&#x27;</span>;</span><br><span class="line">div.style.width = <span class="string">&#x27;20px&#x27;</span>;</span><br><span class="line">div.style.height = <span class="string">&#x27;20px&#x27;</span>;</span><br></pre></td></tr></table></figure>
-
-<p>根据前面的描述，这段代码理论上会触发4次重排+重绘，因为每一次都改变了元素的几何属性。但实际上最后只触发了一次重排，这都得益于浏览器的渲染队列机制。</p>
-<p>但是如果我们像下面这样：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">div.style.left = <span class="string">&#x27;10px&#x27;</span>;</span><br><span class="line"><span class="built_in">console</span>.log(div.offsetLeft);</span><br><span class="line">div.style.top = <span class="string">&#x27;10px&#x27;</span>;</span><br><span class="line"><span class="built_in">console</span>.log(div.offsetTop);</span><br><span class="line">div.style.width = <span class="string">&#x27;20px&#x27;</span>;</span><br><span class="line"><span class="built_in">console</span>.log(div.offsetWidth);</span><br><span class="line">div.style.height = <span class="string">&#x27;20px&#x27;</span>;</span><br><span class="line"><span class="built_in">console</span>.log(div.offsetHeight);</span><br></pre></td></tr></table></figure>
-
-<p>这段代码就会触发4次重排+重绘，因为在 console 中请求了这几个样式信息，无论何时浏览器都会立即执行渲染队列的任务（强制刷新队列），即使该值与操作中修改的值没关联。</p>
-<p>强制刷新队列的 style 样式请求：</p>
-<ul>
-<li><p>offsetTop、offsetLeft、offsetWidth、offsetHeight</p>
-</li>
-<li><p>scrollTop、scrollLeft、scrollWidth、scrollHeight</p>
-</li>
-<li><p>clientTop、clientLeft、clientWidth、clientHeight</p>
-</li>
-<li><p>getComputedStyle()、 或者 IE 的 currentStyle</p>
-</li>
-</ul>
-<p>我们在开发中应当避免这些能够强制刷新队列的操作。</p>
-<h3 id="如何优化重排？"><a href="#如何优化重排？" class="headerlink" title="如何优化重排？"></a>如何优化重排？</h3><h4 id="1、读写分离"><a href="#1、读写分离" class="headerlink" title="1、读写分离"></a>1、读写分离</h4><p>还是拿上面的强制刷新队列的例子，如果我们改成这样：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">div.style.left = <span class="string">&#x27;10px&#x27;</span>;</span><br><span class="line">div.style.top = <span class="string">&#x27;10px&#x27;</span>;</span><br><span class="line">div.style.width = <span class="string">&#x27;20px&#x27;</span>;</span><br><span class="line">div.style.height = <span class="string">&#x27;20px&#x27;</span>;</span><br><span class="line"><span class="built_in">console</span>.log(div.offsetLeft);</span><br><span class="line"><span class="built_in">console</span>.log(div.offsetTop);</span><br><span class="line"><span class="built_in">console</span>.log(div.offsetWidth);</span><br><span class="line"><span class="built_in">console</span>.log(div.offsetHeight);</span><br></pre></td></tr></table></figure>
-
-<p>这次只触发了一次重排，因为：在第一个 console 的时候，浏览器把之前上面四个写操作的渲染队列都给清空了；剩下的 console，因为渲染队列本来就是空的，所以并没有触发重排，仅仅拿值而已。</p>
-<h4 id="2、样式集中改变"><a href="#2、样式集中改变" class="headerlink" title="2、样式集中改变"></a>2、样式集中改变</h4><p>将多次改变样式属性的操作合并成一次操作，减少 DOM 访问</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">div.style.left = <span class="string">&#x27;10px&#x27;</span>;</span><br><span class="line">div.style.top = <span class="string">&#x27;10px&#x27;</span>;</span><br><span class="line">div.style.width = <span class="string">&#x27;20px&#x27;</span>;</span><br><span class="line">div.style.height = <span class="string">&#x27;20px&#x27;</span>;</span><br></pre></td></tr></table></figure>
-
-<p>优化：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">el.className += <span class="string">&quot; className&quot;</span>; <span class="comment">// 直接改变 class</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="3、离线操作"><a href="#3、离线操作" class="headerlink" title="3、离线操作"></a>3、离线操作</h4><p>如果要批量添加 DOM，可以让要操作的元素进行「离线处理」，处理完后一起更新。离线处理的意思是：</p>
-<ul>
-<li><p>隐藏要操作的 DOM</p>
-</li>
-<li><p>在要操作 DOM 之前，通过 display 属性隐藏 DOM，当操作完成之后，再将元素的 display 属性为可见，因为不可见的元素不会触发重排和重绘。</p>
-</li>
-<li><p>通过使用 DocumentFragment 创建一个DOM 碎片，在它上面批量操作 DOM，操作完成之后，再添加到文档中，这样只会触发一次重排。</p>
-</li>
-</ul>
-<h4 id="4、position-属性的应用"><a href="#4、position-属性的应用" class="headerlink" title="4、position 属性的应用"></a>4、position 属性的应用</h4><p>将需要多次重排的元素，position 属性设为 absolute 或 fixed，这样此元素就脱离了文档流，它的变化不会影响到其他元素。例如有动画效果的元素就最好设置为绝对定位。</p>
-<h4 id="5、在内存中构建"><a href="#5、在内存中构建" class="headerlink" title="5、在内存中构建"></a>5、在内存中构建</h4><p>在内存中多次操作节点，完成后再添加到文档中去。例如要异步获取表格数据，渲染到页面。可以先取得数据后在内存中构建整个表格的 html 片段，再一次性添加到文档中去，而不是直接操作 DOM，循环添加每一行。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1419,7 +1324,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-count">37</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1432,7 +1337,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-count">45</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
