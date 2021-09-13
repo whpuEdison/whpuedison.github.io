@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="父-&gt;子方式：父组件通过属性的方式给子组件传值，子组件通过props来接受父组件的值。 注意： 如果传递的是个对象的话，只改变下面的某个属性子组件中是不会响应式更新的，如果子组件需要在数据变化时响应式更新，可以用watch深拷贝deep:true监听到变化；  如果你传进来的是个对象，同时你又需要在子组件中操作传进来的这个数据，那么在父组件中的这个数据也会改变，因为传递的只是个引用，可通过将">
+  <meta name="description" content="父-&gt;子方式父组件通过属性的方式给子组件传值，子组件通过props来接受父组件的值。 注意 如果传递的是个对象的话，只改变下面的某个属性子组件中是不会响应式更新的，如果子组件需要在数据变化时响应式更新，可以用watch深拷贝deep:true监听到变化；  如果你传进来的是个对象，同时你又需要在子组件中操作传进来的这个数据，那么在父组件中的这个数据也会改变，因为传递的只是个引用，可通过将对象">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Vue2.x的组件通信">
 <meta property="og:url" content="http://example.com/2021/09/13/Vue2.x%E7%9A%84%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1/index.html">
 <meta property="og:site_name" content="上任鹅城">
-<meta property="og:description" content="父-&gt;子方式：父组件通过属性的方式给子组件传值，子组件通过props来接受父组件的值。 注意： 如果传递的是个对象的话，只改变下面的某个属性子组件中是不会响应式更新的，如果子组件需要在数据变化时响应式更新，可以用watch深拷贝deep:true监听到变化；  如果你传进来的是个对象，同时你又需要在子组件中操作传进来的这个数据，那么在父组件中的这个数据也会改变，因为传递的只是个引用，可通过将">
+<meta property="og:description" content="父-&gt;子方式父组件通过属性的方式给子组件传值，子组件通过props来接受父组件的值。 注意 如果传递的是个对象的话，只改变下面的某个属性子组件中是不会响应式更新的，如果子组件需要在数据变化时响应式更新，可以用watch深拷贝deep:true监听到变化；  如果你传进来的是个对象，同时你又需要在子组件中操作传进来的这个数据，那么在父组件中的这个数据也会改变，因为传递的只是个引用，可通过将对象">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-09-13T09:52:37.140Z">
-<meta property="article:modified_time" content="2021-09-13T10:24:32.126Z">
+<meta property="article:modified_time" content="2021-09-13T10:28:51.781Z">
 <meta property="article:author" content="马帅傅">
 <meta property="article:tag" content="组件通信">
 <meta name="twitter:card" content="summary">
@@ -180,7 +180,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-09-13 17:52:37 / Modified: 18:24:32" itemprop="dateCreated datePublished" datetime="2021-09-13T17:52:37+08:00">2021-09-13</time>
+              <time title="Created: 2021-09-13 17:52:37 / Modified: 18:28:51" itemprop="dateCreated datePublished" datetime="2021-09-13T17:52:37+08:00">2021-09-13</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -224,27 +224,27 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h4 id="父-gt-子"><a href="#父-gt-子" class="headerlink" title="父-&gt;子"></a>父-&gt;子</h4><h5 id="方式："><a href="#方式：" class="headerlink" title="方式："></a>方式：</h5><p>父组件通过属性的方式给子组件传值，子组件通过props来接受父组件的值。</p>
-<h5 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h5><ol>
+        <h4 id="父-gt-子"><a href="#父-gt-子" class="headerlink" title="父-&gt;子"></a>父-&gt;子</h4><h5 id="方式"><a href="#方式" class="headerlink" title="方式"></a>方式</h5><p>父组件通过属性的方式给子组件传值，子组件通过props来接受父组件的值。</p>
+<h5 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h5><ol>
 <li><p>如果传递的是个对象的话，只改变下面的某个属性子组件中是不会响应式更新的，如果子组件需要在数据变化时响应式更新，可以用watch深拷贝deep:true监听到变化；</p>
 </li>
 <li><p>如果你传进来的是个对象，同时你又需要在子组件中操作传进来的这个数据，那么在父组件中的这个数据也会改变，因为传递的只是个引用，可通过将对象做深拷贝创建一个副本解决这个问题。</p>
 </li>
 </ol>
-<h5 id="可以但不建议的操作："><a href="#可以但不建议的操作：" class="headerlink" title="可以但不建议的操作："></a>可以但不建议的操作：</h5><ol>
+<h5 id="可以但不建议的操作"><a href="#可以但不建议的操作" class="headerlink" title="可以但不建议的操作"></a>可以但不建议的操作</h5><ol>
 <li><p>直接用ref调用子组件函数直接把数据以参数的形式传给子组件；</p>
 </li>
 <li><p>$children是一个数组，是直接儿子的集合，不保证顺序，也不是响应式。</p>
 </li>
 </ol>
-<h4 id="子-gt-父"><a href="#子-gt-父" class="headerlink" title="子-&gt;父"></a>子-&gt;父</h4><h5 id="方式：-1"><a href="#方式：-1" class="headerlink" title="方式："></a>方式：</h5><p>子组件通过$emit的操作触发父组件的自定义事件，父组件中监听这个事件并在回调中写相关逻辑。</p>
-<h5 id="可以但不建议的操作：-1"><a href="#可以但不建议的操作：-1" class="headerlink" title="可以但不建议的操作："></a>可以但不建议的操作：</h5><ol>
+<h4 id="子-gt-父"><a href="#子-gt-父" class="headerlink" title="子-&gt;父"></a>子-&gt;父</h4><h5 id="方式-1"><a href="#方式-1" class="headerlink" title="方式"></a>方式</h5><p>子组件通过$emit的操作触发父组件的自定义事件，父组件中监听这个事件并在回调中写相关逻辑。</p>
+<h5 id="可以但不建议的操作-1"><a href="#可以但不建议的操作-1" class="headerlink" title="可以但不建议的操作"></a>可以但不建议的操作</h5><ol>
 <li><p>可以在子组件中定义一种专供父组件调用的函数，当父组件想要获取子组件数据就直接主动调用ref执行这个函数获取数据；</p>
 </li>
 <li><p>$parent是当前组件树的根 Vue 实例，如果当前实例没有父实例，此实例将会是其自己。</p>
 </li>
 </ol>
-<h4 id="兄-gt-弟"><a href="#兄-gt-弟" class="headerlink" title="兄-&gt;弟"></a>兄-&gt;弟</h4><h5 id="方式：-2"><a href="#方式：-2" class="headerlink" title="方式："></a>方式：</h5><ol>
+<h4 id="兄-gt-弟"><a href="#兄-gt-弟" class="headerlink" title="兄-&gt;弟"></a>兄-&gt;弟</h4><h5 id="方式-2"><a href="#方式-2" class="headerlink" title="方式"></a>方式</h5><ol>
 <li><p>路由URL参数：把需要跨页面传递的数据放到url后面，跳转到另外页面时获取url字符串获取想要的参数即可。局限性：只适合传递比较小的数据。</p>
 </li>
 <li><p>EventBus：在组件之外定义一个event-bus.js作为组件间通信的桥梁，也可称之为事件总线。EventBus实现了发布订阅模式，往事件总线里订阅事件用的是on，发布事件用的是emit。</p>
@@ -254,14 +254,14 @@
 
 
 
-<h4 id="祖先-gt-后代"><a href="#祖先-gt-后代" class="headerlink" title="祖先-&gt;后代"></a>祖先-&gt;后代</h4><h5 id="方式：-3"><a href="#方式：-3" class="headerlink" title="方式："></a>方式：</h5><ol>
+<h4 id="祖先-gt-后代"><a href="#祖先-gt-后代" class="headerlink" title="祖先-&gt;后代"></a>祖先-&gt;后代</h4><h5 id="方式-3"><a href="#方式-3" class="headerlink" title="方式"></a>方式</h5><ol>
 <li><p>provide/inject，允许一个祖先组件向其所有子孙后代注入一个依赖，不论组件层次有多深，并在起上下游关系成立的时间里始终生效。</p>
 </li>
 <li><p>$attrs：在子组件中添加v-bind=’$​attrs’，就把父组件传来的子组件没props接收的数据全部传到孙组件，子组件和孙组件都可以用this.$attrs获取。</p>
 </li>
 </ol>
-<h5 id="注意：-1"><a href="#注意：-1" class="headerlink" title="注意："></a>注意：</h5><p>provide 和 inject 绑定并不是可响应的。如果数据类型是对象Object，其对象的属性还是可响应的，因为对象格式数据存储的是指针而不是数据，操作的是同一个对象。</p>
-<h4 id="通用"><a href="#通用" class="headerlink" title="通用"></a>通用</h4><h5 id="方式"><a href="#方式" class="headerlink" title="方式"></a>方式</h5><p>1.Vuex集中状态管理：类似与一个共享数据仓库，所有的组件都可以去操作；</p>
+<h5 id="注意-1"><a href="#注意-1" class="headerlink" title="注意"></a>注意</h5><p>provide 和 inject 绑定并不是可响应的。如果数据类型是对象Object，其对象的属性还是可响应的，因为对象格式数据存储的是指针而不是数据，操作的是同一个对象。</p>
+<h4 id="通用"><a href="#通用" class="headerlink" title="通用"></a>通用</h4><h5 id="方式-4"><a href="#方式-4" class="headerlink" title="方式"></a>方式</h5><p>1.Vuex集中状态管理：类似与一个共享数据仓库，所有的组件都可以去操作；</p>
 <p>2.localStorage，sessionStorage，cooikes之类的存在本地也能做到组件间的通信。</p>
 
     </div>
@@ -344,7 +344,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%88%B6-gt-%E5%AD%90"><span class="nav-number">1.</span> <span class="nav-text">父-&gt;子</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">方式：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%EF%BC%9A"><span class="nav-number">1.2.</span> <span class="nav-text">注意：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%AF%E4%BB%A5%E4%BD%86%E4%B8%8D%E5%BB%BA%E8%AE%AE%E7%9A%84%E6%93%8D%E4%BD%9C%EF%BC%9A"><span class="nav-number">1.3.</span> <span class="nav-text">可以但不建议的操作：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%90-gt-%E7%88%B6"><span class="nav-number">2.</span> <span class="nav-text">子-&gt;父</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%EF%BC%9A-1"><span class="nav-number">2.1.</span> <span class="nav-text">方式：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%AF%E4%BB%A5%E4%BD%86%E4%B8%8D%E5%BB%BA%E8%AE%AE%E7%9A%84%E6%93%8D%E4%BD%9C%EF%BC%9A-1"><span class="nav-number">2.2.</span> <span class="nav-text">可以但不建议的操作：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%84-gt-%E5%BC%9F"><span class="nav-number">3.</span> <span class="nav-text">兄-&gt;弟</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%EF%BC%9A-2"><span class="nav-number">3.1.</span> <span class="nav-text">方式：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A5%96%E5%85%88-gt-%E5%90%8E%E4%BB%A3"><span class="nav-number">4.</span> <span class="nav-text">祖先-&gt;后代</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%EF%BC%9A-3"><span class="nav-number">4.1.</span> <span class="nav-text">方式：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%EF%BC%9A-1"><span class="nav-number">4.2.</span> <span class="nav-text">注意：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%9A%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">通用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F"><span class="nav-number">5.1.</span> <span class="nav-text">方式</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%88%B6-gt-%E5%AD%90"><span class="nav-number">1.</span> <span class="nav-text">父-&gt;子</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F"><span class="nav-number">1.1.</span> <span class="nav-text">方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F"><span class="nav-number">1.2.</span> <span class="nav-text">注意</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%AF%E4%BB%A5%E4%BD%86%E4%B8%8D%E5%BB%BA%E8%AE%AE%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="nav-number">1.3.</span> <span class="nav-text">可以但不建议的操作</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%90-gt-%E7%88%B6"><span class="nav-number">2.</span> <span class="nav-text">子-&gt;父</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F-1"><span class="nav-number">2.1.</span> <span class="nav-text">方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%AF%E4%BB%A5%E4%BD%86%E4%B8%8D%E5%BB%BA%E8%AE%AE%E7%9A%84%E6%93%8D%E4%BD%9C-1"><span class="nav-number">2.2.</span> <span class="nav-text">可以但不建议的操作</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%84-gt-%E5%BC%9F"><span class="nav-number">3.</span> <span class="nav-text">兄-&gt;弟</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F-2"><span class="nav-number">3.1.</span> <span class="nav-text">方式</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A5%96%E5%85%88-gt-%E5%90%8E%E4%BB%A3"><span class="nav-number">4.</span> <span class="nav-text">祖先-&gt;后代</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F-3"><span class="nav-number">4.1.</span> <span class="nav-text">方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F-1"><span class="nav-number">4.2.</span> <span class="nav-text">注意</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%9A%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">通用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F-4"><span class="nav-number">5.1.</span> <span class="nav-text">方式</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
