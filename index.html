@@ -152,6 +152,133 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/13/Vue2.x%E7%9A%84%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="马帅傅">
+      <meta itemprop="description" content="道阻且长,行则将至">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上任鹅城">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/13/Vue2.x%E7%9A%84%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1/" class="post-title-link" itemprop="url">Vue2.x的组件通信</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-09-13 17:52:37 / Modified: 18:24:32" itemprop="dateCreated datePublished" datetime="2021-09-13T17:52:37+08:00">2021-09-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/vue/" itemprop="url" rel="index"><span itemprop="name">vue</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2021/09/13/Vue2.x%E7%9A%84%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1/" class="post-meta-item leancloud_visitors" data-flag-title="Vue2.x的组件通信" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2021/09/13/Vue2.x%E7%9A%84%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/09/13/Vue2.x%E7%9A%84%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="父-gt-子"><a href="#父-gt-子" class="headerlink" title="父-&gt;子"></a>父-&gt;子</h4><h5 id="方式："><a href="#方式：" class="headerlink" title="方式："></a>方式：</h5><p>父组件通过属性的方式给子组件传值，子组件通过props来接受父组件的值。</p>
+<h5 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h5><ol>
+<li><p>如果传递的是个对象的话，只改变下面的某个属性子组件中是不会响应式更新的，如果子组件需要在数据变化时响应式更新，可以用watch深拷贝deep:true监听到变化；</p>
+</li>
+<li><p>如果你传进来的是个对象，同时你又需要在子组件中操作传进来的这个数据，那么在父组件中的这个数据也会改变，因为传递的只是个引用，可通过将对象做深拷贝创建一个副本解决这个问题。</p>
+</li>
+</ol>
+<h5 id="可以但不建议的操作："><a href="#可以但不建议的操作：" class="headerlink" title="可以但不建议的操作："></a>可以但不建议的操作：</h5><ol>
+<li><p>直接用ref调用子组件函数直接把数据以参数的形式传给子组件；</p>
+</li>
+<li><p>$children是一个数组，是直接儿子的集合，不保证顺序，也不是响应式。</p>
+</li>
+</ol>
+<h4 id="子-gt-父"><a href="#子-gt-父" class="headerlink" title="子-&gt;父"></a>子-&gt;父</h4><h5 id="方式：-1"><a href="#方式：-1" class="headerlink" title="方式："></a>方式：</h5><p>子组件通过$emit的操作触发父组件的自定义事件，父组件中监听这个事件并在回调中写相关逻辑。</p>
+<h5 id="可以但不建议的操作：-1"><a href="#可以但不建议的操作：-1" class="headerlink" title="可以但不建议的操作："></a>可以但不建议的操作：</h5><ol>
+<li><p>可以在子组件中定义一种专供父组件调用的函数，当父组件想要获取子组件数据就直接主动调用ref执行这个函数获取数据；</p>
+</li>
+<li><p>$parent是当前组件树的根 Vue 实例，如果当前实例没有父实例，此实例将会是其自己。</p>
+</li>
+</ol>
+<h4 id="兄-gt-弟"><a href="#兄-gt-弟" class="headerlink" title="兄-&gt;弟"></a>兄-&gt;弟</h4><h5 id="方式：-2"><a href="#方式：-2" class="headerlink" title="方式："></a>方式：</h5><ol>
+<li><p>路由URL参数：把需要跨页面传递的数据放到url后面，跳转到另外页面时获取url字符串获取想要的参数即可。局限性：只适合传递比较小的数据。</p>
+</li>
+<li><p>EventBus：在组件之外定义一个event-bus.js作为组件间通信的桥梁，也可称之为事件总线。EventBus实现了发布订阅模式，往事件总线里订阅事件用的是on，发布事件用的是emit。</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// event-bus.js</span><br><span class="line">import Vue from &#x27;vue&#x27;</span><br><span class="line">export const EventBus = new Vue()</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="祖先-gt-后代"><a href="#祖先-gt-后代" class="headerlink" title="祖先-&gt;后代"></a>祖先-&gt;后代</h4><h5 id="方式：-3"><a href="#方式：-3" class="headerlink" title="方式："></a>方式：</h5><ol>
+<li><p>provide/inject，允许一个祖先组件向其所有子孙后代注入一个依赖，不论组件层次有多深，并在起上下游关系成立的时间里始终生效。</p>
+</li>
+<li><p>$attrs：在子组件中添加v-bind=’$​attrs’，就把父组件传来的子组件没props接收的数据全部传到孙组件，子组件和孙组件都可以用this.$attrs获取。</p>
+</li>
+</ol>
+<h5 id="注意：-1"><a href="#注意：-1" class="headerlink" title="注意："></a>注意：</h5><p>provide 和 inject 绑定并不是可响应的。如果数据类型是对象Object，其对象的属性还是可响应的，因为对象格式数据存储的是指针而不是数据，操作的是同一个对象。</p>
+<h4 id="通用"><a href="#通用" class="headerlink" title="通用"></a>通用</h4><h5 id="方式"><a href="#方式" class="headerlink" title="方式"></a>方式</h5><p>1.Vuex集中状态管理：类似与一个共享数据仓库，所有的组件都可以去操作；</p>
+<p>2.localStorage，sessionStorage，cooikes之类的存在本地也能做到组件间的通信。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/13/Vue2.x%E7%9A%84%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1332,107 +1459,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/03/Vue2.x%E7%9A%84nextTick%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="马帅傅">
-      <meta itemprop="description" content="道阻且长,行则将至">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上任鹅城">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/03/Vue2.x%E7%9A%84nextTick%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/" class="post-title-link" itemprop="url">Vue2.x的nextTick实现原理</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-09-03 16:42:22 / Modified: 18:31:48" itemprop="dateCreated datePublished" datetime="2021-09-03T16:42:22+08:00">2021-09-03</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/vue/" itemprop="url" rel="index"><span itemprop="name">vue</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2021/09/03/Vue2.x%E7%9A%84nextTick%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/" class="post-meta-item leancloud_visitors" data-flag-title="Vue2.x的nextTick实现原理" title="Views">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">Views: </span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine: </span>
-    
-    <a title="valine" href="/2021/09/03/Vue2.x%E7%9A%84nextTick%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/09/03/Vue2.x%E7%9A%84nextTick%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>在下次DOM更新循环结束之后执行延迟回调。</p>
-<p>在修改数据之后立即使用这个方法，获取更新后的DOM。实际上在派发更新过程中，同步任务执行之后会执行nextTick方法，参数是一个watcher队列执行函数。目的是当本次事件循环中所有的数据变化完成后，异步批量执行watcher队列的回调来实现DOM更新。所以在修改数据之后立即使用这个方法，就相当于nextTick执行更新了DOM的回调之后，再来执行这个nextTick里面的回调函数。</p>
-<h4 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h4><p>需要在视图更新之后，基于新的视图进⾏操作。</p>
-<h4 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h4><p>nextTick接收一个函数作为参数，这个函数也可以理解成一个回调函数。nextTick内部其实存储回调函数的一个队列数组，当外面执行同步执行几个nextTick方法的时候，会将这几个nextTick方法的参数存储到回调函数队列中。然后在nextTick的内部会创建一个异步任务。</p>
-<p>运行环境不同生成的异步任务的方式和结果也可能不同，具体的顺序如下：</p>
-<ol>
-<li>判断是否支持Promise，如果支持就在Promise.then方法的回调中去遍历执行队列数组里的回调函数；</li>
-<li>判断是否支持MutationObserver，如果支持就内部创建一个DOM元素，模拟修改DOM元素，以这种方式来执行监听DOM变化的回调函数，在这个回调函数中遍历执行队列数组里的回调函数；</li>
-<li>判断是否支持setImmediate，如果支持就在setImmediate回调中遍历执行队列数组里的回调函数；</li>
-<li>如果以上几种都不支持，setTimeout回调中遍历执行队列数组里的回调函数。</li>
-</ol>
-<p>前面两种方式生成的异步任务是微任务，后面两种生成的异步任务是宏任务。Vue2.x不同的版本对于这个过程的实现可能会有细微差异，但是目的就是生成一个异步任务，这个任务执行的时间越早越好。</p>
-<p>nextTick还有一个实现细节，就是当参数没传且运行环境支持Promise的时候，会返回一个Promise的实例，这个小功能可以按需使用。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1503,7 +1529,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-count">38</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1516,7 +1542,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">45</span>
+        <span class="site-state-item-count">46</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
