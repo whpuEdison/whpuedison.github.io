@@ -304,7 +304,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-09-13 16:53:42 / Modified: 16:55:10" itemprop="dateCreated datePublished" datetime="2021-09-13T16:53:42+08:00">2021-09-13</time>
+              <time title="Created: 2021-09-13 16:53:42 / Modified: 20:02:03" itemprop="dateCreated datePublished" datetime="2021-09-13T16:53:42+08:00">2021-09-13</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -348,7 +348,21 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h4 id="编译过程"><a href="#编译过程" class="headerlink" title="编译过程"></a>编译过程</h4><p>主要三个步骤：parse -&gt; optimize -&gt; codegen。</p>
+<p>将模版template经过上面三个步骤，编译成render函数。</p>
+<h4 id="parse"><a href="#parse" class="headerlink" title="parse"></a>parse</h4><p>parse方法对模版做解析生成AST抽象语法树，AST是源代码抽象语法结构的树状表示，可以简单理解为是将源代码按照一定规则转换成一种树状结构。</p>
+<p>解析HTML模版的时候，使用正则做各种匹配，如注释节点、文档类型节点、开始标签、结束标签等，对于不同情况进行不同的处理，直到整个template被解析完成。</p>
+<p>在处理标签的时候为每一个标签创建了一个AST元素，建立起父子关系生成AST树。AST元素节点一共有3种类型，type为1表示是普通类型，为2表示表达式，为3表示纯文本。</p>
+<p>⚠️ 在parse过程中，还完成了对指令的解析。</p>
+<h4 id="optimize"><a href="#optimize" class="headerlink" title="optimize"></a>optimize</h4><p>optimize做的事情就是优化AST树。</p>
+<p>由于Vue是响应式的，但是模板中并不是所有的数据都是响应式的，很多数据是首次渲染后就永远不会变化，可以在编译阶段将一些AST节点优化成静态节点，可以在数据更新patch的时候跳过这些节点的比对，提高渲染速度。</p>
+<p>整个optimize过程中就干了两件事情：</p>
+<ol>
+<li>标记静态节点</li>
+<li>标记静态根 </li>
+</ol>
+<h4 id="codegen"><a href="#codegen" class="headerlink" title="codegen"></a>codegen</h4><p>优化后的AST抽象语法树通过generate函数生成render函数字符串。在compileToFunctions中，会将这个render函数字符串转换成函数。</p>
+
       
     </div>
 
